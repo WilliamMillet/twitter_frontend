@@ -3,19 +3,20 @@ import getOwnProfileImageLink from "../../utils/getOwnProfileImageLink";
 import Button from "../Button/Button";
 
 const ThreadCreationDraftItem = ({
-  index,
-  activeThreadIndex,
-  handleActivateThreadIndex,
+  id,
+  activeThreadId,
+  handleActivateThreadId,
   handleAddToThread,
   register,
   isBasePost,
 }) => {
+  
   const textareaRef = useRef(null);
   const fileInputRef = useRef(null);
 
   // Check if this thread is active
 
-  const active = activeThreadIndex === index;
+  const active = activeThreadId === id;
 
   const [userInputLength, setUserInputLength] = useState(0);
   const [image, setImage] = useState(undefined);
@@ -53,13 +54,13 @@ const ThreadCreationDraftItem = ({
   };
 
   const handleClickDraftItem = () => {
-    handleActivateThreadIndex(index);
+    handleActivateThreadId(id);
     textareaRef.current.focus();
   };
 
   const handleFocus = () => {
     if (!active) {
-      handleActivateThreadIndex(index);
+      handleActivateThreadId(id);
     }
   };
 
@@ -124,7 +125,7 @@ const ThreadCreationDraftItem = ({
           </div>
           <div className="thread-creation-right-actions">
             <p className="post-length-indicator">{userInputLength} / 400</p>
-            <button className="create-thread-button" onClick={handleAddToThread}>+</button>
+            <button className="create-thread-button" onClick={() => handleAddToThread(id)}>+</button>
             <Button variant="default" size="small-stretch">
               Post all
             </Button>

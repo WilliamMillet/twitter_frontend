@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./ThreadCreationInterface.css";
 import ThreadCreationDraftItem from "./ThreadCreationDraftItem";
 import { useForm } from "react-hook-form";
+import { v4 as uuidv4 } from "uuid";
 
 const ThreadCreationInterface = () => {
   const {
@@ -13,20 +14,30 @@ const ThreadCreationInterface = () => {
 
   // Implement a solution using UUIds for the thread indicies
 
-  const [activeThreadIndex, setActiveThreadIndex] = useState(0);
-  const [threadReplyIndices, setThreadReplyIndices] = useState([1]);
+  const [activeThreadId, setActiveThreadId] = useState(0);
+  const [threadReplies, setThreadReplies] = useState([
+    {id: uuidv4()}
+  ]);
 
-  const handleActivateThreadIndex = (index) => {
-    setActiveThreadIndex(index);
+  const handleAddToThread = (insertAfterId = null) => {
+    const newReply = { id: uuidv4() };
+    if (!insertAfterId) {
+      setThreadReplies((prevReplies) => [...prevReplies, newReply]);
+    } else {
+      setThreadReplies((prevReplies) => {
+        const index = prevReplies.findIndex((reply) => reply.id === insertAfterId);
+        if (index === -1) return prevReplies;
+        const newReplies = [...prevReplies];
+        newReplies.splice(index + 1, 0, newReply);
+        return newReplies;
+      });
+    }
   };
 
-  const handleAddToThread = () => {
-    const itemToAdd = threadReplyIndices.length + 1
-    setThreadReplyIndices(prevIndices => [
-        ...prevIndices,
-        itemToAdd
-    ])
-  }
+  const handleActivateThreadId = (id) => {
+    setActiveThreadId(id);
+  };
+
 
   
 
@@ -36,26 +47,23 @@ const ThreadCreationInterface = () => {
 
   return (
     <div className="image-popup-dark-overlay">
-        {threadReplyIndices.map(index => (
-            <p>{index}</p>
-        ))}
       <div className="thread-creation-interface-popup-container">
         <ThreadCreationDraftItem
           isBasePost={true}
-          index={0}
+          id={0}
           register={register}
-          activeThreadIndex={activeThreadIndex}
+          activeThreadId={activeThreadId}
           handleAddToThread={handleAddToThread}
-          handleActivateThreadIndex={handleActivateThreadIndex}
+          handleActivateThreadId={handleActivateThreadId}
         />
-        {threadReplyIndices.map((index) => (
+        {threadReplies.map(reply => (
           <ThreadCreationDraftItem
-            key={index}
-            index={index}
+            key={reply.id}
+            id={reply.id}
             isBasePost={false}
             register={register}
-            activeThreadIndex={activeThreadIndex}
-            handleActivateThreadIndex={handleActivateThreadIndex}
+            activeThreadId={activeThreadId}
+            handleActivateThreadId={handleActivateThreadId}
             handleAddToThread={handleAddToThread}
           />
         ))}
