@@ -1,0 +1,115 @@
+.standard-options {
+    width: 100%;
+    display: flex;
+    border-collapse: separate;
+    
+}
+
+.vertical-styled {
+    flex-direction: column;
+}
+
+.standard-options button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.vertical-styled button {
+    padding-right: 20px;
+    justify-content: space-between;
+}
+
+.horizontal-styled button {
+    flex: 1;
+    height: 50px;
+}
+
+.vertical-styled .active-option.include-highlight {
+    box-shadow: inset -5px 0px 0px rgb(29 161 242);
+}
+
+.medium-option-height {
+    font-size: 14px;
+    min-height: 40px;
+}
+
+.large-option-height {
+    font-size: 16px;
+    min-height: 60px;
+}
+
+
+@media (prefers-color-scheme: dark) {
+
+    .standard-options button:hover {
+        background-color: #1d1d1d;
+    }
+
+    .include-top-border {
+        border-top: 1px solid rgb(70, 70, 70);
+    }
+
+    .include-bottom-border {
+        border-bottom: 1px solid rgb(70, 70, 70);
+    }
+
+    .standard-options .include-side-borders {
+        border-inline: 0.5px solid rgb(70, 70, 70);
+    }
+
+    .standard-options .include-side-borders:first-child {
+        border-left: 1px solid rgb(70, 70, 70);
+    }
+
+    .standard-options .include-side-borders:last-child {
+        border-right: 1px solid rgb(70, 70, 70);
+    }
+}
+
+.user-media-options-container {
+    width: 106.5%;
+    margin-left: -20px;
+}
+
+.horizontal-styled .ind-button-accent {
+    background-color: rgb(29 161 242);
+    height: 4px;
+    border-radius: 10px;
+    width: 80px;
+    margin-top: -5px;
+
+} 
+
+.standard-option-underlines {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.right-arrow-text {
+    /* position: relative;
+    left: 320px; */
+    font-size: 18px;
+    color: rgb(120,120,120);
+    transform: scale(1,1.75);
+    /* display: inline-block; */
+}
+
+.option-text {
+    margin: 0 0 0 0 ;
+}
+
+.horizontal-button-styling {
+    text-align: center;
+    width: 100%;
+    background-color: blanchedalmond;
+    display: flex;
+    justify-content: center;
+}

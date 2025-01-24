@@ -1,0 +1,135 @@
+.muted-word-list-row {
+    transition: all 0.1s ease-in-out;
+    height: 80px;
+}
+@media (prefers-color-scheme: dark) {
+    .muted-word-list-row {
+        border-bottom: 1px solid rgb(70, 70, 70);
+    }
+
+    .muted-word-list-row:hover {
+        background-color: #1d1d1d;
+    }
+}
+
+.muted-word-and-duration {
+    width: 95%
+}
+.muted-word-list-row {
+    display: flex;  
+    flex-direction: row;
+    padding: 20px; 
+}
+
+.muted-word-text {
+    margin: 0 0 5px 0
+}
+
+.muted-word-duration {
+    margin: 0;
+    color: rgb(120, 120, 120);
+}
+
+.remove-muted-word-button {
+    font-size: 22px;
+}
+
+.add-muted-word-button {
+    margin-left: auto;
+    margin-right: 20px;
+    font-size: 28px;
+    transition: all 0.2s ease-in-out;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    margin-top: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (prefers-color-scheme: dark) {
+    .add-muted-word-button:hover {
+        background-color: #1d1d1d;
+    }
+}
+
+.common-word-alert {
+    color: rgb(211, 196, 118);
+}
+
+.yellow-border-and-label-children input {
+    border-color: rgb(211, 196, 118)
+}
+
+.yellow-border-and-label-children label {
+    color: rgb(211, 196, 118)
+}
+
+.settings-subsection-header {
+    display: flex;
+}
+
+.muted-word-standard-input {
+    width: 94%;
+    margin: auto;
+}
+
+.add-muted-word-header {
+    margin-bottom: 10px;
+}
+
+.mute-information-text {
+    margin: 10px 20px 10px 20px;
+    font-size: 14px;
+    color: rgb(120, 120, 120);
+}
+
+.common-word-alert {
+    margin: 0px 20px 30px 20px;
+    font-size: 14px;
+}
+
+.does-mute-apply-to-all-or-just-following-buttons {
+    display: flex;
+    flex-direction: column;
+}
+
+.does-mute-apply-to-all-or-just-following-buttons button {
+    font-size: 16px;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 20px 0 20px;
+}
+
+.does-mute-apply-to-all-or-just-following-buttons button {
+    display: flex;
+    justify-content: space-between;
+}
+
+.muted-word-input-and-warnings-container {
+    height: 150px;
+}
+
+.add-muted-word-form button{
+    margin: 20px 20px 0 auto;
+}
+
+.backend-error-text {
+    text-align: center;
+    color: red;
+}
+
+.lack-of-muted-words-text-container {
+    width: 300px;
+    text-align: justify;
+    margin: auto;
+}
+
+.lack-of-muted-words-text-container h2 {
+    font-size: 30px;
+}
+
+.lack-of-muted-words-text-container p {
+    text-align: justify;
+}

@@ -1,0 +1,23 @@
+.additional-resource-link-row {
+    display: flex;
+    justify-content: space-between;
+    padding:  0 20px 0 20px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    text-decoration: none;
+}
+
+.additional-resource-link-row:hover {
+    background-color: #1d1d1d;
+}
+
+.additional-resource-link-row button {
+    background: none;
+    border: none;
+    font-size: 26px;
+    color: rgb(120,120,120);
+}
+
+.additional-resources-page-details hr {
+    margin-bottom: 20px;
+}

@@ -1,0 +1,55 @@
+.colour-scheme-option-containers {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.color-scheme-option-div {
+    width: 300px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.light-mode-option-div {
+    background-color: white;
+    color: black;
+}
+
+.dark-mode-option-div {
+    background-color: black;
+    color: white;
+}
+
+.outline-color-scheme-blue {
+    border: 3px solid rgb(29 161 242)
+}
+
+.color-scheme-option-div {
+    width: 200px;
+}
+
+.color-scheme-option-div img {
+    width: 25px;
+    margin-right: 30px;
+
+}
+
+.background-title-text-accessibility-page {
+    margin-left: 20px;
+}
+
+.dark-mode-feature-separator {
+    margin-top: 20px;
+}
+
+.settings-subsection-header {
+    margin-left: 20px;
+}
+
+.sub-heading-additional-resources-page {
+    margin: 5px 20px 5px 20px
+}

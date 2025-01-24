@@ -1,0 +1,108 @@
+.thread-creation-interface-popup-container {
+    width: 700px;
+    min-height: 400px;
+    border-radius: 20px;
+    padding: 10px;
+}
+
+@media (prefers-color-scheme: dark) {
+    .thread-creation-interface-popup-container {
+        background-color: black;
+    }
+}
+
+.thread-creation-draft-item {
+    padding: 10px;
+    transition: all 0.15s ease-in-out;
+}
+
+.inactive-thread-creation-item {
+    filter: brightness(40%);
+}
+
+.thread-creation-draft-item-profile-and-content {
+    display: flex;
+}
+
+.thread-creation-profile-info-container {
+    margin-right: 20px;
+}
+
+.thread-creation-profile-info-container > img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.thread-creation-input-container {
+    width: 100%;
+
+
+}
+
+.thread-creation-input-field {
+    background: none;
+    border: none;
+    outline: none;
+    font-size: 18px;
+    margin-top: 12px;
+    resize: none;
+    overflow: hidden;
+    width: 100%;
+}
+
+@media (prefers-color-scheme: dark) {
+    .thread-creation-input-field {
+        color: white;
+    }
+
+    .thread-creation-input-field::placeholder {
+        color: rgb(120,120,120)
+    }
+    
+    
+}
+
+.thread-creation-vertical-line {
+    width: 2px;
+    min-height: calc(100% - 70px);
+    height: 50px;
+    background: rgb(70, 70, 70);
+    margin: auto;
+}
+
+.thread-creation-action-buttons-container {
+    border-top: 1px solid rgb(70, 70, 70);
+    margin-top: 10px;
+    padding: 10px;
+    display: flex;
+}
+
+.thread-creation-right-actions {
+    margin-left: auto;
+}
+
+.thread-creation-right-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.thread-creation-image-image-preview {
+    position: relative;
+}
+
+.thread-creation-close-image-button {
+    position: absolute;
+    left: 540px;
+    top: 5px
+}
+
+.thread-creation-image-upload {
+    max-width: 100%;
+    border-radius: 20px;
+}
+
+
+

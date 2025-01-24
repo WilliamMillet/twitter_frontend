@@ -1,0 +1,139 @@
+.main-button-style {
+    transition: all 0.2s ease;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.main-button-style:enabled {
+    cursor: pointer;
+}
+
+
+.main-button-style:disabled {
+    cursor: not-allowed
+}
+
+@media (prefers-color-scheme: dark) {
+
+    .default-button {
+        color: black;
+        font-weight: bold;
+    }
+
+    .default-button:-webkit-autofill {
+        background-color: black;
+    }
+
+    .default-button:enabled {
+        background-color: white;
+    }
+
+    .default-button:disabled {
+        background-color: rgb(124, 124, 124);
+    }
+
+    .default-button:enabled:hover {
+        background-color: #e8e8e8;
+    }
+
+    .default-button:enabled:active {
+        background-color: #cbcbcb;
+    }
+
+    .default-border-only-button {
+        background-color: black;
+        color: white;
+        border: 1px solid white !important;
+        font-weight: bold;
+    }
+
+    .default-border-only-button:hover {
+        background-color: rgb(31, 31, 31);
+    }
+    
+}
+
+.default-colorful-button {
+    background-color: rgb(29 161 242);  
+    font-weight: bold;
+}
+
+.default-colorful-button:hover {
+    background-color: rgb(25, 147, 223);  
+    font-weight: bold;
+}
+
+.extra-small-button {
+    min-width: 60px;
+    height: 30px;
+    font-size: 14px;
+    border-radius: 25px;
+    padding: 0px 15px 0px 15px; 
+}
+
+.small-button {
+    width: 90px;
+    height: 40px;
+    font-size: 14px;
+    border-radius: 25px;
+    padding: 0px 25px 0px 25px;
+}
+
+.small-stretch-button {
+    min-width: 90px;
+    height: 40px;
+    min-height: 40px;
+    font-size: 16px;
+    border-radius: 20px;
+}
+
+.small-natural-button {
+    padding: 0px 10px;
+    height: 40px;
+    font-size: 16px;
+    border-radius: 12px;
+}
+
+.small-medium-button {
+    width: 100px;
+    height: 40px;
+    font-size: 16px;
+    border-radius: 12px;
+}
+
+
+
+.medium-button {
+    width: 150px;
+    height: 50px;
+    font-size: 15px;
+    border-radius: 35px;
+    border: none;
+}
+
+.medium-stretch-button {
+    min-width: 150px;
+    width: 100%;
+    height: 50px;
+    font-size: 15px;
+    border-radius: 35px;
+}
+
+
+.medium-wide-button {
+    width: 250px;
+    height: 60px;
+    font-size: 20px;
+    border-radius: 12px;
+    border: none;
+}
+
+.medium-full-width-button {
+    width: 100%;
+    height: 60px;
+    font-size: 20px;
+    border-radius: 12px;
+    border: none;
+}

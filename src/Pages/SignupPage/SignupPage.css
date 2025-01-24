@@ -1,0 +1,123 @@
+.signup-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(40, 45, 54);
+}
+
+.signup-form-container {
+    height: 100%;
+}
+
+.signup-form-container  {
+    width: 580px;
+    height: 630px;
+    padding: 20px 80px;
+    border-radius: 15px;
+}
+
+.signup-form .standard-input-container {
+    margin-bottom: 30px;
+}
+
+.signup-form .blue-text-button {
+    text-align: right;
+    width: 100%
+}
+
+
+@media (prefers-color-scheme: dark) {
+    .signup-form-container {
+        color: white;
+        background-color: black;
+    }
+}
+
+.date-of-birth-title {
+    font-size: 15px;
+    margin-bottom: 10px;
+}
+
+.date-of-birth-info {
+    font-size: 13px;
+    margin-top: 0px;
+}
+
+.signup-form .main-button-style {
+    margin-top: 75px;
+}
+
+.signup-form-top-container {
+    display: flex;
+    position: relative;
+    margin-bottom: 40px;
+    
+
+}
+
+.x-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    position: absolute;
+    font-size: 24px;
+    left: -70px;
+    bottom: -20px;
+    cursor: pointer;
+    border-radius: 100px;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    transition: all 0.2s ease-in-out;
+}
+
+.x-button:hover {
+    background-color: rgb(26, 25, 25);
+}
+
+.step-indicator {
+    position: absolute;
+    margin: 0;
+    bottom: -15px;
+    left: -30px;
+}
+
+.profile-img-upload-container {
+    position: relative;
+    display: inline-block;
+    width: 200px;
+    margin: auto;
+
+  }
+
+.file-input-real-btn {
+    display: none;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+.camera-overlay {
+    position: absolute;
+    top: 25%;
+    left: 41%;
+    font-size: 60px;
+    z-index: 1;
+}
+
+.file-input-img {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    width: 100%;
+    height: 100%;
+}
+
+.dark-overlay {
+    background-color: black;
+    opacity: 50%;
+    pointer-events: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }

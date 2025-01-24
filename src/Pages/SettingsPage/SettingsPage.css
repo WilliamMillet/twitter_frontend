@@ -1,0 +1,23 @@
+.settings-name-title {
+    margin-left: 20px;
+
+}
+
+.settings-section {
+    display: flex;
+    height: 100vh
+}
+
+.settings-primary-categories {
+    width: 40%;
+    height: 100%;
+    border-right: 1px solid rgb(70, 70, 70)
+}
+
+
+.settings-real-options {
+    width: 60%;
+    height: 100%;
+    border-right: 1px solid rgb(70, 70, 70)
+}
+

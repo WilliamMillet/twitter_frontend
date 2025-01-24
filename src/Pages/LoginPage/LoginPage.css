@@ -1,0 +1,39 @@
+.login-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(40, 45, 54);
+}
+
+.login-form-container {
+    height: 100%;
+}
+
+.login-form-container  {
+    width: 580px;
+    height: 630px;
+    padding: 20px 80px;
+    border-radius: 15px;
+
+}
+
+.login-form .standard-input-container, .blue-text-button {
+    margin-bottom: 10px;
+}
+
+.login-form .blue-text-button {
+    text-align: right;
+    width: 100%
+}
+
+.login-form .main-button-style {
+    margin-top: 240px;
+}
+
+
+@media (prefers-color-scheme: dark) {
+    .login-form-container {
+        color: white;
+        background-color: black;
+    }
+}

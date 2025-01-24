@@ -1,0 +1,147 @@
+.individual-post {
+    padding: 20px;
+    border-top: 1px solid rgb(70,70,70);
+    border-bottom: 1px solid rgb(70,70,70);
+    width: 100%;
+    min-height: 120px;
+    transition: all 0.2s ease-in-out;
+}
+
+.clickable-individual-post:hover {
+  background-color: #141414;
+}
+
+.individual-post-fist-row {
+    display: flex;
+}
+
+.individual-post-profile-image {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-right: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.individual-post-profile-image:hover {
+    filter: brightness(90%);
+}
+
+.individual-post-main-information-container {
+    width: 100%;
+}
+
+.individual-user-info-and-timing-container {
+    display: flex;
+    gap: 5px;
+    margin-top: -5px;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+.individual-user-info-and-timing-container > p {
+    margin: 0;
+}
+
+.individual-post-display-name-text {
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.individual-post-identifying-name-text {
+    color: rgb(120,120,120);
+    cursor: pointer;
+}
+
+.individual-post-time-since-creation-text {
+    color: rgb(120,120,120);
+    text-decoration: underline;
+}
+
+.individual-post-text {
+    margin: 0;
+}
+
+
+.individual-post-second-row {
+    display: flex;
+    align-items: center;
+    margin-left: 50px;
+}
+.individual-post-second-row > button {
+    margin-top: 5px;
+}
+.individual-post-second-row > button > p {
+    margin: 0;
+}
+
+.individual-post-image-container {
+    width: 100%;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-top: 20px;
+    cursor: pointer;
+
+}
+
+.individual-post-image-container img {
+    max-width: 100%;
+}
+
+.mentioned_post-container {
+    border: 1px solid rgb(70,70,70);
+    border-radius: 10px;
+    margin-top: 20px;
+    padding: 10px;
+    cursor: pointer;
+}   
+
+.mentioned-post-container-metadata-row {
+    display: flex;
+    align-items: center;
+    gap: 10px
+}
+
+.mentioned-post-profile-image {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-top: 5px;
+    transition: all 0.2s ease-in-out;
+}
+
+.mentioned-post-profile-image:hover {
+    filter: brightness(90%);
+}
+
+.clickable-individual-post:hover {
+    background-color: #141414;
+  }
+  
+
+.mentioned-post-container-metadata-row > p {
+    margin: 0;
+    font-size: 14px;
+}
+
+
+.mentioned-post-display-name-text {
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.mentioned-post-identifying-name-text {
+    color: rgb(120,120,120);
+}
+
+.mentioned-user-verification-check-image {
+    width: 20px;
+    height: 20px;
+}
+
+.mentioned-post-text {
+    font-size: 14px;
+    margin: 0;
+}

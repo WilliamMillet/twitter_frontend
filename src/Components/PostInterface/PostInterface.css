@@ -1,0 +1,124 @@
+.post-interface {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    border-bottom: 1px solid rgb(70, 70, 70);
+}
+
+.post-interface-text-and-profile {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    padding-bottom: 20px;
+}
+
+.post-interface-profile-image-container {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.post-interface-text-input {
+    border-bottom: 1px solid rgb;
+    width: 100%;
+    resize: none;
+    overflow: hidden;
+}
+
+@media (prefers-color-scheme: dark) {
+    .post-interface-text-input {
+        background-color: black;
+        border: none;
+        outline: none;
+        font-size: 22px;
+        color: white;
+    }
+
+    .post-interface-text-and-profile-and-image {
+        border-bottom: 1px solid rgb(70, 70, 70);
+        
+    }
+
+    .post-length-indicator {
+        color: rgb(120, 120, 120);
+    }
+
+}
+
+.post-interface-buttons {
+    display: flex;
+    margin-top: 20px;
+    align-items: center;
+}
+
+
+.right-hand-post-interface-actions-container {
+    margin-left: auto;
+    display: flex;
+
+    align-items: center;
+    gap: 15px;
+}
+
+.upload-image-with-post-button {
+    height: 35px;
+    cursor: pointer;
+}
+
+.add-image-button-cover {
+    height: 100%;
+}
+
+
+
+.add-image-to-post-button-file-upload {
+    display: none;
+}
+
+.post-interface-image-preview {
+    max-height: 400px;
+    width: 100%;
+    border-radius: 20px;
+    overflow: hidden;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.post-interface-image-preview img {
+    width: 100%;
+}
+
+.close-image-button {
+    position: absolute;
+    margin-left: auto;
+    margin-left: 560px;
+    margin-top: 5px;
+}
+
+.create-thread-button {
+    background: none;
+    border: 1px solid white;
+    color: #4c96d5;
+    display: flex;
+    width: 30px;
+    height: 30px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    font-size: 28px;
+    padding-bottom: 2px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.create-thread-button:focus:not(:active) {
+    outline: 2px solid white;
+    outline-offset: 3px;
+
+}
+
+.create-thread-button:hover {
+    background-color: #1c1c1c;
+}
+

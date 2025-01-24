@@ -1,0 +1,97 @@
+.standard-input-container {
+    position: relative;
+    width: 100%;
+    height: 60px 
+}
+
+.standard-text-area-container {
+    position: relative;
+    width: 100%;
+}
+
+.standard-text-area-container textarea {
+    resize: none;
+}
+
+.standard-input {
+    width: 100%;
+    height: 100%;
+    border-radius: 4px;
+    border: 1px solid rgb(90, 90, 90);
+    outline: none;
+    padding: 30px 10px 5px 10px;
+    font-size: 18px;;
+}
+
+.standard-label {
+    position: absolute;
+    color: rgb(90, 90, 90);
+    left: 10px;
+    top: 17px;
+    font-size: 18px;
+    transition: all 0.2s ease-in-out;
+}
+
+.standard-text-area-container .input-length-indicator {
+    top: 0px;
+}
+
+.label-styling-when-scroll-is-active {
+    transform: translateX(-10px);
+    opacity: 0;
+  }
+
+
+.focused-standard-label {
+    font-size: 14px;
+    top: 10px;
+    color: #4c96d5;
+}
+
+.grey-label-out-of-way {
+    font-size: 14px;
+    top: 10px;
+}
+
+@media (prefers-color-scheme: dark) {
+    .standard-input {
+        background-color: black;
+        color: white;
+    }
+    
+}
+
+
+.focused-standard-input {
+    border-color: #4c96d5
+}
+
+.focused-standard-textarea {
+    border-color: #4c96d5
+}
+
+.input-length-indicator {
+    position: absolute;
+    text-align: right;
+    width: 100%;
+    right: 10px;
+    bottom: 17px;
+    font-size: 14px;
+    color:rgb(90, 90, 90);
+    transition: all 0.2s ease-in-out;
+}
+
+.standard-input-error {
+    color: red;
+    font-size: 13px;
+    margin-left: 10px;
+}
+
+.red {
+    color: red
+}
+
+.red-border {
+    border-color: red;
+}
+

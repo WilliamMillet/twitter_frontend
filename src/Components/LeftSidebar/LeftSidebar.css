@@ -1,0 +1,112 @@
+.left-sidebar-inner-container {
+    width: 300px;
+    position: absolute;
+    right: 50px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.left-sidebar-inner-container ul {
+    list-style: none;
+}
+
+.left-sidebar-inner-container li {
+    margin-top: 20px;
+    font-size: 18px;
+}
+
+.left-sidebar-inner-container a {
+    text-decoration: none;
+    color: black;
+}
+
+.left-sidebar-inner-container nav {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1
+}
+
+.profile-nav-item {
+    width: 250px;
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    margin: auto;
+    align-items: center;
+    border-radius: 50px;
+    transition: all 0.2s ease-in-out;
+    padding: 0px 15px;
+    cursor: pointer;
+    margin-bottom: 30px;
+    margin-top: auto;
+}
+
+
+
+.left-sidebar-inner-container {
+    height: 100vh;
+    width: 300px;
+    text-align: left;
+}
+
+
+
+.profile-picture-small-icon-container {
+    width: 50px;
+    height: 50px;
+}
+
+.profile-picture-small-icon-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.profile-nav-display-name-text {
+    font-weight: bold;
+}
+
+@media (prefers-color-scheme: dark) {
+    .profile-nav-item:hover {
+        background-color: #1c1c1c;
+    }
+    .profile-nav-display-name-text {
+        color: white;
+    }
+
+    .profile-nav-identifying-name-text {
+        color: rgb(130, 130, 130)
+    }
+}
+.user-options-button {
+    font-size: 22px;
+    margin-left: 20px;
+}
+
+.logout-popup {
+    box-shadow: 0px 0px 20px rgba(150, 150, 150, 0.5);
+    /* border: 1px solid rgb(120, 120, 120); */
+    position: absolute;
+    height: 50px;
+    border-radius: 20px;
+    width: 250px;
+    height: 60px;
+    bottom: 120px;
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    left: 25px;
+    transition: all 0.2s ease-in-out;
+}
+
+.logout-button {
+    background: none;
+    border: none;
+    font-weight: bold;
+    font-size: 15px;
+    cursor: pointer;
+}
+
