@@ -163,7 +163,7 @@ const ThreadCreationDraftItem = ({
             >
               +
             </button>
-            <Button variant="default" size="small-stretch">
+            <Button variant="default" size="small-stretch" type='submit'>
               Post all
             </Button>
           </div>

@@ -81,6 +81,15 @@ const PostInterface = () => {
     fetchData: postImageMetadataFetchFunction,
   } = useFetchData();
 
+  const aggregatedErrors = [
+    uploadTextError,
+    generatePresignedUrlError,
+    awsUploadError,
+    postImageMetadataError
+  ].filter(error => error !== undefined)
+
+  // I could make it so the post redirects you to the post, or possibly does so in a new tab
+
   const handlePost = () => {
     uploadTextFetchFunction(
       "http://localhost:5000/api/posts/text",
@@ -89,6 +98,7 @@ const PostInterface = () => {
       { postText: input },
       {
         onSuccess: (uploadTextData) => {
+          setInput("");
           const { postId } = uploadTextData;
           if (image) {
             generatePresignedUrlFetchFunction(
@@ -113,7 +123,6 @@ const PostInterface = () => {
                           { uuid: uniqueId },
                           {
                             onSuccess: () => {
-                              setInput(null);
                               setImage(null);
                             },
                           }
@@ -129,6 +138,7 @@ const PostInterface = () => {
       }
     );
   };
+
 
   return (
     <div className="post-interface">
@@ -172,6 +182,7 @@ const PostInterface = () => {
           />
         </div>
         <div className="right-hand-post-interface-actions-container">
+          <p className="standard-input-error">{aggregatedErrors}</p>
           <p className="post-length-indicator">{userInputLength} / 400</p>
           <button className="create-thread-button" onClick={() => setThreadCreationInterfaceActive(true)}>+</button>
           <Button variant="default" size="small" onClick={handlePost}>

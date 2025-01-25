@@ -3,7 +3,7 @@ import "./ThreadCreationInterface.css";
 import ThreadCreationDraftItem from "./ThreadCreationDraftItem";
 import { useForm } from "react-hook-form";
 import { v4 as uuidv4 } from "uuid";
-
+import handleUploadThread from "./handleUploadThread";
 const ThreadCreationInterface = () => {
 
 
@@ -52,8 +52,13 @@ const ThreadCreationInterface = () => {
     setActiveThreadId(id);
   };
 
-  const onSubmit = () => {
+  const onSubmit = (data) => {
     // Handle upload logic
+
+    handleUploadThread(data)
+
+    // Plan do the post upload alone first, just copy paste the old post logic 
+    // Do the reply logic, send them all in one fetch te
   }
 
   return (
