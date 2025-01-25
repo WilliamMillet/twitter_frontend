@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import getOwnProfileImageLink from "../../utils/getOwnProfileImageLink";
 import Button from "../Button/Button";
+import { generateInputConfigurations } from "./generateThreadInputConfigurations";
 
 const ThreadCreationDraftItem = ({
   id,
@@ -8,19 +9,25 @@ const ThreadCreationDraftItem = ({
   handleActivateThreadId,
   handleAddToThread,
   register,
-  isBasePost,
+  threadItems,
 }) => {
-  
-  const textareaRef = useRef(null);
+  // The base post which thread replies are attached to will always have an id of 1 if the code is written correctly
+
+  const isBasePost = id === 1;
+
   const fileInputRef = useRef(null);
+  const textareaRef = useRef(null);
 
   // Check if this thread is active
 
   const active = activeThreadId === id;
 
+  const isLastReply = id === threadItems[threadItems.length - 1]?.id;
+
   const [userInputLength, setUserInputLength] = useState(0);
-  const [image, setImage] = useState(undefined);
   const [imagePreview, setImagePreview] = useState(undefined);
+
+  // Ensure the textarea is always the minimum number of lines that will fit the text of a given post
 
   const handleChange = (e) => {
     setUserInputLength(e.target.value.length);
@@ -29,29 +36,35 @@ const ThreadCreationDraftItem = ({
     textarea.style.height = `${textarea.scrollHeight}px`;
   };
 
+  // Create a link to the image uploaded to preview it in the post
+
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setImage(file);
       setImagePreview(URL.createObjectURL(file));
     }
   };
+
+  // If a user tabs to the icon for the image and presses enter or space it should click the hidden file input button and open the file menu
 
   const handleAddImageClick = () => {
     fileInputRef.current.click();
   };
 
   const handleAddImageKeyDown = (e) => {
-    if (e.key === 'Enter' || e.key === " ") {
-        handleAddImageClick()
+    if (e.key === "Enter" || e.key === " ") {
+      fileInputRef.current.click();
     }
-  }
+  };
+
+  // Remove the image preview and clear the file upload input
 
   const handleRemoveImage = () => {
-    setImage(null);
     setImagePreview(null);
     fileInputRef.current.value = null;
   };
+
+  // If anywhere on thread item is clicked, the input should focus
 
   const handleClickDraftItem = () => {
     handleActivateThreadId(id);
@@ -64,6 +77,13 @@ const ThreadCreationDraftItem = ({
     }
   };
 
+  // Set up the registers for the form in a way that lets the refs still be used elsewhere
+
+  const inputConfig = generateInputConfigurations(id);
+
+  const { ref: textRef, ...textRest } = register(inputConfig.text.name);
+  const { ref: fileRef, ...fileRest } = register(inputConfig.file.name);
+
   return (
     <div
       className={`thread-creation-draft-item ${
@@ -75,7 +95,9 @@ const ThreadCreationDraftItem = ({
       <div className="thread-creation-draft-item-profile-and-content">
         <div className="thread-creation-profile-info-container">
           <img src={getOwnProfileImageLink()} alt="Profile" />
-          {active && <div className="thread-creation-vertical-line"></div>}
+          {active && !isLastReply && (
+            <div className="thread-creation-vertical-line"></div>
+          )}
         </div>
         <div className="thread-creation-input-container">
           <textarea
@@ -84,9 +106,14 @@ const ThreadCreationDraftItem = ({
             placeholder={
               isBasePost ? "What is happening?" : "Add to your thread"
             }
-            ref={textareaRef}
             onChange={handleChange}
             rows="1"
+            {...textRest}
+            ref={(e) => {
+              textRef(e);
+              textareaRef.current = e;
+            }}
+            maxLength={400}
           ></textarea>
           {imagePreview && (
             <div className="thread-creation-image-image-preview">
@@ -118,14 +145,24 @@ const ThreadCreationDraftItem = ({
             />
             <input
               type="file"
+              accept=".png, .jpeg, .jpg"
               className="add-image-to-post-button-file-upload"
-              ref={fileInputRef}
               onChange={handleImageUpload}
+              {...fileRest}
+              ref={(e) => {
+                fileRef(e);
+                fileInputRef.current = e;
+              }}
             />
           </div>
           <div className="thread-creation-right-actions">
             <p className="post-length-indicator">{userInputLength} / 400</p>
-            <button className="create-thread-button" onClick={() => handleAddToThread(id)}>+</button>
+            <button
+              className="create-thread-button"
+              onClick={() => handleAddToThread(id)}
+            >
+              +
+            </button>
             <Button variant="default" size="small-stretch">
               Post all
             </Button>
