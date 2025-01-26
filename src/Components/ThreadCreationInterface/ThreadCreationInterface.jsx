@@ -55,7 +55,7 @@ const ThreadCreationInterface = () => {
   const onSubmit = (data) => {
     // Handle upload logic
 
-    handleUploadThread(data)
+    // handleUploadThread(data)
 
     // Plan do the post upload alone first, just copy paste the old post logic 
     // Do the reply logic, send them all in one fetch te

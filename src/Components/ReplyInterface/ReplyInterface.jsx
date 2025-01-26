@@ -4,7 +4,7 @@ import FlashingGrayBarsLoadingAnimation from "../FlashingGrayBarsLoadingAnimatio
 import getOwnProfileImageLink from "../../utils/getOwnProfileImageLink";
 import { useRef, useState } from "react";
 import Button from "../Button/Button";
-
+import useUploadReply from "./useUploadReply";
 // The following properties of parentPostData are available
 // post_id,
 // user_identifying_name,
@@ -48,7 +48,7 @@ const ReplyInterface = ({ parentPostData }) => {
 
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
-    setImageInput(file)
+    setImageInput(file);
     if (file) {
       setImagePreview(URL.createObjectURL(file));
     }
@@ -71,13 +71,20 @@ const ReplyInterface = ({ parentPostData }) => {
     fileUploadRef.current.value = null;
   };
 
-
   const handleFocus = () => {
     setIsActive(true);
   };
-
-
-  const handlePost = () => {};
+  const { handleUploadReply, aggregatedErrors } = useUploadReply();
+  
+  const handleSubmit = () => {
+    handleUploadReply(
+      textInput,
+      imageInput,
+      parentPostData.post_id,
+      null,
+      false
+    ); // The null value is null for now, i will allow commenting on other commnets later
+  };
 
   if (!parentPostData) {
     return (
@@ -114,31 +121,31 @@ const ReplyInterface = ({ parentPostData }) => {
           </div>
         )}
         <div className="reply-interface-user-inputs">
-            <textarea
-              className="reply-interface-text-input"
-              ref={textareaRef}
-              onFocus={handleFocus}
-              onChange={handleTextInputChange}
-              value={textInput}
-              placeholder="Post your reply"
-              rows="1"
-              maxLength={400}
-            ></textarea>
-            {imagePreview && (
-              <div className="reply-interface-image-preview">
-                <button
-                  className="frosted-glass-plain-text-button reply-interface-close-image-button"
-                  onClick={handleRemoveImage}
-                >
-                  ×
-                </button>
-                <img
-                  src={imagePreview}
-                  alt="Image preview"
-                  className="reply-interface-image-upload"
-                />
-              </div>
-            )}
+          <textarea
+            className="reply-interface-text-input"
+            ref={textareaRef}
+            onFocus={handleFocus}
+            onChange={handleTextInputChange}
+            value={textInput}
+            placeholder="Post your reply"
+            rows="1"
+            maxLength={400}
+          ></textarea>
+          {imagePreview && (
+            <div className="reply-interface-image-preview">
+              <button
+                className="frosted-glass-plain-text-button reply-interface-close-image-button"
+                onClick={handleRemoveImage}
+              >
+                ×
+              </button>
+              <img
+                src={imagePreview}
+                alt="Image preview"
+                className="reply-interface-image-upload"
+              />
+            </div>
+          )}
         </div>
         {isActive && (
           <div className="reply-interface-actions">
@@ -160,11 +167,14 @@ const ReplyInterface = ({ parentPostData }) => {
               />
             </div>
             <div className="reply-interface-actions-right">
+              {aggregatedErrors && (
+                <p className="standard-input-error">{aggregatedErrors}</p>
+              )}
               <p className="post-length-indicator">{textInputLength} / 400</p>
               <Button
                 variant="default"
                 size="small"
-                onClick={handlePost}
+                onClick={handleSubmit}
                 disabled={textInputLength === 0}
               >
                 Reply
