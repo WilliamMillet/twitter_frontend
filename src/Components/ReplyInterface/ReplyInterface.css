@@ -1,0 +1,90 @@
+.reply-interface {
+    display: flex;
+    gap: 10px;
+    padding: 20px;
+}
+
+.replying-to-text {
+    color: rgb(120,120,120);
+    font-size: 14px;
+}
+
+.replying-to-link-to-profile {
+    text-decoration: none;
+}
+
+.reply-interface-your-profile-link-when-active {
+    margin-top: 35px;
+}
+
+.reply-interface-your-profile-link {
+    width: 50px;
+    border-radius: 50%;
+    
+}
+
+.reply-interface-second-column {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.reply-interface-text-input {
+    width: 100%;
+    resize: none;
+    font-size: 18px;
+}
+
+@media (prefers-color-scheme: dark) {
+    .reply-interface-text-input {
+        color: white;
+    }
+}
+
+.reply-interface-text-input {
+    background: none;
+    border: none;
+    outline: none;
+}
+
+.reply-interface {
+    border-bottom: 1px solid rgb(70,70,70);
+}
+
+.reply-inteface-add-image-button-cover {
+    width: 30px;
+}
+
+.reply-inteface-add-image-button-cover {
+    margin-top: 5px;
+}
+
+.reply-interface-actions {
+    display: flex;
+    align-items: center;
+}
+
+.reply-interface-actions-right {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.reply-interface-image-preview {
+    position: relative;
+    width: 100%;
+}
+
+.reply-interface-close-image-button {
+    position: absolute;
+    left: 500px;
+    top: 5px
+}
+
+.reply-interface-image-upload {
+    max-width: 100%;
+    border-radius: 20px;
+}
+

@@ -5,6 +5,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ImagePopup from "../ImagePopup/ImagePopup";
 import IndividualMentionedPost from "./IndividualMentionedPost";
+import FlashingGrayBarsLoadingAnimation from "../FlashingGrayBarsLoadingAnimation/FlashingGrayBarsLoadingAnimation";
+
 // Post data should be an object with the following keys:
 
 // post_id,
@@ -81,11 +83,7 @@ const IndividualPost = ({ postData, clickable = false }) => {
   if (!postData) {
 
     return (
-      <div className="individual-post flashing-gray-load-animation-set">
-        <div className="flashing-gray-load-animation"></div>
-        <div className="flashing-gray-load-animation"></div>
-        <div className="flashing-gray-load-animation"></div>
-      </div>
+      <FlashingGrayBarsLoadingAnimation/>
     );
   }
 

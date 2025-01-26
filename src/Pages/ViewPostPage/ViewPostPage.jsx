@@ -3,26 +3,22 @@ import StandardLayout from "../../Components/StandardLayout/StandardLayout";
 import { useNavigate, useParams } from "react-router-dom";
 import useFetchData from "../../hooks/useFetchData";
 import IndividualPost from "../../Components/IndividualPost/IndividualPost";
+import ReplyInterface from "../../Components/ReplyInterface/ReplyInterface";
 import { useEffect } from "react";
 
 const ViewPostPage = () => {
   const { id } = useParams(); // Get the post id
   const navigate = useNavigate()
-  
-  const {
-    response: mainPostResponse,
-    error: mainPostError,
-    loading: mainPostLoading,
-    fetchData: mainPostFetchFunction,
-  } = useFetchData();
+
+  const getPostData = useFetchData()
 
   useEffect(() => {
-    mainPostFetchFunction(`http://localhost:5000/api/posts/${id}`, "GET");
+    getPostData.fetchData(`http://localhost:5000/api/posts/${id}`, "GET");
   }, [id]);
 
   useEffect(() => {
-    console.log(mainPostResponse);
-  }, [mainPostResponse]);
+    console.log(getPostData.response);
+  }, [getPostData.response]);
 
   const handleNavigateToMainPage = () => {
     navigate('/')
@@ -39,7 +35,8 @@ const ViewPostPage = () => {
         </button>{" "}
         <h4>Account information</h4>
       </div>
-      <IndividualPost postData={mainPostResponse || null} />
+      <IndividualPost postData={getPostData.response || null} />
+      <ReplyInterface parentPostData={getPostData.response}/>
     </StandardLayout>
   );
 };
