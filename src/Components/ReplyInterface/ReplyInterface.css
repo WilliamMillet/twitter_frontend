@@ -84,7 +84,9 @@
 }
 
 .reply-interface-image-upload {
-    max-width: 100%;
+    width: 100%;
+    max-height: 400px;
     border-radius: 20px;
+    object-fit: cover;
 }
 

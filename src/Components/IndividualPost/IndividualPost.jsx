@@ -32,6 +32,7 @@ import FlashingGrayBarsLoadingAnimation from "../FlashingGrayBarsLoadingAnimatio
 
 // Clickable makes the post a link that navigates you to the post page
 // Clickable also leads to the post changing its background colour slightly on hover
+// Clickable is  always used for when a post is on the main feed, so it can be used as a way to detect that
 
 const IndividualPost = ({ postData, clickable = false }) => {
   const [postLiked, setPostLiked] = useState(false);
@@ -89,7 +90,7 @@ const IndividualPost = ({ postData, clickable = false }) => {
 
   return (
     <div
-      className={`individual-post ${clickable && "clickable-individual-post"}`} // The clickable individual post class is applied so that the div can be given a different colour upon hover when it is clickable
+      className={`individual-post ${clickable ? "clickable-individual-post" : 'unclickable-individual-post'}`} // The clickable individual post class is applied so that the div can be given a different colour upon hover when it is clickable
       onClick={clickable ? handleRedirectToPostPage : undefined}
       style={{ ...(clickable && { cursor: "pointer" }) }}
     >
@@ -104,18 +105,18 @@ const IndividualPost = ({ postData, clickable = false }) => {
         </div>
         <div className="individual-post-main-information-container">
           <div className="individual-user-info-and-timing-container">
-            <p
-              className="individual-post-display-name-text"
-              onClick={handleRedirectToProfile}
-            >
-              {postData.user_display_name}
-            </p>
-            {postData.verified !== 0 && (
-              <img
-                className="verification-check-image"
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Twitter_Verified_Badge.svg/1200px-Twitter_Verified_Badge.svg.png"
-              ></img>
-            )}
+              <p
+                className="individual-post-display-name-text"
+                onClick={handleRedirectToProfile}
+              >
+                {postData.user_display_name}
+              </p>
+              {postData.verified !== 0 && (
+                <img
+                  className="verification-check-image"
+                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Twitter_Verified_Badge.svg/1200px-Twitter_Verified_Badge.svg.png"
+                ></img>
+              )}
             <p
               className="individual-post-identifying-name-text"
               onClick={handleRedirectToProfile}
@@ -141,7 +142,9 @@ const IndividualPost = ({ postData, clickable = false }) => {
           </div>
         </div>
       </div>
+      {!clickable && <hr className="nintey-percent-width-grey-line clicked-post-grey-line"/>}
       <div className="individual-post-second-row">
+        
         <ImageToggleableButton
           imgSrcWhenInactive="/assets/unclicked_comment_icon.png"
           imgSrcWhenActive="/assets/clicked_comment_icon.png"

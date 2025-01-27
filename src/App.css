@@ -206,6 +206,14 @@ body, button, input, textarea {
   width: 100%;
 }
 
+.nintey-percent-width-grey-line {
+  width: 90%;
+  border: none;
+  height: 1px;
+  background-color: rgb(70, 70, 70);
+  width: 100%;
+}
+
 .success-text {
   color: #4c96d5
 }

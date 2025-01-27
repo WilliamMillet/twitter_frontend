@@ -5,6 +5,7 @@ import useFetchData from "../../hooks/useFetchData";
 import IndividualPost from "../../Components/IndividualPost/IndividualPost";
 import ReplyInterface from "../../Components/ReplyInterface/ReplyInterface";
 import { useEffect } from "react";
+import IndividualReply from "../../Components/IndividualReply/IndividualReply";
 
 const ViewPostPage = () => {
   const { id } = useParams(); // Get the post id
@@ -37,6 +38,7 @@ const ViewPostPage = () => {
       </div>
       <IndividualPost postData={getPostData.response || null} />
       <ReplyInterface parentPostData={getPostData.response}/>
+      <IndividualReply/>
     </StandardLayout>
   );
 };
