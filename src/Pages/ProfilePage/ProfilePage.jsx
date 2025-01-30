@@ -46,7 +46,7 @@ const ProfilePage = () => {
   const getUserPosts = useFetchData()
 
   useEffect(() => {
-    getUserPosts.fetchData`http://localhost:5000/api/posts/?user=${username}, 'GET`()
+    getUserPosts.fetchData(`http://localhost:5000/api/posts/?user=${username}`, 'GET')
   }, [username])
 
   const userProfileLink = userDetails?.profile_image_url
@@ -54,7 +54,7 @@ const ProfilePage = () => {
   userDetails.profile_image_url
   : "https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg";
 
-  console.log(userDetails)
+  console.log(getUserPosts.response)
 
   const bannerLink = userDetails?.cover_image_url
   ? "https://the-bucket-of-william-millet.s3.ap-southeast-2.amazonaws.com/" +
@@ -158,7 +158,9 @@ const ProfilePage = () => {
         </div>
       </div>
       {isEditPopupOpen && <EditProfilePopup userDetails={userDetails}/>}
-      {getUserPosts.data.map()}
+      {getUserPosts?.response && getUserPosts.response.map(post => (
+         <IndividualPost key={post.id} clickable={true}  postData={post}/>
+      ))}
     </StandardLayout>
   );
 };
