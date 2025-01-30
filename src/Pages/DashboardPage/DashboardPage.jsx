@@ -3,14 +3,10 @@ import PostInterface from "../../Components/PostInterface/PostInterface";
 import { useState } from "react";
 import StandardLayout from "../../Components/StandardLayout/StandardLayout";
 import IndividualPost from "../../Components/IndividualPost/IndividualPost";
+import useFetchData from "../../hooks/useFetchData";
 
 const DashboardPage = () => {
   const [selectedFeed, setSelectedFeed] = useState("For You");
-
-  const profileLink =
-    "https://the-bucket-of-william-millet.s3.ap-southeast-2.amazonaws.com/" +
-    JSON.parse(localStorage.getItem("profile-link-suffix"))
-    || 'https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg'
 
   const posts = [
     {

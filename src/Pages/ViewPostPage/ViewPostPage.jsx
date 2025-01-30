@@ -43,6 +43,7 @@ const ViewPostPage = () => {
       <ReplyInterface parentPostData={getPostData.response}/>
       {getRepliesData.response && getRepliesData.response.map(reply => (
         <IndividualReply replyData={reply}/>
+        
       ))}
     </StandardLayout>
   );

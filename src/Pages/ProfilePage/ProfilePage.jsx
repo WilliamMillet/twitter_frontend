@@ -7,7 +7,8 @@ import truncateString from "../../utils/truncateString";
 import StandardOptions from "../../Components/StandardOptions/StandardOptions";
 import Button from "../../Components/Button/Button";
 import EditProfilePopup from "./EditProfilePopup";
-
+import useFetchData from "../../hooks/useFetchData";
+import IndividualPost from "../../Components/IndividualPost/IndividualPost";
 
 const ProfilePage = () => {
   const { username } = useParams();
@@ -42,10 +43,18 @@ const ProfilePage = () => {
       });
   }, [username]);
 
+  const getUserPosts = useFetchData()
+
+  useEffect(() => {
+    getUserPosts.fetchData`http://localhost:5000/api/posts/?user=${username}, 'GET`()
+  }, [username])
+
   const userProfileLink = userDetails?.profile_image_url
   ? "https://the-bucket-of-william-millet.s3.ap-southeast-2.amazonaws.com/" +
   userDetails.profile_image_url
   : "https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg";
+
+  console.log(userDetails)
 
   const bannerLink = userDetails?.cover_image_url
   ? "https://the-bucket-of-william-millet.s3.ap-southeast-2.amazonaws.com/" +
@@ -149,6 +158,7 @@ const ProfilePage = () => {
         </div>
       </div>
       {isEditPopupOpen && <EditProfilePopup userDetails={userDetails}/>}
+      {getUserPosts.data.map()}
     </StandardLayout>
   );
 };
