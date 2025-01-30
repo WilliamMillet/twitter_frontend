@@ -15,7 +15,7 @@
     position: relative;
 }
 
-.image-popup-dark-overlay > img {
+.image-popup-container > img {
     max-width: 1280px;
     min-width: 1000px;
     max-height: 720px;

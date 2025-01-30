@@ -27,20 +27,7 @@ import FlashingGrayBarsLoadingAnimation from "../FlashingGrayBarsLoadingAnimatio
 // Clickable makes the post a link that navigates you to the post page
 // Clickable also leads to the post changing its background colour slightly on hover
 
-const IndividualReply = ({ replyData = {
-    reply_id: 1,
-    post_id: 1,
-    parent_reply_id: null,
-    user_identifying_name: "test_user",
-    reply_text: "This is a test reply.",
-    reply_image_uuid: null,
-    is_part_of_thread: false,
-    created_at: "2023-10-01T12:00:00Z",
-    user_display_name: "User",
-    profile_image_url: 'aaaf25f4-dbc6-43ca-9b28-2d51695515ca',
-    verified: 1,
-    bio: "This is a test bio."
-}, clickable = false }) => {
+const IndividualReply = ({ replyData, clickable = false }) => {
 
 
     const [replyLiked, setReplyLiked] = useState(false);
@@ -51,7 +38,7 @@ const IndividualReply = ({ replyData = {
       replyData.profile_image_url
     : "https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg";
 
-  const replyImageSource = replyData?.image_uuid
+  const replyImageSource = replyData?.reply_image_uuid
     ? "https://the-bucket-of-william-millet.s3.ap-southeast-2.amazonaws.com/" +
        replyData.reply_image_uuid
     : null;

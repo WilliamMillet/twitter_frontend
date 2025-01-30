@@ -12,13 +12,16 @@ const ViewPostPage = () => {
   const navigate = useNavigate()
 
   const getPostData = useFetchData()
+  const getRepliesData = useFetchData()
 
   useEffect(() => {
     getPostData.fetchData(`http://localhost:5000/api/posts/${id}`, "GET");
+    getRepliesData.fetchData(`http://localhost:5000/api/posts/${id}/replies`, "GET")
   }, [id]);
 
+
   useEffect(() => {
-    console.log(getPostData.response);
+    console.log(getRepliesData.response);
   }, [getPostData.response]);
 
   const handleNavigateToMainPage = () => {
@@ -38,7 +41,9 @@ const ViewPostPage = () => {
       </div>
       <IndividualPost postData={getPostData.response || null} />
       <ReplyInterface parentPostData={getPostData.response}/>
-      <IndividualReply/>
+      {getRepliesData.response && getRepliesData.response.map(reply => (
+        <IndividualReply replyData={reply}/>
+      ))}
     </StandardLayout>
   );
 };
