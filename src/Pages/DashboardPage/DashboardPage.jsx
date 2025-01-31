@@ -55,9 +55,15 @@ const DashboardPage = () => {
         ></div>
       </div>
       <PostInterface />
-      {posts.map((post) => (
+      {selectedFeed === 'For You' && (
+        'No content yet!'
+      )}
+      {selectedFeed === "Following" && (
+        'Hello'
+      )}
+      {/* {posts.map((post) => (
         <IndividualPost postData={post} clickable={true}/>
-      ))}
+      ))} */}
     </StandardLayout>
   );
 };

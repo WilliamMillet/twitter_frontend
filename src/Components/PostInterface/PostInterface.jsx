@@ -185,7 +185,7 @@ const PostInterface = () => {
           <p className="standard-input-error">{aggregatedErrors}</p>
           <p className="post-length-indicator">{userInputLength} / 400</p>
           <button className="create-thread-button" onClick={() => setThreadCreationInterfaceActive(true)}>+</button>
-          <Button variant="default" size="small" onClick={handlePost}>
+          <Button variant="default" size="small" onClick={handlePost} disabled={!input || input.length < 1}>
             Post
           </Button>
         </div>

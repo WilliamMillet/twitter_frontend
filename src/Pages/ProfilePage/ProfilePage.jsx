@@ -19,6 +19,7 @@ const ProfilePage = () => {
     localStorage.getItem("user_identifying_name")
   );
   const [profileIsOwn, setProfileIsOwn] = useState(false);
+  const [following, setFollowing] = useState(null);
 
   const [isEditPopupOpen, setIsEditPopupOpen] = useState(false);
 
@@ -49,6 +50,9 @@ const ProfilePage = () => {
 
   const getUserPosts = useFetchData();
   const getUserPostCount = useFetchData();
+  const checkIfFollowing = useFetchData();
+  const getFollowerCount = useFetchData();
+  const getFollowingCount = useFetchData();
 
   useEffect(() => {
     getUserPosts.fetchData(
@@ -59,7 +63,28 @@ const ProfilePage = () => {
       `http://localhost:5000/api/posts/${username}/post-count`,
       "GET"
     );
+
+    checkIfFollowing.fetchData(
+      `http://localhost:5000/api/users/${personalUserIdentifyingName}/is-following/${username}`,
+      "GET"
+    );
+    getFollowerCount.fetchData(
+      `http://localhost:5000/api/users/${username}/follower-count`,
+      "GET"
+    );
+    getFollowingCount.fetchData(
+      `http://localhost:5000/api/users/${username}/following-count`,
+      "GET"
+    );
   }, [username]);
+
+  // useEffect to update the following state once it is found it whether or not the user is being followed
+
+  useEffect(() => {
+    setFollowing(checkIfFollowing?.response?.isFollowing || null) // Optional chaining to avoid errors on the first render of the page
+  }, [checkIfFollowing.response])
+
+  console.log(getFollowingCount.response)
 
   const userProfileLink = userDetails?.profile_image_url
     ? "https://the-bucket-of-william-millet.s3.ap-southeast-2.amazonaws.com/" +
@@ -70,6 +95,33 @@ const ProfilePage = () => {
     ? "https://the-bucket-of-william-millet.s3.ap-southeast-2.amazonaws.com/" +
       userDetails.cover_image_url
     : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0yCgViCJ4Hmeyk6dRvEqkrQ4AkhcRR04BXQ&s";
+
+  const uploadFollowRelationToServer = useFetchData()
+  const deleteFollowRelationFromServer = useFetchData()
+
+  const handleFollow = () => {
+    uploadFollowRelationToServer.fetchData(
+      `http://localhost:5000/api/users/${username}/follow`,
+      "POST",
+      {includeAuth: true},
+      null,
+      {onSuccess: () => (
+        setFollowing(true)
+      )}
+    )
+  };
+
+  const handleUnfollow = () => {
+    deleteFollowRelationFromServer.fetchData(
+      `http://localhost:5000/api/users/${username}/unfollow`,
+      "DELETE",
+      {includeAuth: true},
+      null,
+      {onSuccess: () => (
+        setFollowing(false)
+      )}
+    )
+  };
 
   return (
     <StandardLayout>
@@ -113,7 +165,17 @@ const ProfilePage = () => {
               </Button>
             </>
           ) : (
-            <></>
+            <>
+              {following ? (
+                <Button variant="default" size="medium" onClick={handleUnfollow}>
+                Unfollow
+              </Button>
+              ) : (
+                <Button variant="default" size="medium" onClick={handleFollow}>
+                Follow
+              </Button>
+              )}
+            </>
           )}
         </div>
         <div className="display-name-and-verification-conatiner">
@@ -161,6 +223,22 @@ const ProfilePage = () => {
           </p>
         </div>
         <div className="following-and-followers-count-container"></div>
+        {getFollowingCount?.response && (
+          <button className="following-count-button">
+            <span className="following-count-number">
+              {getFollowingCount.response.following_count}
+            </span>
+            <span className="following-count-text"> Following</span>
+          </button>
+        )}
+        {getFollowerCount?.response  && (
+          <button className="follower-count-button">
+            <span className="follower-count-number">
+              {getFollowerCount.response.follower_count}
+            </span>
+            <span className="follower-count-text"> Followers</span>
+          </button>
+        )}
         <div className="followers-preview-container"></div>
         <div className="user-media-options-container">
           <StandardOptions

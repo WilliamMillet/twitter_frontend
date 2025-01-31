@@ -26,8 +26,6 @@ const useFetchData = () => {
 
     const { onSuccess, onError, onFinally } = callbacks;
 
-    console.log('running')
-
     try {
       // Begin building headers
       // Default content type is application/json
