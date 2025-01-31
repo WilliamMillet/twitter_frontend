@@ -147,13 +147,39 @@
     align-items: center;
     justify-content: center;
     z-index: 1000;
+    transition: opacity 0.5s ease-in-out;
+    animation: fadeInOverlay 0.3s ease-in-out;
 }
+
+@keyframes fadeInOverlay {
+    0% {
+        background-color: rgba(91, 112, 131, 0);
+    }
+    100% {
+        background-color: rgba(91, 112, 131, 0.4);
+    }
+}
+
 
 .edit-profile-popup {
     width: 600px;
     height: 800px;
     border-radius: 20px;
     overflow-y: auto;
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.1);
+    animation: editProfilePopupAnimation 0.3s cubic-bezier(0, 0, 0.2, 1)
+}
+
+@keyframes editProfilePopupAnimation {
+    0% {
+        transform: translateY(100px) scale(1);
+        opacity: 0;
+        }
+        100% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+        }
+    
 }
 
 @media (prefers-color-scheme: dark) {

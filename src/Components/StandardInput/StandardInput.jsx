@@ -31,6 +31,8 @@ const StandardInput = ({
   };
 
   const textareaRef = useRef(null);
+
+  const { ref: textRef, ...textRest } = register(name);
   
 
 
@@ -91,7 +93,11 @@ const StandardInput = ({
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
           rows={textAreaLines}
-          ref={textareaRef}
+          {...textRest}
+          ref={(e) => {
+            textRef(e);
+            textareaRef.current = e;
+          }}
           maxLength={
             displayMaxLength && requirements?.maxLength?.value
               ? requirements.maxLength.value

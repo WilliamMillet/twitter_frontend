@@ -18,7 +18,7 @@ const ProfilePage = () => {
   const personalUserIdentifyingName = JSON.parse(localStorage.getItem('user_identifying_name'))
   const [profileIsOwn, setProfileIsOwn] = useState(false);
 
-  const [isEditPopupOpen, SetIsEditPopupOpen] = useState(false)
+  const [isEditPopupOpen, setIsEditPopupOpen] = useState(false)
 
   useEffect(() => {
     const match = (personalUserIdentifyingName === userDetails.user_identifying_name);
@@ -54,12 +54,11 @@ const ProfilePage = () => {
   userDetails.profile_image_url
   : "https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg";
 
-  console.log(getUserPosts.response)
-
   const bannerLink = userDetails?.cover_image_url
   ? "https://the-bucket-of-william-millet.s3.ap-southeast-2.amazonaws.com/" +
   userDetails.cover_image_url
   : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0yCgViCJ4Hmeyk6dRvEqkrQ4AkhcRR04BXQ&s'
+
 
 
   return (
@@ -89,7 +88,7 @@ const ProfilePage = () => {
         <div className="profile-action-container">
           {profileIsOwn ? (
             <>
-            <Button variant='default-border-only' size='medium' onClick={() => SetIsEditPopupOpen(true)}>
+            <Button variant='default-border-only' size='medium' onClick={() => setIsEditPopupOpen(true)}>
               Edit Profile
             </Button>
 
@@ -157,10 +156,10 @@ const ProfilePage = () => {
           />
         </div>
       </div>
-      {isEditPopupOpen && <EditProfilePopup userDetails={userDetails}/>}
       {getUserPosts?.response && getUserPosts.response.map(post => (
          <IndividualPost key={post.id} clickable={true}  postData={post}/>
       ))}
+      {isEditPopupOpen && <EditProfilePopup userDetails={userDetails} setIsEditPopupOpen={setIsEditPopupOpen} /> }
     </StandardLayout>
   );
 };

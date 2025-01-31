@@ -5,8 +5,9 @@ import editProfilePopupValidation from "./editProfilePopupValidation";
 import Button from "../../Components/Button/Button";
 import { useEffect, useState } from "react";
 import useFetchPrivateUserData from "../../hooks/useFetchPrivateUserData";
+import FlashingGrayBarsLoadingAnimation from "../../Components/FlashingGrayBarsLoadingAnimation/FlashingGrayBarsLoadingAnimation";
 
-const EditProfilePopup = () => {
+const EditProfilePopup = ({setIsEditPopupOpen}) => {
   const [wrongFileType, setWrongFileType] = useState(false);
 
   const { userData, error, loading, fetchUserData } = useFetchPrivateUserData();
@@ -45,7 +46,12 @@ const EditProfilePopup = () => {
     }
   }, [userData]);
 
+  const handleSave = () => {
+
+  }
+
   const onSubmit = (data) => {
+
     const textInformationHasChanged =
       data.name != userData.user_display_name ||
       data.bio != userData.bio ||
@@ -204,11 +210,11 @@ const EditProfilePopup = () => {
         onSubmit={handleSubmit(onSubmit)}
       >
         {loading ? (
-          <span class="loader"></span>
+          <FlashingGrayBarsLoadingAnimation numberOfBars={10} spacingPx={30} verticalPosition='center'/>
         ) : (
           <>
             <div className="edit-profile-header">
-              <button className="grey-hover-plain-text-button close-edit-profile-menu-button">
+              <button className="grey-hover-plain-text-button close-edit-profile-menu-button" onClick={() => setIsEditPopupOpen(false)}>
                 ×
               </button>
               <h3>Edit Profile</h3>
@@ -217,6 +223,7 @@ const EditProfilePopup = () => {
                 variant="default"
                 size="extra-small"
                 className="save-profile-changes-button"
+                onClick={handleSave}
               >
                 Save
               </Button>
