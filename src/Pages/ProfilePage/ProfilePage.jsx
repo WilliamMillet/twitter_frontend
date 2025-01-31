@@ -15,16 +15,18 @@ const ProfilePage = () => {
 
   const [userDetails, setUserDetails] = useState({});
 
-  const personalUserIdentifyingName = JSON.parse(localStorage.getItem('user_identifying_name'))
+  const personalUserIdentifyingName = JSON.parse(
+    localStorage.getItem("user_identifying_name")
+  );
   const [profileIsOwn, setProfileIsOwn] = useState(false);
 
-  const [isEditPopupOpen, setIsEditPopupOpen] = useState(false)
+  const [isEditPopupOpen, setIsEditPopupOpen] = useState(false);
 
   useEffect(() => {
-    const match = (personalUserIdentifyingName === userDetails.user_identifying_name);
+    const match =
+      personalUserIdentifyingName === userDetails.user_identifying_name;
     setProfileIsOwn(match);
   }, [userDetails, personalUserIdentifyingName]);
-
 
   // Media options
 
@@ -35,7 +37,9 @@ const ProfilePage = () => {
   // Get public data affiliated with user profile
 
   useEffect(() => {
-    fetch(`http://localhost:5000/api/users/getMainPublicUserDetails/${username}`)
+    fetch(
+      `http://localhost:5000/api/users/getMainPublicUserDetails/${username}`
+    )
       .then((response) => response.json())
       .then((data) => setUserDetails(data))
       .catch((err) => {
@@ -43,23 +47,29 @@ const ProfilePage = () => {
       });
   }, [username]);
 
-  const getUserPosts = useFetchData()
+  const getUserPosts = useFetchData();
+  const getUserPostCount = useFetchData();
 
   useEffect(() => {
-    getUserPosts.fetchData(`http://localhost:5000/api/posts/?user=${username}`, 'GET')
-  }, [username])
+    getUserPosts.fetchData(
+      `http://localhost:5000/api/posts/?user=${username}`,
+      "GET"
+    );
+    getUserPostCount.fetchData(
+      `http://localhost:5000/api/posts/${username}/post-count`,
+      "GET"
+    );
+  }, [username]);
 
   const userProfileLink = userDetails?.profile_image_url
-  ? "https://the-bucket-of-william-millet.s3.ap-southeast-2.amazonaws.com/" +
-  userDetails.profile_image_url
-  : "https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg";
+    ? "https://the-bucket-of-william-millet.s3.ap-southeast-2.amazonaws.com/" +
+      userDetails.profile_image_url
+    : "https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg";
 
   const bannerLink = userDetails?.cover_image_url
-  ? "https://the-bucket-of-william-millet.s3.ap-southeast-2.amazonaws.com/" +
-  userDetails.cover_image_url
-  : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0yCgViCJ4Hmeyk6dRvEqkrQ4AkhcRR04BXQ&s'
-
-
+    ? "https://the-bucket-of-william-millet.s3.ap-southeast-2.amazonaws.com/" +
+      userDetails.cover_image_url
+    : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0yCgViCJ4Hmeyk6dRvEqkrQ4AkhcRR04BXQ&s";
 
   return (
     <StandardLayout>
@@ -71,7 +81,13 @@ const ProfilePage = () => {
           <p className="profile-top-container-name-text">
             {userDetails.user_display_name}
           </p>
-          <p className="profile-top-container-post-count">0 posts</p>{" "}
+          {getUserPostCount?.response && (
+            <p className="profile-top-container-post-count">
+              {getUserPostCount.response.post_count} post
+              {getUserPostCount.response.post_count != 1 && "s"}
+              {/* Add s if the number should be pluralised */}
+            </p>
+          )}
           {/* ^^^^^ I gotta fix this as some point */}
         </div>
       </div>
@@ -88,15 +104,16 @@ const ProfilePage = () => {
         <div className="profile-action-container">
           {profileIsOwn ? (
             <>
-            <Button variant='default-border-only' size='medium' onClick={() => setIsEditPopupOpen(true)}>
-              Edit Profile
-            </Button>
-
+              <Button
+                variant="default-border-only"
+                size="medium"
+                onClick={() => setIsEditPopupOpen(true)}
+              >
+                Edit Profile
+              </Button>
             </>
           ) : (
-            <>
-            
-            </>
+            <></>
           )}
         </div>
         <div className="display-name-and-verification-conatiner">
@@ -156,10 +173,16 @@ const ProfilePage = () => {
           />
         </div>
       </div>
-      {getUserPosts?.response && getUserPosts.response.map(post => (
-         <IndividualPost key={post.id} clickable={true}  postData={post}/>
-      ))}
-      {isEditPopupOpen && <EditProfilePopup userDetails={userDetails} setIsEditPopupOpen={setIsEditPopupOpen} /> }
+      {getUserPosts?.response &&
+        getUserPosts.response.map((post) => (
+          <IndividualPost key={post.id} clickable={true} postData={post} />
+        ))}
+      {isEditPopupOpen && (
+        <EditProfilePopup
+          userDetails={userDetails}
+          setIsEditPopupOpen={setIsEditPopupOpen}
+        />
+      )}
     </StandardLayout>
   );
 };

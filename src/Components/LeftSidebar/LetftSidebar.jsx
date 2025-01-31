@@ -30,6 +30,11 @@ const LeftSidebar = () => {
         <nav>
           <ul>
             <li>
+              <Link to="/">
+                <span className="header-item">Home</span>
+              </Link>
+            </li>
+            <li>
               <Link to="/signup">
                 <span className="header-item">Signup</span>
               </Link>
