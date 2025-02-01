@@ -175,6 +175,7 @@ const ProfilePage = () => {
                 Follow
               </Button>
               )}
+              {<p className="standard-input-error">{uploadFollowRelationToServer.error} {deleteFollowRelationFromServer.error}</p>}
             </>
           )}
         </div>

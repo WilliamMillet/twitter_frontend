@@ -372,3 +372,9 @@
     color: rgb(120,120,120);
 }
 
+
+.profile-action-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
