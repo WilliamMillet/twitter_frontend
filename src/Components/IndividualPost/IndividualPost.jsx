@@ -1,12 +1,13 @@
 import "./IndividualPost.css";
 import convertIsoStringDateToFormattedTimeSinceNow from "../../utils/convertIsoStringDateToFormattedTimeSinceNow";
+import ImageButton from "../ImageButton/ImageButton";
 import ImageToggleableButton from "../ImageToggleableButton/ImageToggleableButton";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ImagePopup from "../ImagePopup/ImagePopup";
 import IndividualMentionedPost from "./IndividualMentionedPost";
 import FlashingGrayBarsLoadingAnimation from "../FlashingGrayBarsLoadingAnimation/FlashingGrayBarsLoadingAnimation";
-
+import StandardPopup from "../StandardPopup/StandardPopup";
 // Post data should be an object with the following keys:
 
 // post_id,
@@ -37,8 +38,11 @@ import FlashingGrayBarsLoadingAnimation from "../FlashingGrayBarsLoadingAnimatio
 const IndividualPost = ({ postData, clickable = false }) => {
   const [postLiked, setPostLiked] = useState(false);
   const [imagePopupActive, setImagePopupActive] = useState(false);
+  const [sharePopupActive, setSharePopupActive] = useState(false)
 
-
+  const toggleSharePopupActive = () => {
+    setSharePopupActive(prev => !prev)
+  }
 
   const profileImageSource = postData?.profile_image_url
     ? "https://the-bucket-of-william-millet.s3.ap-southeast-2.amazonaws.com/" +
@@ -52,8 +56,6 @@ const IndividualPost = ({ postData, clickable = false }) => {
 
   // Create a new version of the postData with only mentioned values, which can then be passed as a prop to the IndividualMentionedPost component 
 
-  // console.log("Post data: ", postData)
-
   let mentionedData
 
   if (postData?.mentioned_post_id) {
@@ -65,8 +67,13 @@ const IndividualPost = ({ postData, clickable = false }) => {
     }, {})  
   }
 
-  // console.log("Mentioned post data: ", mentionedData)
+  const handleCopyLinkToClipboard = () => {
+    navigator.clipboard.writeText(`http://localhost:3000/posts/${postData.post_id}`)
+  }
 
+  const sharePopupData = [
+    {iconImgSrc: '/assets/link_icon.png', text: 'Copy link', onClick: handleCopyLinkToClipboard}
+  ]
 
 
   const timeSincePostCreation =
@@ -166,14 +173,18 @@ const IndividualPost = ({ postData, clickable = false }) => {
           textActiveColor="#fb73b3"
           hoverColor="heartPink"
         />
-        <ImageToggleableButton
-          imgSrcWhenInactive="/assets/unclicked_share_icon.png"
-          imgSrcWhenActive="/assets/clicked_share_icon.png"
-          widthInPx={20}
-          // Text is intentionally NOT applied
-          textActiveColor="#4c96d5"
-          hoverColor="twitterBlue"
-        />
+        
+        <div className="image-popup-icon-and-popup">
+          <ImageButton
+            imgSrc="/assets/unclicked_share_icon.png"
+            widthInPx={20}
+            // Text is intentionally NOT applied
+            textActiveColor="#4c96d5"
+            hoverColor="twitterBlue"
+            handleClick={toggleSharePopupActive}
+          />
+                {sharePopupActive && <StandardPopup popupData={sharePopupData}/>}
+        </div>
       </div>
       {imagePopupActive && (
         <ImagePopup
@@ -181,6 +192,7 @@ const IndividualPost = ({ postData, clickable = false }) => {
           setImagePopupActive={setImagePopupActive}
         />
       )}
+
     </div>
   );
 };
