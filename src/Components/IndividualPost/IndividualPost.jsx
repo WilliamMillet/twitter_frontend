@@ -8,6 +8,8 @@ import ImagePopup from "../ImagePopup/ImagePopup";
 import IndividualMentionedPost from "./IndividualMentionedPost";
 import FlashingGrayBarsLoadingAnimation from "../FlashingGrayBarsLoadingAnimation/FlashingGrayBarsLoadingAnimation";
 import StandardPopup from "../StandardPopup/StandardPopup";
+import useClickOutside from "../../hooks/useClickOutside";
+
 // Post data should be an object with the following keys:
 
 // post_id,
@@ -38,11 +40,11 @@ import StandardPopup from "../StandardPopup/StandardPopup";
 const IndividualPost = ({ postData, clickable = false }) => {
   const [postLiked, setPostLiked] = useState(false);
   const [imagePopupActive, setImagePopupActive] = useState(false);
-  const [sharePopupActive, setSharePopupActive] = useState(false)
+  const [sharePopupActive, setSharePopupActive] = useState(false);
 
   const toggleSharePopupActive = () => {
-    setSharePopupActive(prev => !prev)
-  }
+    setSharePopupActive((prev) => !prev);
+  };
 
   const profileImageSource = postData?.profile_image_url
     ? "https://the-bucket-of-william-millet.s3.ap-southeast-2.amazonaws.com/" +
@@ -54,27 +56,37 @@ const IndividualPost = ({ postData, clickable = false }) => {
       postData.image_uuid
     : null;
 
-  // Create a new version of the postData with only mentioned values, which can then be passed as a prop to the IndividualMentionedPost component 
+  // Create a new version of the postData with only mentioned values, which can then be passed as a prop to the IndividualMentionedPost component
 
-  let mentionedData
+  let mentionedData;
 
   if (postData?.mentioned_post_id) {
     mentionedData = Object.keys(postData)
-    .filter(key => key.startsWith("mentioned_"))
-    .reduce((acc, key) => {
-      acc[key] = postData[key]
-      return acc
-    }, {})  
+      .filter((key) => key.startsWith("mentioned_"))
+      .reduce((acc, key) => {
+        acc[key] = postData[key];
+        return acc;
+      }, {});
   }
 
   const handleCopyLinkToClipboard = () => {
-    navigator.clipboard.writeText(`http://localhost:3000/posts/${postData.post_id}`)
-  }
+    navigator.clipboard.writeText(
+      `http://localhost:3000/posts/${postData.post_id}`
+    );
+  };
 
   const sharePopupData = [
-    {iconImgSrc: '/assets/link_icon.png', text: 'Copy link', onClick: handleCopyLinkToClipboard}
-  ]
+    {
+      iconImgSrc: "/assets/link_icon.png",
+      text: "Copy link",
+      onClick: handleCopyLinkToClipboard,
+      textAfterClick: 'Copied!'
+    },
+  ];
 
+  const sharePopupRef = useClickOutside(() =>
+    setSharePopupActive(false)
+  );
 
   const timeSincePostCreation =
     convertIsoStringDateToFormattedTimeSinceNow(postData?.created_at) || null;
@@ -91,15 +103,14 @@ const IndividualPost = ({ postData, clickable = false }) => {
   };
 
   if (!postData) {
-
-    return (
-      <FlashingGrayBarsLoadingAnimation/>
-    );
+    return <FlashingGrayBarsLoadingAnimation />;
   }
 
   return (
     <div
-      className={`individual-post ${clickable ? "clickable-individual-post" : 'unclickable-individual-post'}`} // The clickable individual post class is applied so that the div can be given a different colour upon hover when it is clickable
+      className={`individual-post ${
+        clickable ? "clickable-individual-post" : "unclickable-individual-post"
+      }`} // The clickable individual post class is applied so that the div can be given a different colour upon hover when it is clickable
       onClick={clickable ? handleRedirectToPostPage : undefined}
       style={{ ...(clickable && { cursor: "pointer" }) }}
     >
@@ -114,18 +125,18 @@ const IndividualPost = ({ postData, clickable = false }) => {
         </div>
         <div className="individual-post-main-information-container">
           <div className="individual-user-info-and-timing-container">
-              <p
-                className="individual-post-display-name-text"
-                onClick={handleRedirectToProfile}
-              >
-                {postData.user_display_name}
-              </p>
-              {postData.verified !== 0 && (
-                <img
-                  className="verification-check-image"
-                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Twitter_Verified_Badge.svg/1200px-Twitter_Verified_Badge.svg.png"
-                ></img>
-              )}
+            <p
+              className="individual-post-display-name-text"
+              onClick={handleRedirectToProfile}
+            >
+              {postData.user_display_name}
+            </p>
+            {postData.verified !== 0 && (
+              <img
+                className="verification-check-image"
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Twitter_Verified_Badge.svg/1200px-Twitter_Verified_Badge.svg.png"
+              ></img>
+            )}
             <p
               className="individual-post-identifying-name-text"
               onClick={handleRedirectToProfile}
@@ -147,13 +158,16 @@ const IndividualPost = ({ postData, clickable = false }) => {
                 />
               </div>
             )}
-            {mentionedData && <IndividualMentionedPost mentionedPostData={mentionedData}/>}
+            {mentionedData && (
+              <IndividualMentionedPost mentionedPostData={mentionedData} />
+            )}
           </div>
         </div>
       </div>
-      {!clickable && <hr className="nintey-percent-width-grey-line clicked-post-grey-line"/>}
+      {!clickable && (
+        <hr className="nintey-percent-width-grey-line clicked-post-grey-line" />
+      )}
       <div className="individual-post-second-row">
-        
         <ImageToggleableButton
           imgSrcWhenInactive="/assets/unclicked_comment_icon.png"
           imgSrcWhenActive="/assets/clicked_comment_icon.png"
@@ -173,7 +187,7 @@ const IndividualPost = ({ postData, clickable = false }) => {
           textActiveColor="#fb73b3"
           hoverColor="heartPink"
         />
-        
+
         <div className="image-popup-icon-and-popup">
           <ImageButton
             imgSrc="/assets/unclicked_share_icon.png"
@@ -183,7 +197,12 @@ const IndividualPost = ({ postData, clickable = false }) => {
             hoverColor="twitterBlue"
             handleClick={toggleSharePopupActive}
           />
-                {sharePopupActive && <StandardPopup popupData={sharePopupData}/>}
+          {sharePopupActive && (
+            <StandardPopup
+              popupData={sharePopupData}
+              ref={sharePopupRef}
+            />
+          )}
         </div>
       </div>
       {imagePopupActive && (
@@ -192,7 +211,6 @@ const IndividualPost = ({ postData, clickable = false }) => {
           setImagePopupActive={setImagePopupActive}
         />
       )}
-
     </div>
   );
 };
