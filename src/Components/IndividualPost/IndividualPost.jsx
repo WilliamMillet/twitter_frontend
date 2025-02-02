@@ -38,6 +38,8 @@ const IndividualPost = ({ postData, clickable = false }) => {
   const [postLiked, setPostLiked] = useState(false);
   const [imagePopupActive, setImagePopupActive] = useState(false);
 
+
+
   const profileImageSource = postData?.profile_image_url
     ? "https://the-bucket-of-william-millet.s3.ap-southeast-2.amazonaws.com/" +
       postData.profile_image_url

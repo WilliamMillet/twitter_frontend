@@ -59,3 +59,52 @@
     flex-direction: row;
     justify-content: space-around;
 }
+
+.load-more-posts-button {
+    background: none;
+    text-align: center;
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid rgb(70, 70, 70);
+    height: 70px;
+    font-size: 17px;
+    color: #4c96d5;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+@media (prefers-color-scheme: dark) {
+    .load-more-posts-button:hover {
+        background-color: #1c1c1c;    
+    }
+}
+
+.no-posts-found-button {
+    text-align: center;
+    color: rgb(120,120,120);
+    height: 50px;
+}
+
+.has-no-post-found-text {
+    animation: fade-in-out 3s forwards;
+    animation-iteration-count: 1;
+}
+
+@keyframes fade-in-out {
+    0% {
+        transform: translateY(-20px);
+        opacity: 0
+    }
+    10% {
+        transform: translateY(0px);
+        opacity: 1;
+    }
+    90% {
+        transform: translateY(0px);
+        opacity: 1
+    }
+    100% {
+        transform: translateY(-20px);
+        opacity: 0
+    }
+}
