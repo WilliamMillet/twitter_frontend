@@ -2,13 +2,15 @@ import "./IndividualPost.css";
 import convertIsoStringDateToFormattedTimeSinceNow from "../../utils/convertIsoStringDateToFormattedTimeSinceNow";
 import ImageButton from "../ImageButton/ImageButton";
 import ImageToggleableButton from "../ImageToggleableButton/ImageToggleableButton";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ImagePopup from "../ImagePopup/ImagePopup";
 import IndividualMentionedPost from "./IndividualMentionedPost";
 import FlashingGrayBarsLoadingAnimation from "../FlashingGrayBarsLoadingAnimation/FlashingGrayBarsLoadingAnimation";
 import StandardPopup from "../StandardPopup/StandardPopup";
 import useClickOutside from "../../hooks/useClickOutside";
+import useFetchData from "../../hooks/useFetchData";
+import abbreviateNumber from "../../utils/abbreviateNumber";
 
 // Post data should be an object with the following keys:
 
@@ -30,6 +32,8 @@ import useClickOutside from "../../hooks/useClickOutside";
 // mentioned_post_user_profile_image_url,
 // mentioned_post_user_bio,
 // mentioned_post_user_verified
+// like_count
+// reply_count
 
 // The mentioned post data will be null in cases where there is no mentioned_post_id
 
@@ -38,7 +42,11 @@ import useClickOutside from "../../hooks/useClickOutside";
 // Clickable is  always used for when a post is on the main feed, so it can be used as a way to detect that
 
 const IndividualPost = ({ postData, clickable = false }) => {
-  const [postLiked, setPostLiked] = useState(false);
+
+  console.log(postData)
+  const [postLiked, setPostLiked] = useState(null);
+  // augmentedLikeCount includes likes or unlikes made by the user while on the page
+  const [augmentedLikeCount, setAugmentedLikeCount] = useState(postData?.like_count || 0)
   const [imagePopupActive, setImagePopupActive] = useState(false);
   const [sharePopupActive, setSharePopupActive] = useState(false);
 
@@ -101,6 +109,51 @@ const IndividualPost = ({ postData, clickable = false }) => {
   const handleRedirectToPostPage = () => {
     navigate(`/posts/${postData.post_id}`);
   };
+
+  // Determine initial like toggle status
+
+  const checkIfUserHasLikedPost = useFetchData()
+
+  useEffect(() => {
+    checkIfUserHasLikedPost.fetchData(
+      `http://localhost:5000/api/posts/${postData.post_id}/is-liked-by-user`,
+      'GET',
+      {includeAuth: true}
+    )
+  }, [])
+
+  useEffect(() => {
+    setPostLiked(checkIfUserHasLikedPost.response)
+  }, [checkIfUserHasLikedPost.response])
+
+
+  // useEffect to detect changes to the postLiked toggle, then make changes on the backend
+
+  const uploadLike = useFetchData()
+  const deleteLike = useFetchData()
+
+  useEffect(() => {
+
+    if (typeof postLiked !== 'boolean') return
+
+    if (postLiked) {
+      uploadLike.fetchData(
+        `http://localhost:5000/api/posts/${postData.post_id}/like`,
+        'POST',
+        {includeAuth: true},
+        null,
+      )
+      setAugmentedLikeCount(prev => prev + 1)
+    } else {
+      deleteLike.fetchData(
+        `http://localhost:5000/api/posts/${postData.post_id}/like`,
+        'DELETE',
+        {includeAuth: true}
+      )
+      setAugmentedLikeCount(postData.like_count) // reset the like count to what was fetched upon unliking a post
+    }
+  }, [postLiked])
+
 
   if (!postData) {
     return <FlashingGrayBarsLoadingAnimation />;
@@ -172,7 +225,7 @@ const IndividualPost = ({ postData, clickable = false }) => {
           imgSrcWhenInactive="/assets/unclicked_comment_icon.png"
           imgSrcWhenActive="/assets/clicked_comment_icon.png"
           widthInPx={20}
-          text="3.5k"
+          text={abbreviateNumber(postData.reply_count)}
           textActiveColor="#4c96d5"
           hoverColor="twitterBlue"
           navigateLocation={`/posts/${postData.post_id}`}
@@ -183,7 +236,7 @@ const IndividualPost = ({ postData, clickable = false }) => {
           setToggle={setPostLiked}
           toggle={postLiked}
           widthInPx={25}
-          text="9.2k"
+          text={abbreviateNumber(augmentedLikeCount)}
           textActiveColor="#fb73b3"
           hoverColor="heartPink"
         />

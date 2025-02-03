@@ -20,10 +20,6 @@ const ViewPostPage = () => {
   }, [id]);
 
 
-  useEffect(() => {
-    console.log(getRepliesData.response);
-  }, [getPostData.response]);
-
   const handleNavigateToMainPage = () => {
     navigate('/')
   }
@@ -39,7 +35,7 @@ const ViewPostPage = () => {
         </button>{" "}
         <h4>Account information</h4>
       </div>
-      <IndividualPost postData={getPostData.response || null} />
+      {getPostData.response && <IndividualPost postData={getPostData.response} />}
       <ReplyInterface parentPostData={getPostData.response}/>
       {getRepliesData.response && getRepliesData.response.map(reply => (
         <IndividualReply replyData={reply}/>
