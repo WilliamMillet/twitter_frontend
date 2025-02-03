@@ -17,6 +17,11 @@
     overflow: hidden;
 }
 
+.standard-popup-offset-top-left {
+    left: -250px;
+    bottom: 5px;
+}
+
 .standard-popup-list {
     list-style: none;
     margin: 0;

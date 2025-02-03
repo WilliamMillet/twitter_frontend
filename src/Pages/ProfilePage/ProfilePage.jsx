@@ -1,6 +1,6 @@
 import "./ProfilePage.css";
 import StandardLayout from "../../Components/StandardLayout/StandardLayout";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import isoDateToDisplayableFormat from "../../utils/isoDateToDisplayableFormat";
 import truncateString from "../../utils/truncateString";
@@ -9,12 +9,62 @@ import Button from "../../Components/Button/Button";
 import EditProfilePopup from "./EditProfilePopup";
 import useFetchData from "../../hooks/useFetchData";
 import IndividualPost from "../../Components/IndividualPost/IndividualPost";
+import StandardPopup from "../../Components/StandardPopup/StandardPopup";
+import useClickOutside from "../../hooks/useClickOutside";
 
 const ProfilePage = () => {
+  const navigate = useNavigate();
+
   const { username } = useParams();
 
+  const [userActionsPopupActive, setUserActionsPopupActive] = useState(false);
+
+  const toggleUserActionsPopupActive = () => {
+    setUserActionsPopupActive((prev) => !prev);
+  };
+
+  const userActionPopupRef = useClickOutside(() =>
+    setUserActionsPopupActive(false)
+  );
+
+  const uploadBlock = useFetchData();
+
+  const handleBlock = () => {
+    uploadBlock.fetchData(
+      `http://localhost:5000/api/users/${username}/block`,
+      "POST",
+      { includeAuth: true },
+      null,
+      {
+        onSuccess: () => {
+          navigate("/");
+        },
+      }
+    );
+  };
+
+  const handleCopyLinkToClipboard = () => {
+    navigator.clipboard.writeText(
+      `http://localhost:3000/profile/${username}`
+    );
+  };
+
+  const userActionPopupData = [
+    {
+      iconImgSrc: "/assets/block_icon.png",
+      text: `Block @${truncateString(username, 15)}`,
+      onClick: handleBlock,
+    },
+    {
+      iconImgSrc: "/assets/link_icon.png",
+      text: "Copy link",
+      onClick: handleCopyLinkToClipboard,
+      textAfterClick: 'Copied!'
+    },
+  ];
+
   const [userDetails, setUserDetails] = useState({});
-  const [followingBtnHovered, setFollowingBtnHovered] = useState(false)
+  const [followingBtnHovered, setFollowingBtnHovered] = useState(false);
 
   const personalUserIdentifyingName = JSON.parse(
     localStorage.getItem("user_identifying_name")
@@ -31,10 +81,6 @@ const ProfilePage = () => {
       setProfileIsOwn(match);
     }
   }, [userDetails, personalUserIdentifyingName]);
-
-  useEffect(() => {
-    console.log(profileIsOwn);
-  }, [profileIsOwn]);
 
   // Media options
 
@@ -158,15 +204,16 @@ const ProfilePage = () => {
       <div className="user-basic-details">
         <div className="profile-action-container">
           {profileIsOwn === true && (
-            <Button
-              variant="default-border-only"
-              size="medium"
-              onClick={() => setIsEditPopupOpen(true)}
-            >
-              Edit Profile
-            </Button>
+            <>
+              <Button
+                variant="default-border-only"
+                size="medium"
+                onClick={() => setIsEditPopupOpen(true)}
+              >
+                Edit Profile
+              </Button>
+            </>
           )}
-
           {profileIsOwn === false && (
             <>
               {following ? (
@@ -174,19 +221,30 @@ const ProfilePage = () => {
                   variant="default-border-only"
                   size="medium"
                   onClick={handleUnfollow}
-                  className='following-button'
+                  className="following-button"
                   setHovered={setFollowingBtnHovered}
                 >
-                  {followingBtnHovered ? 'Unfollow' : 'Following'}
+                  {followingBtnHovered ? "Unfollow" : "Following"}
                 </Button>
               ) : (
-                <Button
-                  variant='default'
-                  size="medium"
-                  onClick={handleFollow}
-                >
+                <Button variant="default" size="medium" onClick={handleFollow}>
                   Follow
                 </Button>
+              )}
+              <Button
+                className="additional-profile-actions-button"
+                variant="default-border-only"
+                size="medium-circle"
+                onClick={toggleUserActionsPopupActive}
+              >
+                ···
+              </Button>
+              {userActionsPopupActive && (
+                <StandardPopup
+                  popupData={userActionPopupData}
+                  position={"top-left"}
+                  ref={userActionPopupRef}
+                />
               )}
               <p className="standard-input-error">
                 {uploadFollowRelationToServer.error}{" "}

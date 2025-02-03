@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./LeftSidebar.css";
-import { Link } from "react-router-dom";
+import { Link, NavLink, useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 const LeftSidebar = () => {
@@ -29,30 +29,52 @@ const LeftSidebar = () => {
       <div className="left-sidebar-inner-container">
         <nav>
           <ul>
+            <li className="x-logo-li">
+            <Link to='/'>
+            <div className="x-main-icon-container">
+            <img src="/assets/x_main_icon.png" alt="Profile" className="left-sidebar-x-icon"/>
+            </div>
+            </Link>
+            </li>
             <li>
-              <Link to="/">
+              <NavLink to="/" className={({isActive}) =>
+                isActive ? 'header-item active-page-link' : 'header-item'
+              }>
+                <img src="/assets/home_icon.png" alt="Home" className="left-sidebar-main-icon"/>
                 <span className="header-item">Home</span>
-              </Link>
+              </NavLink>
             </li>
-            <li>
-              <Link to="/signup">
+            {/* <li>
+              <NavLink to="/signup" className={({isActive}) =>
+                isActive ? 'header-item active-page-link' : 'header-item'
+              }>
                 <span className="header-item">Signup</span>
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link to="/login">
+              <NavLink to="/login" className={({isActive}) =>
+                isActive ? 'header-item active-page-link' : 'header-item'
+              }>
                 <span className="header-item">Login</span>
-              </Link>
-            </li>
+              </NavLink>
+            </li> */}
+            {/* Login and signup have been commented out as they should not be visbile on this page, as this page is dedicated for signed in users only */}
+            {/* However, to make this project more acessible to potential employers, I may make a publically acessible version of this page */}
             <li>
-              <Link to={`/profile/${identifyingName}`}>
+              <NavLink to={`/profile/${identifyingName}`} className={({isActive}) =>
+                isActive ? 'header-item active-page-link' : 'header-item'
+              }>
+                <img src="/assets/profile_icon.png" alt="Profile" className="left-sidebar-main-icon"/>
                 <span className="header-item">Profile</span>
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link to="/settings">
+              <NavLink to="/settings" className={({isActive}) =>
+                isActive ? 'header-item active-page-link' : 'header-item'
+              }>
+                <img src="/assets/settings_icon.png" alt="Settings" className="left-sidebar-main-icon"/>
                 <span className="header-item">Settings</span>
-              </Link>
+              </NavLink>
             </li>
           </ul>
           <div

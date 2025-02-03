@@ -18,7 +18,7 @@ const PopupItem = ({ item }) => {
           className="standard-popup-icon"
         />
         <span className="standard-popup-text">
-            {itemClicked ? item.textAfterClick : item.text}
+            {itemClicked ? item?.textAfterClick || item.text : item.text}
             </span>
       </button>
     </li>
@@ -35,8 +35,15 @@ const PopupItem = ({ item }) => {
 //     }
 // ]
 
-// Note that the iconImg is not necessary
-const StandardPopup = React.forwardRef(({ popupData }, ref) => {
+// position can be:
+// top-left
+// top-right
+// bottom-left
+// bottom-right
+
+// iconImg is not necessary (Or at least it shouldnt be if i implemented it right)
+
+const StandardPopup = React.forwardRef(({ popupData, position }, ref) => {
   const stopPropagation = (e) => {
     e.stopPropagation();
   };
@@ -47,7 +54,7 @@ const StandardPopup = React.forwardRef(({ popupData }, ref) => {
       onClick={stopPropagation}
       ref={ref}
     >
-      <div className="standard-popup">
+      <div className={`standard-popup standard-popup-offset-${position}`}>
         <ul className="standard-popup-list">
           {popupData?.length > 0 &&
             popupData.map((item, index) => (

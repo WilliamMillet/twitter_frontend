@@ -384,3 +384,8 @@
     border-color: #d2b2b6 !important;
     color: #e67883;
 }
+
+.additional-profile-actions-button {
+    font-size: 30px;
+    border: 1px solid white;
+}

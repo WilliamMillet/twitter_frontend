@@ -1,0 +1,41 @@
+.blocked-accounts-header {
+    display: flex;
+}
+
+.blocked-accounts-container {
+    margin: 0
+}
+
+.blocked-account-list-row {
+    border-bottom: 1px solid rgb(70,70,70);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    height: 80px;
+    transition: all 0.2s ease-in-out;
+}
+
+.blocked-account-list-row:hover {
+    cursor: pointer;
+    background-color: #1d1d1d;
+}
+
+.blocked-account-text {
+    font-size: 18px;
+}
+
+.remove-blocked-account-button {
+    font-size: 24px;
+}
+
+.blocked-account-info-statement-when-blocked-users-exist {
+    border-bottom: 1px solid rgb(70,70,70);
+    padding: 20px;
+    margin: 0;
+}
+
+.block-user-account-prompt-container {
+    width: 300px;
+    margin: auto;
+}

@@ -1,109 +1,103 @@
-import StandardInput from "../../StandardInput/StandardInput";
-import { useForm } from "react-hook-form";
-import Button from "../../Button/Button";
+import "./BlockedAccounts.css";
 import { useEffect, useState } from "react";
-import { useNavigate, Link } from 'react-router-dom'
+import useFetchData from "../../../hooks/useFetchData";
 
 // Pass the set selected option as a prompt to allow users to return to the base account options page
-
 const BlockedAccounts = ({ setSelectedOption }) => {
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors, isValid },
-  } = useForm();
+  // Declare an augmented blocked accounts state. This exists so that when the user removes a blocked account,
+  // the blocked account row can be removed from the DOM without having to complete another fetch.
+  const [augmentedBlockedAccounts, setAugmentedBlockedAccounts] = useState([]);
 
-  const navigate = useNavigate()
+  // Custom hooks for fetching data
+  const getBlockedAccounts = useFetchData();
+  const unblockAccount = useFetchData();
 
-  const userProfileLink = 'https://the-bucket-of-william-millet.s3.ap-southeast-2.amazonaws.com/' + JSON.parse(localStorage.getItem('profile_link_suffix')) 
-  const displayName = JSON.parse(localStorage.getItem('user_display_name'))
-  const identifyingName = JSON.parse(localStorage.getItem('user_identifying_name'))
-
-  const [authError, setAuthError] = useState(false);
-
+  // Get the name of the user to pass as an argument to the fetch.
   const user_identifying_name = JSON.parse(
     localStorage.getItem("user_identifying_name")
   );
 
-  const onSubmit = (data) => {
+  // Initial fetch for a list of all blocked accounts.
+  useEffect(() => {
+    getBlockedAccounts.fetchData(
+      `http://localhost:5000/api/users/${user_identifying_name}/blocked-accounts`,
+      "GET",
+      { includeAuth: true }
+    );
+  }, []);
 
-    fetch(`http://localhost:5000/api/users/deleteAccount/${user_identifying_name}?password=${data.currentPassword}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-    .then(response => {
-      if (response.status === 200) {
-        setAuthError(false)
-        navigate('/signup');
-        localStorage.clear()
-      } else {
-        if (response.status === 401) {
-          console.log('true')
-          setAuthError(true)
-        }
-        throw new Error('Error deleting account')
-      }
-    })
-    .catch(err => {
-      console.error('Error deleting account: ', err.message);
-    })
+  // Update the augmented blocked accounts state when a response is received.
+  useEffect(() => {
+    if (getBlockedAccounts.response) {
+      setAugmentedBlockedAccounts(getBlockedAccounts.response);
+    }
+  }, getBlockedAccounts.response);
 
+  const handleUnblock = (user_id_name) => {
+    // Remove blocked account from the state in the client used to display blocked accounts.
+    const indexOfAccountToBlock = augmentedBlockedAccounts.findIndex(
+      (blockTableRow) =>
+        blockTableRow.blocked_user_identifying_name === user_id_name
+    );
+
+    setAugmentedBlockedAccounts((prev) => {
+      const newArray = [...prev];
+      newArray.splice(indexOfAccountToBlock, 1);
+      return newArray;
+    });
+
+    // Remove blocked account on the server.
+    unblockAccount.fetchData(
+      `http://localhost:5000/api/users/${user_id_name}/unblock`,
+      "DELETE",
+      { includeAuth: true }
+    );
   };
 
   return (
     <>
-      <div className="account-information-header">
+      <div className="blocked-accounts-header">
         <button
           className="text-only-button settings-arrow-btn"
           onClick={() => setSelectedOption("base-page")}
         >
           🡰
         </button>
-        <h4>Deactivate account</h4>
+        <h4>Blocked Accounts</h4>
       </div>
-      <Link to={`/profile/${identifyingName}`} className='no-underline-link'>
-      <div className="visual-link-to-profile">
-        <div className="profile-picture-small-icon-container">
-          <img src={userProfileLink} alt="User profile image" />
-        </div>
-        <div className="profile-picture-small-icon">
-          <div className="profile-nav-display-name-text">{displayName}</div>
-          <div className="profile-nav-identifying-name-text">
-            @{identifyingName}
+      <div className="blocked-accounts-container">
+        {getBlockedAccounts?.response?.length > 0 ? (
+          <>
+            <p className="greyed-text blocked-account-info-statement-when-blocked-users-exist">
+              When you block someone, they won't be able to follow or message you.
+            </p>
+            {augmentedBlockedAccounts.map((blockedTableRow, index) => (
+              <div key={index} className="blocked-account-list-row">
+                <div className="blocked-account">
+                  <p className="blocked-account-text">
+                    @{blockedTableRow.blocked_user_identifying_name}
+                  </p>
+                </div>
+                <button
+                  className="text-only-button remove-blocked-account-button"
+                  onClick={() =>
+                    handleUnblock(blockedTableRow.blocked_user_identifying_name)
+                  }
+                >
+                  ×
+                </button>
+              </div>
+            ))}
+          </>
+        ) : (
+          <div className="block-user-account-prompt-container">
+            <h2>Block other user's accounts</h2>
+            <p className="greyed-text">
+              When you block someone, they won't be able to follow or message you.
+            </p>
           </div>
-        </div>
+        )}
       </div>
-      </Link>
-      <h3 className="deactivation-first-warning">
-      This will deactivate your account
-      </h3>
-      <p className="greyed-text settings-sub-page-sub-text">
-            You're about to start the process of deactivating your X account. Your display name, @username, and public profile will no longer be viewable on X.com, X for iOS, or X for Android.
-      </p>
-      <hr className="default-grey-line old-and-new-password-input-separator" />
-      <form
-        className="deactivate-account-input-container"
-        onSubmit={handleSubmit(onSubmit)}
-      >
-        <StandardInput
-          label="Current Password"
-          name="currentPassword"
-          type="password"
-          register={register}
-          displayMaxLength={false}
-          error={errors.currentPassword || authError} // Check if this auth error stuff needs to be here. Also check the auth error lsightly below
-        />
-        <p className="standard-input-error password-tester-for-account-termination-error-message">
-          {authError && "Incorrect password. Please try again"}
-        </p>
-
-        <button className='deactivation-btn'>
-            Deactivate
-        </button>
-      </form>
     </>
   );
 };
