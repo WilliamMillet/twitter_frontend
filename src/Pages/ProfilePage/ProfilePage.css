@@ -378,3 +378,9 @@
     align-items: center;
     gap: 10px;
 }
+
+.following-button:hover {
+    background-color: #250c0c;
+    border-color: #d2b2b6 !important;
+    color: #e67883;
+}

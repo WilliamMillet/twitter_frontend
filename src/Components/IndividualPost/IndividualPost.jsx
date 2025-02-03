@@ -43,7 +43,6 @@ import abbreviateNumber from "../../utils/abbreviateNumber";
 
 const IndividualPost = ({ postData, clickable = false }) => {
 
-  console.log(postData)
   const [postLiked, setPostLiked] = useState(null);
   // augmentedLikeCount includes likes or unlikes made by the user while on the page
   const [augmentedLikeCount, setAugmentedLikeCount] = useState(postData?.like_count || 0)

@@ -14,20 +14,27 @@ const ProfilePage = () => {
   const { username } = useParams();
 
   const [userDetails, setUserDetails] = useState({});
+  const [followingBtnHovered, setFollowingBtnHovered] = useState(false)
 
   const personalUserIdentifyingName = JSON.parse(
     localStorage.getItem("user_identifying_name")
   );
-  const [profileIsOwn, setProfileIsOwn] = useState(false);
+  const [profileIsOwn, setProfileIsOwn] = useState(null);
   const [following, setFollowing] = useState(null);
 
   const [isEditPopupOpen, setIsEditPopupOpen] = useState(false);
 
   useEffect(() => {
-    const match =
-      personalUserIdentifyingName === userDetails.user_identifying_name;
-    setProfileIsOwn(match);
+    if (personalUserIdentifyingName && userDetails.user_identifying_name) {
+      const match =
+        personalUserIdentifyingName === userDetails.user_identifying_name;
+      setProfileIsOwn(match);
+    }
   }, [userDetails, personalUserIdentifyingName]);
+
+  useEffect(() => {
+    console.log(profileIsOwn);
+  }, [profileIsOwn]);
 
   // Media options
 
@@ -81,10 +88,10 @@ const ProfilePage = () => {
   // useEffect to update the following state once it is found it whether or not the user is being followed
 
   useEffect(() => {
-    setFollowing(checkIfFollowing?.response?.isFollowing || null) // Optional chaining to avoid errors on the first render of the page
-  }, [checkIfFollowing.response])
+    setFollowing(checkIfFollowing?.response?.isFollowing || null); // Optional chaining to avoid errors on the first render of the page
+  }, [checkIfFollowing.response]);
 
-  console.log(getFollowingCount.response)
+  console.log(getFollowingCount.response);
 
   const userProfileLink = userDetails?.profile_image_url
     ? "https://the-bucket-of-william-millet.s3.ap-southeast-2.amazonaws.com/" +
@@ -96,31 +103,27 @@ const ProfilePage = () => {
       userDetails.cover_image_url
     : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0yCgViCJ4Hmeyk6dRvEqkrQ4AkhcRR04BXQ&s";
 
-  const uploadFollowRelationToServer = useFetchData()
-  const deleteFollowRelationFromServer = useFetchData()
+  const uploadFollowRelationToServer = useFetchData();
+  const deleteFollowRelationFromServer = useFetchData();
 
   const handleFollow = () => {
     uploadFollowRelationToServer.fetchData(
       `http://localhost:5000/api/users/${username}/follow`,
       "POST",
-      {includeAuth: true},
+      { includeAuth: true },
       null,
-      {onSuccess: () => (
-        setFollowing(true)
-      )}
-    )
+      { onSuccess: () => setFollowing(true) }
+    );
   };
 
   const handleUnfollow = () => {
     deleteFollowRelationFromServer.fetchData(
       `http://localhost:5000/api/users/${username}/unfollow`,
       "DELETE",
-      {includeAuth: true},
+      { includeAuth: true },
       null,
-      {onSuccess: () => (
-        setFollowing(false)
-      )}
-    )
+      { onSuccess: () => setFollowing(false) }
+    );
   };
 
   return (
@@ -154,28 +157,41 @@ const ProfilePage = () => {
       </div>
       <div className="user-basic-details">
         <div className="profile-action-container">
-          {profileIsOwn ? (
-            <>
-              <Button
-                variant="default-border-only"
-                size="medium"
-                onClick={() => setIsEditPopupOpen(true)}
-              >
-                Edit Profile
-              </Button>
-            </>
-          ) : (
+          {profileIsOwn === true && (
+            <Button
+              variant="default-border-only"
+              size="medium"
+              onClick={() => setIsEditPopupOpen(true)}
+            >
+              Edit Profile
+            </Button>
+          )}
+
+          {profileIsOwn === false && (
             <>
               {following ? (
-                <Button variant="default" size="medium" onClick={handleUnfollow}>
-                Unfollow
-              </Button>
+                <Button
+                  variant="default-border-only"
+                  size="medium"
+                  onClick={handleUnfollow}
+                  className='following-button'
+                  setHovered={setFollowingBtnHovered}
+                >
+                  {followingBtnHovered ? 'Unfollow' : 'Following'}
+                </Button>
               ) : (
-                <Button variant="default" size="medium" onClick={handleFollow}>
-                Follow
-              </Button>
+                <Button
+                  variant='default'
+                  size="medium"
+                  onClick={handleFollow}
+                >
+                  Follow
+                </Button>
               )}
-              {<p className="standard-input-error">{uploadFollowRelationToServer.error} {deleteFollowRelationFromServer.error}</p>}
+              <p className="standard-input-error">
+                {uploadFollowRelationToServer.error}{" "}
+                {deleteFollowRelationFromServer.error}
+              </p>
             </>
           )}
         </div>
@@ -232,7 +248,7 @@ const ProfilePage = () => {
             <span className="following-count-text"> Following</span>
           </button>
         )}
-        {getFollowerCount?.response  && (
+        {getFollowerCount?.response && (
           <button className="follower-count-button">
             <span className="follower-count-number">
               {getFollowerCount.response.follower_count}

@@ -4,11 +4,15 @@ import { useEffect, useState } from "react";
 import StandardLayout from "../../Components/StandardLayout/StandardLayout";
 import IndividualPost from "../../Components/IndividualPost/IndividualPost";
 import useFetchData from "../../hooks/useFetchData";
+import FlashingGrayBarsLoadingAnimation from "../../Components/FlashingGrayBarsLoadingAnimation/FlashingGrayBarsLoadingAnimation";
+import { Suspense } from "react";
 
 const DashboardPage = () => {
   const [selectedFeed, setSelectedFeed] = useState("For You");
 
-  const userIdentifyingName = JSON.parse(localStorage.getItem('user_identifying_name'))
+  const userIdentifyingName = JSON.parse(
+    localStorage.getItem("user_identifying_name")
+  );
 
   // const posts = [
   //   {
@@ -24,47 +28,58 @@ const DashboardPage = () => {
   //   },
   // ];
 
-  const [noPostsFound, setNoPostsFound] = useState(false)
-  const [posts, setPosts] = useState([])
+  const [noPostsFound, setNoPostsFound] = useState(false);
+  const [posts, setPosts] = useState([]);
 
-  const handleLoadPosts = () => {
-    getPosts.fetchData(
-      `http://localhost:5000/api/posts?following=${userIdentifyingName}&limit=5&offset=${posts?.length || 0}`,
-      'GET'
-    )
-  }
+  const getPosts = useFetchData();
 
-  const getPosts = useFetchData()
+  const handleLoadPosts = (offsetValue) => {
+    if (selectedFeed === "Following") {
+      getPosts.fetchData(
+        `
+        http://localhost:5000/api/posts?following=${userIdentifyingName}&limit=5&offset=${offsetValue}`,
+        "GET"
+      );
+    } else if (selectedFeed === "For You") {
+      getPosts.fetchData(
+        `http://localhost:5000/api/posts/algorithm-sorted-posts/${userIdentifyingName}?limit=5&offset=${offsetValue}`,
+        "GET",
+        { includeAuth: true }
+      );
+    }
+  };
+
+  // Set the offset to zero, as 
 
   useEffect(() => {
-    handleLoadPosts()
-  }, [])
+    setPosts([]);
+    handleLoadPosts(0);
+  }, [selectedFeed]);
 
   useEffect(() => {
+    console.log(getPosts.response);
 
-    console.log(getPosts.response)
-
-      if (getPosts.response && getPosts.response.length) {
-        setPosts(prevPosts => [...prevPosts, ...getPosts.response])
-      }
-      if (getPosts?.response?.length === 0) {
-        setNoPostsFound(true)
-      }
-  }, [getPosts.response])
+    if (getPosts.response && getPosts.response.length) {
+      setPosts((prevPosts) => [...prevPosts, ...getPosts.response]);
+    }
+    if (getPosts?.response?.length === 0) {
+      setNoPostsFound(true);
+    }
+  }, [getPosts.response]);
 
   // Set no posts found to false after 3 seconds so that the text dissapears. 3 seconds is the length of the fade in out animation
 
   useEffect(() => {
     if (noPostsFound) {
-      setTimeout(() => setNoPostsFound(false), 3000)
+      setTimeout(() => setNoPostsFound(false), 3000);
     }
-  }, [noPostsFound])
+  }, [noPostsFound]);
 
   return (
     <StandardLayout>
       <div className="feed-buttons">
         <button
-          className={`feed-individual-button following-button ${
+          className={`feed-individual-button ${
             selectedFeed === "For You" ? "active-feed" : "inactive-feed"
           }`}
           onClick={() => setSelectedFeed("For You")}
@@ -72,7 +87,7 @@ const DashboardPage = () => {
           For You
         </button>
         <button
-          className={`feed-individual-button following-button ${
+          className={`feed-individual-button ${
             selectedFeed === "Following" ? "active-feed" : "inactive-feed"
           }`}
           onClick={() => setSelectedFeed("Following")}
@@ -93,19 +108,23 @@ const DashboardPage = () => {
         ></div>
       </div>
       <PostInterface />
-      {selectedFeed === 'For You' && (
-        'No content yet!'
-      )}
-    {selectedFeed === "Following" && (
-      <>
-      {posts.map((post) => (
-        <IndividualPost key={post.post_id} postData={post} clickable={true} />
-      ))}
-      <button className="load-more-posts-button" onClick={handleLoadPosts}>Load more posts</button>
-      <p className={`no-posts-found-button ${noPostsFound && 'has-no-post-found-text'}`}>{noPostsFound && 'No posts found!'}</p>
-      </>
-    )}
-
+      <Suspense fallback={<FlashingGrayBarsLoadingAnimation numberOfBars={6} spacingPx={30} verticalPosition="start" />}>
+        <>
+          {posts.map((post) => (
+            <IndividualPost key={post.post_id} postData={post} clickable={true} />
+          ))}
+          <button className="load-more-posts-button" onClick={() => handleLoadPosts(posts?.length || 0)}>
+            Load more posts
+          </button>
+          <p
+            className={`no-posts-found-button ${
+              noPostsFound && "has-no-post-found-text"
+            }`}
+          >
+            {noPostsFound && "No posts found!"}
+          </p>
+        </>
+      </Suspense>
     </StandardLayout>
   );
 };
