@@ -16,7 +16,13 @@
     border-radius: 30px;
     padding: 20px;
     font-size: 16px;
+    transition: all 0.2s ease-in-out;
 }
+
+.main-search-bar:focus {
+    border-color: #4c96d5;
+}
+
 
 .top-accounts-container {
     height: 400px;
@@ -78,4 +84,91 @@
 
 .top-profile-follow-button {
     margin-left: auto;
+}
+
+.right-sidebar-links-container {
+    width: 350px;
+}
+
+.right-sidebar-links-container a,
+.right-sidebar-links-container p {
+    margin-right: 10px;
+    font-size: 13px;
+}
+
+.search-drop-down-menu-container {
+    position: relative;
+    margin-top: -25px;
+}
+
+.search-drop-down-menu {
+    background-color: black;
+    box-shadow: 0px 6px 20px rgba(150, 150, 150, 0.5);
+    width: 350px;
+    max-height: 380px;
+    position: absolute;
+    border-radius: 20px;
+    overflow: auto;
+}
+
+.search-profiles-row {
+    height: 65px;
+    display: flex;
+    padding: 20px;
+    transition: 0.2s ease-in-out;
+    align-items: center;
+    cursor: pointer;
+}
+
+.search-profiles-row:hover {
+    background-color: #1c1c1c;
+}
+
+.search-profiles-image-container {
+    width: 45px;
+    height: 45px;
+    overflow: hidden;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.search-profiles-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.search-profiles-name-and-verification-status {
+    display: flex;
+    flex-direction: column;
+}
+
+.search-profiles-display-name-and-verification-status {
+    display: flex;
+}
+
+.search-profiles-user-identifying-name-text {
+    color: rgb(120,120,120);
+    margin: 0;
+}
+
+.search-profiles-user-display-name-text {
+    margin: 0;
+}
+
+.main-search-button {
+    background: black;
+    height: 55px;
+    padding: 20px;
+    font-size: 16px;
+    border: none;
+    border-bottom: 1px solid rgb(70, 70, 70);
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.main-search-button:hover {
+    background-color: #1c1c1c;
 }

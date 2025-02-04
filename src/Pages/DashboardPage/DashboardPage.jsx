@@ -57,7 +57,6 @@ const DashboardPage = () => {
   }, [selectedFeed]);
 
   useEffect(() => {
-    console.log(getPosts.response);
 
     if (getPosts.response && getPosts.response.length) {
       setPosts((prevPosts) => [...prevPosts, ...getPosts.response]);

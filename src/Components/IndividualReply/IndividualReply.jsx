@@ -27,7 +27,10 @@ import FlashingGrayBarsLoadingAnimation from "../FlashingGrayBarsLoadingAnimatio
 // Clickable makes the post a link that navigates you to the post page
 // Clickable also leads to the post changing its background colour slightly on hover
 
-const IndividualReply = ({ replyData, clickable = false }) => {
+// The not connected to reply variable is a boolean that is used to format the post when it is to be connected to a reply
+
+
+const IndividualReply = ({ replyData, clickable = false, connectedToPost = false }) => {
 
 
     const [replyLiked, setReplyLiked] = useState(false);
@@ -65,7 +68,7 @@ const IndividualReply = ({ replyData, clickable = false }) => {
 
   return (
     <div
-      className={`individual-reply ${clickable && "clickable-individual-reply"}`} // The clickable individual post class is applied so that the div can be given a different colour upon hover when it is clickable
+      className={`individual-reply ${clickable ? "clickable-individual-reply" : ''} ${connectedToPost ? 'connected-to-post' : 'not-connected-to-post'}`} // The clickable individual post class is applied so that the div can be given a different colour upon hover when it is clickable
       onClick={clickable ? handleRedirectToReplyPage : undefined}
       style={{ ...(clickable && { cursor: "pointer" }) }}
     >

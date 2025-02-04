@@ -113,3 +113,9 @@
     display: flex;
     justify-content: center;
 }
+
+
+
+.inactive-option.color-grey-when-inactive p {
+    color: rgb(120,120,120);
+}

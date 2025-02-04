@@ -1,14 +1,16 @@
 import "./RightSidebar.css";
 import useFetchData from "../../hooks/useFetchData";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import getProfileLinkOrPlaceholder from "../../utils/getProfileLinkOrPlaceholder";
 import Button from "../Button/Button";
 import truncateString from "../../utils/truncateString";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import useDebounce from "../../hooks/useDebounce";
+import SearchDropDown from "./SearchDropDown";
+import ProfilePreview from "../ProfilePreview/ProfilePreview";
 
 const RightSidebar = () => {
-
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const getTopProfiles = useFetchData();
 
   useEffect(() => {
@@ -18,9 +20,32 @@ const RightSidebar = () => {
     );
   }, []);
 
-  const handleClick = (user_identifying_name) => {
-    navigate(`/profile/${user_identifying_name}`)
+
+  const [search, setSearch] = useState('')
+  const [searchBarFocused, setSearchBarFocused] = useState(false)
+
+  const getMatchingProfiles = useFetchData()
+  
+  const handleGetMatchingProfiles = () => {
+    getMatchingProfiles.fetchData(
+        `http://localhost:5000/api/users/top-accounts-main-details?limit=5&pattern=${JSON.stringify(search)}`,
+        "GET"
+      );
   }
+
+  useDebounce(handleGetMatchingProfiles, 600, search)
+
+  // Redirect on enter if the user has entered a search
+
+  const handleRedirectToSearchPage = (e) => {
+    if (e.key === 'Enter' && search.trim()) {
+        e.preventDefault();
+        navigate(`/search/${search.trim()}`)
+        window.location.reload()
+
+    }
+  }
+
 
   return (
     <aside className="right-sidebar">
@@ -29,43 +54,66 @@ const RightSidebar = () => {
           type="search"
           className="main-search-bar"
           placeholder="🔎︎   Search"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          onFocus={() => setSearchBarFocused(true)}
+          onBlur={() => setSearchBarFocused(false)}
+          onKeyDown={handleRedirectToSearchPage}
         />
+        <div className="search-drop-down-menu-container">
+            { getMatchingProfiles.response && searchBarFocused && <SearchDropDown results={getMatchingProfiles.response} search={search}/> }
+        </div>
         <div className="top-accounts-container">
           <h1 className="who-to-follow-title">Who to follow</h1>
           <div className="top-accounts-inner-container">
             {getTopProfiles?.response &&
               getTopProfiles.response.map((profile, index) => (
-                <div className="top-profile-row" key={index} onClick={() => handleClick(profile.user_identifying_name)}>
-                  <div className="top-profile-image-container">
-                    <img
-                      src={getProfileLinkOrPlaceholder(
-                        profile.profile_image_url
-                      )}
-                      alt=""
-                    />
-                  </div>
-                  <div className="top-profile-name-and-verification-status">
-                    <div>
-                      <p className="top-profile-display-name">{truncateString(profile.user_display_name, 13)}</p>
-                      {profile.verified === 1 && (
-                        <img
-                          className="verification-check-image"
-                          src="https://uploiad.wikimedia.org/wikipedia/commons/thumb/e/e4/Twitter_Verified_Badge.svg/1200px-Twitter_Verified_Badge.svg.png"
-                        ></img>
-                      )}
-                    </div>
-                    <div>
-                      <p className="greyed-text">
-                        @{truncateString(profile.user_identifying_name, 13)}
-                      </p>
-                    </div>
-                  </div>
-                    <Button variant='default' size='small' className='top-profile-follow-button'>
-                        Profile
-                    </Button>
-                </div>
+                <ProfilePreview profileData={profile} key={index}/>
               ))}
           </div>
+        </div>
+        <div className="right-sidebar-links-container">
+          <a
+            href="https://x.com/en/tos"
+            className="greyed-text"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Terms of service
+          </a>
+          <a
+            href="https://x.com/en/privacy"
+            className="greyed-text"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Privacy Policy
+          </a>
+          <a
+            href="https://help.x.com/en/rules-and-policies/x-cookies"
+            className="greyed-text"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Cookie Policy
+          </a>
+          <a
+            href="https://help.x.com/en/resources/accessibility"
+            className="greyed-text"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Accessibility
+          </a>
+          <a
+            href="https://business.x.com/en/help/troubleshooting/how-x-ads-work"
+            className="greyed-text"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Ads info
+          </a>
+          <p className="greyed-text">@ 2025 X Corp.</p>
         </div>
       </div>
     </aside>

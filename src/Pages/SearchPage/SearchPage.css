@@ -1,0 +1,29 @@
+.search-page-people-label {
+    padding-left: 20px;
+}
+
+.search-page-post-label {
+    padding: 20px;
+    margin-bottom: 0;
+    margin-top: 0
+}
+
+.view-all-people-button {
+  color: #4c96d5;
+  background: none;
+  width: 100%;
+  border: none;
+  outline: none;
+  text-align: left;
+  height: 50px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  font-size: 15px;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.view-all-people-button:hover {
+    background-color: #1c1c1c;
+}

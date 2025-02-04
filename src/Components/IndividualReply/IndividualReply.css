@@ -1,12 +1,14 @@
 .individual-reply {
     padding: 20px;
-    border-top: 1px solid rgb(70,70,70);
     border-bottom: 1px solid rgb(70,70,70);
     width: 100%;
     min-height: 100px;
     transition: all 0.2s ease-in-out;
 }
 
+.individual-reply.not-connected-to-post {
+    border-top: 1px solid rgb(70,70,70);
+}
 
 .clickable-individual-reply:hover {
   background-color: #141414;

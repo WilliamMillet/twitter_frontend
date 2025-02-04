@@ -39,6 +39,7 @@ const StandardOptions = ({
             className={`feed-ind-button following-button ${
               selectedOption === option ? "active-option" : "inactive-option"
             }
+            ${colorInactiveOptionsGrey ? 'color-grey-when-inactive' : ''}
             ${borders[2] && "include-side-borders"}
             ${textAlign === 'center' && "text-align-center"}
             ${textAlign === 'left' && "text-align-left-with-padding"}

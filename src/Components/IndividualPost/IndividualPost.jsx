@@ -41,7 +41,9 @@ import abbreviateNumber from "../../utils/abbreviateNumber";
 // Clickable also leads to the post changing its background colour slightly on hover
 // Clickable is  always used for when a post is on the main feed, so it can be used as a way to detect that
 
-const IndividualPost = ({ postData, clickable = false }) => {
+// The not connected to reply variable is a boolean that is used to format the post when it is to be connected to a reply
+
+const IndividualPost = ({ postData, clickable = false, connectedToReply = false }) => {
 
   const [postLiked, setPostLiked] = useState(null);
   // augmentedLikeCount includes likes or unlikes made by the user while on the page
@@ -160,9 +162,11 @@ const IndividualPost = ({ postData, clickable = false }) => {
 
   return (
     <div
-      className={`individual-post ${
-        clickable ? "clickable-individual-post" : "unclickable-individual-post"
-      }`} // The clickable individual post class is applied so that the div can be given a different colour upon hover when it is clickable
+      className={`individual-post 
+        ${clickable ? "clickable-individual-post" : "unclickable-individual-post"}
+        ${connectedToReply ? 'connected-to-reply' : 'not-connected-to-reply'}
+        `
+    } // The clickable individual post class is applied so that the div can be given a different colour upon hover when it is clickable
       onClick={clickable ? handleRedirectToPostPage : undefined}
       style={{ ...(clickable && { cursor: "pointer" }) }}
     >
@@ -174,6 +178,7 @@ const IndividualPost = ({ postData, clickable = false }) => {
             className="individual-post-profile-image"
             onClick={handleRedirectToProfile}
           />
+          {connectedToReply && <div className="line-to-next-reply"></div>}
         </div>
         <div className="individual-post-main-information-container">
           <div className="individual-user-info-and-timing-container">

@@ -1,10 +1,13 @@
 .individual-post {
     padding: 20px;
     border-top: 1px solid rgb(70,70,70);
-    border-bottom: 1px solid rgb(70,70,70);
     width: 100%;
     min-height: 120px;
     transition: all 0.2s ease-in-out;
+}
+
+.individual-post.not-connected-to-reply {
+    border-bottom: 1px solid rgb(70,70,70);
 }
 
 .clickable-individual-post:hover {
@@ -13,6 +16,18 @@
 
 .individual-post-fist-row {
     display: flex;
+}
+
+.individual-row-profile-image-container {
+    position: relative;
+}
+
+.line-to-next-reply {
+    width: 2px;
+    height: 104%;
+    background-color: rgb(70,70,70);
+    margin-left: 22px;
+    margin-top: 5px;
 }
 
 .individual-post-profile-image {

@@ -8,9 +8,11 @@ import StandardOptions from "../../Components/StandardOptions/StandardOptions";
 import Button from "../../Components/Button/Button";
 import EditProfilePopup from "./EditProfilePopup";
 import useFetchData from "../../hooks/useFetchData";
-import IndividualPost from "../../Components/IndividualPost/IndividualPost";
 import StandardPopup from "../../Components/StandardPopup/StandardPopup";
 import useClickOutside from "../../hooks/useClickOutside";
+import ProfilePagePostContent from "./ProfilePagePostContent";
+import ProfilePageReplyContent from "./ProfilePageReplyContent";
+
 
 const ProfilePage = () => {
   const navigate = useNavigate();
@@ -85,7 +87,7 @@ const ProfilePage = () => {
   // Media options
 
   const [selectedOption, setSelectedOption] = useState("Posts");
-  const options = ["Posts", "Replies", "Highlights", "Media"];
+  const options = ["Posts", "Replies", "Media"];
   const borders = [false, true, false];
 
   // Get public data affiliated with user profile
@@ -101,17 +103,14 @@ const ProfilePage = () => {
       });
   }, [username]);
 
-  const getUserPosts = useFetchData();
+  
   const getUserPostCount = useFetchData();
   const checkIfFollowing = useFetchData();
   const getFollowerCount = useFetchData();
   const getFollowingCount = useFetchData();
 
   useEffect(() => {
-    getUserPosts.fetchData(
-      `http://localhost:5000/api/posts/?user=${username}`,
-      "GET"
-    );
+
     getUserPostCount.fetchData(
       `http://localhost:5000/api/posts/${username}/post-count`,
       "GET"
@@ -136,8 +135,6 @@ const ProfilePage = () => {
   useEffect(() => {
     setFollowing(checkIfFollowing?.response?.isFollowing || null); // Optional chaining to avoid errors on the first render of the page
   }, [checkIfFollowing.response]);
-
-  console.log(getFollowingCount.response);
 
   const userProfileLink = userDetails?.profile_image_url
     ? "https://the-bucket-of-william-millet.s3.ap-southeast-2.amazonaws.com/" +
@@ -317,7 +314,7 @@ const ProfilePage = () => {
         <div className="followers-preview-container"></div>
         <div className="user-media-options-container">
           <StandardOptions
-            options={["Posts", "Replies", "Highlights", "Media"]}
+            options={["Posts", "Replies", "Media"]}
             selectedOption={selectedOption}
             setSelectedOption={setSelectedOption}
             defaultOption="Posts"
@@ -326,10 +323,8 @@ const ProfilePage = () => {
           />
         </div>
       </div>
-      {getUserPosts?.response &&
-        getUserPosts.response.map((post) => (
-          <IndividualPost key={post.id} clickable={true} postData={post} />
-        ))}
+      {selectedOption === 'Posts' && <ProfilePagePostContent/>}
+      {selectedOption === 'Replies' && <ProfilePageReplyContent/>}
       {isEditPopupOpen && (
         <EditProfilePopup
           userDetails={userDetails}
