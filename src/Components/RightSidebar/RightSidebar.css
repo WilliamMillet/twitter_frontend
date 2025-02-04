@@ -1,0 +1,81 @@
+.right-sidebar-main-container {
+    margin-top: 50px;
+    margin-left: 40px;
+    gap: 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+.main-search-bar {
+    background: none;
+    border: 1px solid rgb(70, 70, 70);
+    outline: none;
+    height: 50px;
+    width: 350px;
+    color: white;
+    border-radius: 30px;
+    padding: 20px;
+    font-size: 16px;
+}
+
+.top-accounts-container {
+    height: 400px;
+    width: 350px;
+    border-radius: 30px;
+    border: 1px solid rgb(70, 70, 70);
+}
+
+.who-to-follow-title {
+    margin: 20px 20px;
+}
+
+.top-profile-row {
+    display: flex;
+    gap: 15px;
+    padding: 10px 20px;
+    width: 100%;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+
+
+.top-profile-row:hover {
+    background-color: #1c1c1c;
+}
+
+.top-profile-image-container {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    transition: all 0.2s ease-in-out;
+}
+
+.top-profile-image-container:hover {
+    filter: brightness(90%)
+    }
+
+.top-profile-image-container img{
+    width: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.top-profile-name-and-verification-status {
+    display: flex;
+    flex-direction: column;
+}
+
+.top-profile-name-and-verification-status p {
+    margin: 0;
+}
+
+.top-profile-display-name {
+    font-weight: bold;
+}
+
+.top-profile-follow-button {
+    margin-left: auto;
+}
