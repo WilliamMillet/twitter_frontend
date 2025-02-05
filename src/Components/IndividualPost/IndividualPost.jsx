@@ -2,7 +2,7 @@ import "./IndividualPost.css";
 import convertIsoStringDateToFormattedTimeSinceNow from "../../utils/convertIsoStringDateToFormattedTimeSinceNow";
 import ImageButton from "../ImageButton/ImageButton";
 import ImageToggleableButton from "../ImageToggleableButton/ImageToggleableButton";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import ImagePopup from "../ImagePopup/ImagePopup";
 import IndividualMentionedPost from "./IndividualMentionedPost";
@@ -12,44 +12,16 @@ import useClickOutside from "../../hooks/useClickOutside";
 import useFetchData from "../../hooks/useFetchData";
 import abbreviateNumber from "../../utils/abbreviateNumber";
 
-// Post data should be an object with the following keys:
-
-// post_id,
-// user_identifying_name,
-// user_display_name,
-// profile_image_url,
-// verified,
-// bio,
-// post_text,
-// image_uuid,
-// created_at,
-// mentioned_post_id,
-// mentioned_post_text,
-// mentioned_post_created_at,
-// mentioned_post_image_uuid,
-// mentioned_post_user_display_name,
-// mentioned_post_user_identifying_name,
-// mentioned_post_user_profile_image_url,
-// mentioned_post_user_bio,
-// mentioned_post_user_verified
-// like_count
-// reply_count
-
-// The mentioned post data will be null in cases where there is no mentioned_post_id
-
-// Clickable makes the post a link that navigates you to the post page
-// Clickable also leads to the post changing its background colour slightly on hover
-// Clickable is  always used for when a post is on the main feed, so it can be used as a way to detect that
-
-// The not connected to reply variable is a boolean that is used to format the post when it is to be connected to a reply
-
 const IndividualPost = ({ postData, clickable = false, connectedToReply = false }) => {
-
   const [postLiked, setPostLiked] = useState(null);
   // augmentedLikeCount includes likes or unlikes made by the user while on the page
-  const [augmentedLikeCount, setAugmentedLikeCount] = useState(postData?.like_count || 0)
+  const [augmentedLikeCount, setAugmentedLikeCount] = useState(postData?.like_count || 0);
   const [imagePopupActive, setImagePopupActive] = useState(false);
   const [sharePopupActive, setSharePopupActive] = useState(false);
+  // Flag to track whether the intial like status has been fetched
+  const [initialLikeFetched, setInitialLikeFetched] = useState(false);
+  // This ref will store the initially fetched like value so it doesn’t change on later renders.
+  const initialLikeRef = useRef(null);
 
   const toggleSharePopupActive = () => {
     setSharePopupActive((prev) => !prev);
@@ -65,10 +37,9 @@ const IndividualPost = ({ postData, clickable = false, connectedToReply = false 
       postData.image_uuid
     : null;
 
-  // Create a new version of the postData with only mentioned values, which can then be passed as a prop to the IndividualMentionedPost component
+  // Extract mentioned post data if available.
 
   let mentionedData;
-
   if (postData?.mentioned_post_id) {
     mentionedData = Object.keys(postData)
       .filter((key) => key.startsWith("mentioned_"))
@@ -111,51 +82,75 @@ const IndividualPost = ({ postData, clickable = false, connectedToReply = false 
     navigate(`/posts/${postData.post_id}`);
   };
 
-  // Determine initial like toggle status
+  // Initialize  custom hooks for API calls.
+  const checkIfUserHasLikedPost = useFetchData();
+  const uploadLike = useFetchData();
+  const deleteLike = useFetchData();
 
-  const checkIfUserHasLikedPost = useFetchData()
+  // Fetch initial like status 
+  useEffect(() => {
+    if (!initialLikeFetched) {
+      checkIfUserHasLikedPost.fetchData(
+        `http://localhost:5000/api/posts/${postData.post_id}/is-liked-by-user`,
+        'GET',
+        { includeAuth: true }
+      );
+    }
+  
+  }, [initialLikeFetched, postData.post_id]);
+
+  // When the response comes in, store it in state and in a ref, then mark the fetch as complete.
 
   useEffect(() => {
-    checkIfUserHasLikedPost.fetchData(
-      `http://localhost:5000/api/posts/${postData.post_id}/is-liked-by-user`,
-      'GET',
-      {includeAuth: true}
-    )
-  }, [])
+    if (!initialLikeFetched && checkIfUserHasLikedPost.response !== null) {
+      initialLikeRef.current = checkIfUserHasLikedPost.response;
+      setPostLiked(checkIfUserHasLikedPost.response);
+      setInitialLikeFetched(true);
+    }
+  }, [checkIfUserHasLikedPost.response, initialLikeFetched]);
 
-  useEffect(() => {
-    setPostLiked(checkIfUserHasLikedPost.response)
-  }, [checkIfUserHasLikedPost.response])
-
-
-  // useEffect to detect changes to the postLiked toggle, then make changes on the backend
-
-  const uploadLike = useFetchData()
-  const deleteLike = useFetchData()
-
+  // Trigger API call upon toggling like
   useEffect(() => {
 
-    if (typeof postLiked !== 'boolean') return
+    // Do nothing until the initial like status is fetched. This is to prevent sending an API call to reupload the users previous like/lack of a like
+    
+    if (!initialLikeFetched) return;
 
-    if (postLiked) {
+    // Only proceed if the user’s toggle is different from the initial value.
+
+    if (postLiked === initialLikeRef.current) return;
+
+    if (postLiked === true) {
+      // User liked the post.
       uploadLike.fetchData(
         `http://localhost:5000/api/posts/${postData.post_id}/like`,
         'POST',
-        {includeAuth: true},
-        null,
-      )
-      setAugmentedLikeCount(prev => prev + 1)
-    } else {
+        { includeAuth: true },
+        null
+      );
+      setAugmentedLikeCount((prev) => prev + 1);
+  
+      initialLikeRef.current = true;
+    } else if (postLiked === false) {
+      // User unliked the post.
       deleteLike.fetchData(
         `http://localhost:5000/api/posts/${postData.post_id}/like`,
         'DELETE',
-        {includeAuth: true}
-      )
-      setAugmentedLikeCount(postData.like_count) // reset the like count to what was fetched upon unliking a post
+        { includeAuth: true }
+      );
+      // Reset the like count to the original count.
+      setAugmentedLikeCount((prev) => prev - 1);
+      initialLikeRef.current = false;
     }
-  }, [postLiked])
-
-
+  }, [
+    postLiked,
+    initialLikeFetched,
+    postData.like_count,
+    postData.post_id,
+    uploadLike,
+    deleteLike,
+  ]);
+  
   if (!postData) {
     return <FlashingGrayBarsLoadingAnimation />;
   }
@@ -165,8 +160,7 @@ const IndividualPost = ({ postData, clickable = false, connectedToReply = false 
       className={`individual-post 
         ${clickable ? "clickable-individual-post" : "unclickable-individual-post"}
         ${connectedToReply ? 'connected-to-reply' : 'not-connected-to-reply'}
-        `
-    } // The clickable individual post class is applied so that the div can be given a different colour upon hover when it is clickable
+        `}
       onClick={clickable ? handleRedirectToPostPage : undefined}
       style={{ ...(clickable && { cursor: "pointer" }) }}
     >
@@ -192,7 +186,8 @@ const IndividualPost = ({ postData, clickable = false, connectedToReply = false 
               <img
                 className="verification-check-image"
                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Twitter_Verified_Badge.svg/1200px-Twitter_Verified_Badge.svg.png"
-              ></img>
+                alt="Verified"
+              />
             )}
             <p
               className="individual-post-identifying-name-text"
@@ -211,6 +206,7 @@ const IndividualPost = ({ postData, clickable = false, connectedToReply = false 
               <div className="individual-post-image-container">
                 <img
                   src={postImageSource}
+                  alt="Post content"
                   onClick={() => setImagePopupActive(true)}
                 />
               </div>
@@ -244,7 +240,6 @@ const IndividualPost = ({ postData, clickable = false, connectedToReply = false 
           textActiveColor="#fb73b3"
           hoverColor="heartPink"
         />
-
         <div className="image-popup-icon-and-popup">
           <ImageButton
             imgSrc="/assets/unclicked_share_icon.png"

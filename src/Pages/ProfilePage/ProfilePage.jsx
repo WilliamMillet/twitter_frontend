@@ -13,8 +13,11 @@ import useClickOutside from "../../hooks/useClickOutside";
 import ProfilePagePostContent from "./ProfilePagePostContent";
 import ProfilePageReplyContent from "./ProfilePageReplyContent";
 
+import ProfilePageMediaContent from "./ProfilePageMediaContent";
 
 const ProfilePage = () => {
+
+  
   const navigate = useNavigate();
 
   const { username } = useParams();
@@ -44,6 +47,13 @@ const ProfilePage = () => {
       }
     );
   };
+
+
+  // Scroll to the top of the page upon load. This is necessary as if you zoom into one page scroll down then navigate to this page, you will not end up at the top
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const handleCopyLinkToClipboard = () => {
     navigator.clipboard.writeText(
@@ -325,6 +335,7 @@ const ProfilePage = () => {
       </div>
       {selectedOption === 'Posts' && <ProfilePagePostContent/>}
       {selectedOption === 'Replies' && <ProfilePageReplyContent/>}
+      {selectedOption === 'Media' && <ProfilePageMediaContent/>}
       {isEditPopupOpen && (
         <EditProfilePopup
           userDetails={userDetails}

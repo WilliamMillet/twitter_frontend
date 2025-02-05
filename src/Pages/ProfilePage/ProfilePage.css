@@ -389,3 +389,28 @@
     font-size: 30px;
     border: 1px solid white;
 }
+
+.individual-media-container {
+    width: 213px;
+    height: 210px;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.individual-media-container img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    transition: all 0.2s ease-in-out;
+}
+
+.individual-media-container img:hover {
+    filter: brightness(0.8);
+    transform: scale(1.03);
+}
+
+.media-container {
+    gap: 5px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+}
