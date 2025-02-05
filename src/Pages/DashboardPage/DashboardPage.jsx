@@ -37,8 +37,9 @@ const DashboardPage = () => {
     if (selectedFeed === "Following") {
       getPosts.fetchData(
         `
-        http://localhost:5000/api/posts?following=${userIdentifyingName}&limit=5&offset=${offsetValue}`,
-        "GET"
+        http://localhost:5000/api/posts/algorithm-sorted-posts/${userIdentifyingName}?limit=5&offset=${offsetValue}&followedBy=${userIdentifyingName}&orderBy=date`,
+        "GET",
+        { includeAuth: true }
       );
     } else if (selectedFeed === "For You") {
       getPosts.fetchData(
