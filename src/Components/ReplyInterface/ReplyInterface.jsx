@@ -5,7 +5,9 @@ import getOwnProfileImageLink from "../../utils/getOwnProfileImageLink";
 import { useRef, useState } from "react";
 import Button from "../Button/Button";
 import useUploadReply from "./useUploadReply";
-// The following properties of parentPostData are available
+// Parent data be relating to either a post or reply
+// If it is relating to a post, it will look like this
+
 // post_id,
 // user_identifying_name,
 // user_display_name,
@@ -25,7 +27,9 @@ import useUploadReply from "./useUploadReply";
 // mentioned_post_user_bio,
 // mentioned_post_user_verified
 
-const ReplyInterface = ({ parentPostData }) => {
+const ReplyInterface = ({ parentData, replyingToReply = false }) => {
+
+  console.log(parentData)
   const textareaRef = useRef(null);
   const fileUploadRef = useRef(null);
 
@@ -80,13 +84,14 @@ const ReplyInterface = ({ parentPostData }) => {
     handleUploadReply(
       textInput,
       imageInput,
-      parentPostData.post_id,
+      parentData.post_id, // If replying to anothe reply, parent data will be in reply format 
+      replyingToReply ? parentData.reply_id : null,
       null,
       false
     ); // The null value is null for now, i will allow commenting on other commnets later
   };
 
-  if (!parentPostData) {
+  if (!parentData) {
     return (
       <div className="reply-interface">
         <FlashingGrayBarsLoadingAnimation numberOfBars={2} />
@@ -112,10 +117,10 @@ const ReplyInterface = ({ parentPostData }) => {
             <p className="replying-to-text">
               Replying to{" "}
               <Link
-                to={`posts/${parentPostData.user_identifying_name}`}
+                to={`posts/${parentData.user_identifying_name}`}
                 className="replying-to-link-to-profile blue-text"
               >
-                @{parentPostData.user_identifying_name}
+                @{parentData.user_identifying_name}
               </Link>
             </p>
           </div>

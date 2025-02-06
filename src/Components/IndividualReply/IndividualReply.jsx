@@ -1,4 +1,4 @@
-import './IndividualReply.css'
+import "./IndividualReply.css";
 import convertIsoStringDateToFormattedTimeSinceNow from "../../utils/convertIsoStringDateToFormattedTimeSinceNow";
 import ImageToggleableButton from "../ImageToggleableButton/ImageToggleableButton";
 import { useState } from "react";
@@ -22,31 +22,33 @@ import FlashingGrayBarsLoadingAnimation from "../FlashingGrayBarsLoadingAnimatio
 // verified,
 // bio,
 
-// created_at is an ISO date string 
+// created_at is an ISO date string
 
 // Clickable makes the post a link that navigates you to the post page
 // Clickable also leads to the post changing its background colour slightly on hover
 
 // The not connected to reply variable is a boolean that is used to format the post when it is to be connected to a reply
 
+const IndividualReply = ({
+  replyData,
+  clickable = false,
+  connectedToPost = false,
+  connectedToChildReply = false,
+}) => {
+  const [replyLiked, setReplyLiked] = useState(false);
+  const [imagePopupActive, setImagePopupActive] = useState(false);
 
-const IndividualReply = ({ replyData, clickable = false, connectedToPost = false }) => {
-
-
-    const [replyLiked, setReplyLiked] = useState(false);
-    const [imagePopupActive, setImagePopupActive] = useState(false);
-
-    const profileImageSource = replyData?.profile_image_url
+  const profileImageSource = replyData?.profile_image_url
     ? "https://the-bucket-of-william-millet.s3.ap-southeast-2.amazonaws.com/" +
       replyData.profile_image_url
     : "https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg";
 
   const replyImageSource = replyData?.reply_image_uuid
     ? "https://the-bucket-of-william-millet.s3.ap-southeast-2.amazonaws.com/" +
-       replyData.reply_image_uuid
+      replyData.reply_image_uuid
     : null;
 
-    const timeSinceReplyCreation =
+  const timeSinceReplyCreation =
     convertIsoStringDateToFormattedTimeSinceNow(replyData?.created_at) || null;
 
   const navigate = useNavigate();
@@ -59,16 +61,18 @@ const IndividualReply = ({ replyData, clickable = false, connectedToPost = false
   const handleRedirectToReplyPage = () => {
     navigate(`/replies/${replyData.reply_id}`);
   };
-    
+
   if (!replyData) {
-    return (
-      <FlashingGrayBarsLoadingAnimation/>
-    );
+    return <FlashingGrayBarsLoadingAnimation />;
   }
 
   return (
     <div
-      className={`individual-reply ${clickable ? "clickable-individual-reply" : ''} ${connectedToPost ? 'connected-to-post' : 'not-connected-to-post'}`} // The clickable individual post class is applied so that the div can be given a different colour upon hover when it is clickable
+      className={`individual-reply ${
+        clickable ? "clickable-individual-reply" : ""
+      } ${connectedToPost ? "connected-to-post" : "not-connected-to-post"}
+        ${connectedToChildReply ? "connected-to-child-reply": 'not-connected-to-child-reply'}
+      `} // The clickable individual post class is applied so that the div can be given a different colour upon hover when it is clickable
       onClick={clickable ? handleRedirectToReplyPage : undefined}
       style={{ ...(clickable && { cursor: "pointer" }) }}
     >
@@ -80,6 +84,7 @@ const IndividualReply = ({ replyData, clickable = false, connectedToPost = false
             className="individual-reply-profile-image"
             onClick={handleRedirectToProfile}
           />
+          {connectedToChildReply && <div className="line-to-next-reply"></div>}
         </div>
         <div className="individual-reply-main-information-container">
           <div className="individual-user-info-and-timing-container">
@@ -156,8 +161,6 @@ const IndividualReply = ({ replyData, clickable = false, connectedToPost = false
       )}
     </div>
   );
+};
 
-}
- 
 export default IndividualReply;
-

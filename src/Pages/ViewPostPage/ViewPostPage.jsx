@@ -36,9 +36,9 @@ const ViewPostPage = () => {
         <h4>Account information</h4>
       </div>
       {getPostData.response && <IndividualPost postData={getPostData.response} />}
-      <ReplyInterface parentPostData={getPostData.response}/>
+      <ReplyInterface parentData={getPostData.response}/>
       {getRepliesData.response && getRepliesData.response.map(reply => (
-        <IndividualReply replyData={reply}/>
+        <IndividualReply replyData={reply} clickable={true}/>
         
       ))}
     </StandardLayout>

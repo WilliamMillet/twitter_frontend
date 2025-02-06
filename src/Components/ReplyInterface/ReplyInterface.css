@@ -19,9 +19,12 @@
 
 .reply-interface-your-profile-link {
     width: 50px;
-    border-radius: 50%;
-    
+    height: 50px;
+    border-radius: 50%;   
+    overflow: hidden;
+    object-fit: cover;
 }
+
 
 .reply-interface-second-column {
     width: 100%;

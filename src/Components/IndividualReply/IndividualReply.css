@@ -149,3 +149,6 @@
     margin: 0;
 }
 
+.individual-reply.connected-to-child-reply {
+    border-bottom: none;
+}

@@ -1,5 +1,7 @@
 const getOwnProfileImageLink = () => {
-    const profileSuffix = JSON.parse(localStorage.getItem("profile-link-suffix"));
+    const profileSuffix = JSON.parse(localStorage.getItem("profile_link_suffix"));
+
+    console.log('Profile suffix:', profileSuffix)
         
     return profileSuffix
     ? "https://the-bucket-of-william-millet.s3.ap-southeast-2.amazonaws.com/" +
