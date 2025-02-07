@@ -20,12 +20,11 @@
     margin-top: 18px;
 }
 
-@media (prefers-color-scheme: dark) {
+
     .settings-arrow-btn:hover {
         background-color: #1c1c1c;
 
     }
-}
 
 .account-information-header {
     display: flex;
@@ -118,7 +117,6 @@
     margin-bottom: 30px;
 }
 
-@media (prefers-color-scheme: dark) {
     .visual-link-to-profile:hover {
         background-color: #1c1c1c;
     }
@@ -129,7 +127,7 @@
     .profile-nav-identifying-name-text {
         color: rgb(130, 130, 130)
     }
-}
+
 
 .deactivation-first-warning {
     margin-left: 20px;
@@ -153,13 +151,12 @@
     margin-top: 10px;
 }
 
-@media (prefers-color-scheme: dark) {
 
     .deactivation-btn:hover {
         background-color: #1f0909;
     }
 
-}
+
 
 .password-tester-for-account-termination-error-message {
     position: absolute;

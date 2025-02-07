@@ -45,7 +45,7 @@
 }
 
 
-@media (prefers-color-scheme: dark) {
+
 
     .standard-options button:hover {
         background-color: #1d1d1d;
@@ -70,7 +70,7 @@
     .standard-options .include-side-borders:last-child {
         border-right: 1px solid rgb(70, 70, 70);
     }
-}
+
 
 .user-media-options-container {
     width: 106.5%;

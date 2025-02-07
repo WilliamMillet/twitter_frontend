@@ -26,12 +26,11 @@
 }
 
 
-@media (prefers-color-scheme: dark) {
     .signup-form-container {
         color: white;
         background-color: black;
     }
-}
+
 
 .date-of-birth-title {
     font-size: 15px;

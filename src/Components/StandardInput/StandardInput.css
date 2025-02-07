@@ -53,13 +53,11 @@
     top: 10px;
 }
 
-@media (prefers-color-scheme: dark) {
     .standard-input {
         background-color: black;
         color: white;
     }
-    
-}
+
 
 
 .focused-standard-input {

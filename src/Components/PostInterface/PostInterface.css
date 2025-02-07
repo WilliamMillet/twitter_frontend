@@ -26,7 +26,7 @@
     overflow: hidden;
 }
 
-@media (prefers-color-scheme: dark) {
+
     .post-interface-text-input {
         background-color: black;
         border: none;
@@ -44,7 +44,6 @@
         color: rgb(120, 120, 120);
     }
 
-}
 
 .post-interface-buttons {
     display: flex;

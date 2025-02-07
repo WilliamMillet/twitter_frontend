@@ -15,7 +15,7 @@
     cursor: not-allowed
 }
 
-@media (prefers-color-scheme: dark) {
+
 
     .default-button {
         color: black;
@@ -53,7 +53,7 @@
         background-color: rgb(31, 31, 31);
     }
     
-}
+
 
 .default-colorful-button {
     background-color: rgb(29 161 242);  

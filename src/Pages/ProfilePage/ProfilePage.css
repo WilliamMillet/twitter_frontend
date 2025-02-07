@@ -33,11 +33,9 @@
         justify-content: center;
 }
 
-@media (prefers-color-scheme: dark) {
     .profile-top-container .arrow-icon:hover {
         background-color: #1c1c1c;
     }
-}
 
 .profile-banner-container {
     height: 220px;
@@ -61,11 +59,9 @@
     justify-content: center;
 }
 
-@media (prefers-color-scheme: dark) {
     .user-page-main-profile-container {
         background-color: black;
     }
-}
 
 .user-basic-details {
     margin: 10px 20px 0px 20px;
@@ -182,12 +178,10 @@
     
 }
 
-@media (prefers-color-scheme: dark) {
     .edit-profile-popup {
         background-color: black;
 
     }
-}
 
 
 

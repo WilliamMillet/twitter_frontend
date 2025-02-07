@@ -13,7 +13,6 @@ import { useNavigate } from "react-router-dom";
 // mentioned_post_verified
 
 const IndividualMentionedPost = ({ mentionedPostData }) => {
-  console.log(mentionedPostData);
 
   const mentionedPostProfileImageSource =
     mentionedPostData?.mentioned_post_user_profile_image_url

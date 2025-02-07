@@ -39,11 +39,10 @@
     font-size: 18px;
 }
 
-@media (prefers-color-scheme: dark) {
     .reply-interface-text-input {
         color: white;
     }
-}
+
 
 .reply-interface-text-input {
     background: none;

@@ -28,6 +28,13 @@ body, button, input, textarea {
   height: 100vh;
 }
 
+@media (max-width: 800px) {
+  .triple-grid {
+    grid-template-columns: 80px 1fr
+    
+  }
+}
+
 @media (max-width: 1270px) {
   .right-sidebar {
     display: none
@@ -35,23 +42,20 @@ body, button, input, textarea {
 
 
   .triple-grid {
-    grid-template-columns: 80px 1fr 80px;
+    grid-template-columns: 1fr 650 1fr;
     gap: 0;
   }
 
-
-
-
 }
 
-@media (prefers-color-scheme: dark) {
-  
+ 
   .center-grid-item {
     border-left: 1px solid rgb(70, 70, 70);
     border-right: 1px solid rgb(70, 70, 70);
+    max-width: 650px;
   }
   
-}
+
 
 .full-size {
   height: 100vh;
@@ -92,12 +96,11 @@ body, button, input, textarea {
   font-size: 18px;;
 }
 
-@media (prefers-color-scheme: dark) {
   select {
     background-color: black;
     color: white;
   }
-}
+
 
 .date-selector-container {
   display: flex;
@@ -167,7 +170,7 @@ body, button, input, textarea {
   cursor: pointer;
 }
 
-@media (prefers-color-scheme: dark) {
+
   h1,
   h2,
   h3,
@@ -184,7 +187,7 @@ body, button, input, textarea {
   body {
       background-color: black;
   }
-}
+
 
 
 
@@ -274,11 +277,11 @@ body, button, input, textarea {
   box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5);
 }
 
-@media (prefers-color-scheme: dark) {
+
   .grey-hover-plain-text-button {
     color: white;
     
-  }
+  
 
   .grey-hover-plain-text-button:hover {
     background-color: #1c1c1c;
@@ -356,7 +359,7 @@ body, button, input, textarea {
   color: #4c96d5;
 }
 
-@media (prefers-color-scheme: dark) {
+
   .three-dot-button {
     color: rgb(120,120,120);
     background: none;
@@ -366,7 +369,7 @@ body, button, input, textarea {
 .three-dot-button:hover {
   background-color: #1c1c1c; 
 }
-}
+
 
 .margin-left-auto {
   margin-left: auto;

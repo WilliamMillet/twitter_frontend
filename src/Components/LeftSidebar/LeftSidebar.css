@@ -72,7 +72,7 @@
     font-weight: bold;
 }
 
-@media (prefers-color-scheme: dark) {
+
     .profile-nav-item:hover {
         background-color: #1c1c1c;
     }
@@ -83,7 +83,7 @@
     .profile-nav-identifying-name-text {
         color: rgb(130, 130, 130)
     }
-}
+
 .user-options-button {
     font-size: 22px;
     margin-left: 20px;
@@ -130,11 +130,11 @@
     margin: 20px 0
 }
 
-@media (prefers-color-scheme: dark) {
+
     .header-item:hover {
         background-color: #1c1c1c;
     }
-}
+
 
 .left-sidebar-main-icon {
     width: 30px;

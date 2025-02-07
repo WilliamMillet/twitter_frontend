@@ -31,9 +31,7 @@
 }
 
 
-@media (prefers-color-scheme: dark) {
     .login-form-container {
         color: white;
         background-color: black;
     }
-}

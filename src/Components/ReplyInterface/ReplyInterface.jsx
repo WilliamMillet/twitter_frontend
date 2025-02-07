@@ -29,7 +29,6 @@ import useUploadReply from "./useUploadReply";
 
 const ReplyInterface = ({ parentData, replyingToReply = false }) => {
 
-  console.log(parentData)
   const textareaRef = useRef(null);
   const fileUploadRef = useRef(null);
 
