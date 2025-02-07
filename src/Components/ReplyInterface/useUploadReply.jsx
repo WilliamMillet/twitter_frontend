@@ -59,9 +59,7 @@ const useUploadReply = () => {
                           { uuid: uniqueId },
                           {
                             onSuccess: () => {
-                              console.log("Reply with image uploaded successfully");
-                              // If needed, pass setInput via arguments
-                              // setInput(""); 
+                              window.location.reload();
                             },
                           }
                         );
@@ -72,7 +70,7 @@ const useUploadReply = () => {
               }
             );
           } else {
-            console.log("Reply without image uploaded successfully");
+            window.location.reload();
           }
         },
       }

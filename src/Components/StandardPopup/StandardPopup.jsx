@@ -12,11 +12,11 @@ const PopupItem = ({ item }) => {
   return (
     <li className="standard-popup-item">
       <button onClick={handleClick}>
-        <img
+        {item.iconImgSrc && <img
           src={item.iconImgSrc}
           alt={`${item.text}-icon`}
           className="standard-popup-icon"
-        />
+        />}
         <span className="standard-popup-text">
             {itemClicked ? item?.textAfterClick || item.text : item.text}
             </span>

@@ -36,17 +36,7 @@
     width: 100%;
 }
 
-.individual-user-info-and-timing-container {
-    display: flex;
-    gap: 5px;
-    margin-top: -5px;
-    align-items: center;
-    margin-bottom: 4px;
-}
 
-.individual-user-info-and-timing-container > p {
-    margin: 0;
-}
 
 .individual-reply-display-name-text {
     font-weight: bold;
@@ -151,4 +141,14 @@
 
 .individual-reply.connected-to-child-reply {
     border-bottom: none;
+}
+
+.reply-has-been-deleted {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.reply-has-been-deleted p {
+    color: #a66a6a;
 }

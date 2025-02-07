@@ -10,6 +10,7 @@ const ImagePopup = ({ src, setImagePopupActive }) => {
         <button
           className="frosted-glass-plain-text-button close-image-popup-button"
           onClick={onClose}
+          
         >
           ×
         </button>

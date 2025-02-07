@@ -10,9 +10,9 @@ import EditProfilePopup from "./EditProfilePopup";
 import useFetchData from "../../hooks/useFetchData";
 import StandardPopup from "../../Components/StandardPopup/StandardPopup";
 import useClickOutside from "../../hooks/useClickOutside";
+import useProfileIsOwn from "../../hooks/useProfileIsOwn";
 import ProfilePagePostContent from "./ProfilePagePostContent";
 import ProfilePageReplyContent from "./ProfilePageReplyContent";
-
 import ProfilePageMediaContent from "./ProfilePageMediaContent";
 
 const ProfilePage = () => {
@@ -78,21 +78,14 @@ const ProfilePage = () => {
   const [userDetails, setUserDetails] = useState({});
   const [followingBtnHovered, setFollowingBtnHovered] = useState(false);
 
-  const personalUserIdentifyingName = JSON.parse(
-    localStorage.getItem("user_identifying_name")
-  );
-  const [profileIsOwn, setProfileIsOwn] = useState(null);
+
   const [following, setFollowing] = useState(null);
 
   const [isEditPopupOpen, setIsEditPopupOpen] = useState(false);
 
-  useEffect(() => {
-    if (personalUserIdentifyingName && userDetails.user_identifying_name) {
-      const match =
-        personalUserIdentifyingName === userDetails.user_identifying_name;
-      setProfileIsOwn(match);
-    }
-  }, [userDetails, personalUserIdentifyingName]);
+
+  const profileIsOwn = useProfileIsOwn(userDetails.user_identifying_name);
+
 
   // Media options
 
@@ -126,8 +119,10 @@ const ProfilePage = () => {
       "GET"
     );
 
+    const ownName = JSON.parse(localStorage.getItem("user_identifying_name"))
+
     checkIfFollowing.fetchData(
-      `http://localhost:5000/api/users/${personalUserIdentifyingName}/is-following/${username}`,
+      `http://localhost:5000/api/users/${ownName}/is-following/${username}`,
       "GET"
     );
     getFollowerCount.fetchData(

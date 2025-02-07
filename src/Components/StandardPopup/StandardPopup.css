@@ -1,10 +1,10 @@
 .standard-popup-container {
     position: relative;
     background: none;
+    margin: 0;
 }
 
 .standard-popup {
-    min-height: 50px;
     border-radius: 20px;
     width: 250px;
     display: flex;
@@ -15,11 +15,18 @@
     bottom: -13px;
     align-items: start;
     overflow: hidden;
+    cursor: pointer;
+    z-index: 100;
 }
 
 .standard-popup-offset-top-left {
     left: -250px;
     bottom: 5px;
+}
+
+.standard-popup-offset-right {
+    left: 0px;
+    bottom: -20px
 }
 
 .standard-popup-list {

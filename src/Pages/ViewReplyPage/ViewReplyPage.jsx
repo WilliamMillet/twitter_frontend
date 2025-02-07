@@ -13,12 +13,6 @@ const ViewReplyPage = () => {
 
   const replyRef = useRef(null)
 
-  useEffect(() => {
-  if (getMainReplyAndPostData.response && replyRef.current) {
-    replyRef.current.scrollIntoView();
-  }
-  })
-
 
     const getRepliesData = useFetchData()
 

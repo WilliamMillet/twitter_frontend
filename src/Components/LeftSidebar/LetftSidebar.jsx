@@ -12,6 +12,8 @@ const LeftSidebar = () => {
     localStorage.getItem("user_identifying_name")
   );
 
+  const userIsLoggedIn = Boolean(identifyingName)
+
   const windowWidth = useWindowWidth();
 
   const [popupActive, setPopupActive] = useState(false);
@@ -72,7 +74,7 @@ const LeftSidebar = () => {
               }>
                 <span className="header-item">Login</span>
               </NavLink>
-            </li> */}
+            </li>
             {/* Login and signup have been commented out as they should not be visbile on this page, as this page is dedicated for signed in users only */}
             {/* However, to make this project more acessible to potential employers, I may make a publically acessible version of this page */}
             <li>

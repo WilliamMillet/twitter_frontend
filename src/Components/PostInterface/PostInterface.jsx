@@ -5,6 +5,7 @@ import Button from "../Button/Button";
 import useFetchData from "../../hooks/useFetchData";
 import ImagePopup from "../ImagePopup/ImagePopup";
 import ThreadCreationInterface from "../ThreadCreationInterface/ThreadCreationInterface";
+import { useNavigate } from "react-router-dom";
 
 
 const PostInterface = () => {
@@ -17,6 +18,8 @@ const PostInterface = () => {
   const [imagePopupActive, setImagePopupActive] = useState(false)
   const [threadCreationInterfaceActive, setThreadCreationInterfaceActive] = useState(false)
   const [userInputLength, setUserInputLength] = useState(0);
+
+  const navigate = useNavigate()
 
   useEffect(() => {
     fetchUserData();

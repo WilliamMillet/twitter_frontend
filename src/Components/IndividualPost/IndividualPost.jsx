@@ -11,6 +11,8 @@ import StandardPopup from "../StandardPopup/StandardPopup";
 import useClickOutside from "../../hooks/useClickOutside";
 import useFetchData from "../../hooks/useFetchData";
 import abbreviateNumber from "../../utils/abbreviateNumber";
+import useProfileIsOwn from "../../hooks/useProfileIsOwn";
+import truncateString from "../../utils/truncateString";
 
 const IndividualPost = ({ postData, clickable = false, connectedToReply = false }) => {
 
@@ -19,17 +21,24 @@ const IndividualPost = ({ postData, clickable = false, connectedToReply = false 
   const [augmentedLikeCount, setAugmentedLikeCount] = useState(postData?.like_count || 0);
   const [imagePopupActive, setImagePopupActive] = useState(false);
   const [sharePopupActive, setSharePopupActive] = useState(false);
-  // Flag to track whether the intial like status has been fetched
+  const [miscOptionsActive, setMiscOptionsActive] = useState(false);
+  // Flag to track whether the initial like status has been fetched
   const [initialLikeFetched, setInitialLikeFetched] = useState(false);
+  const [postHasBeenRemoved, setPostHasBeenRemoved] = useState({value: false, reason: null});
   // This ref will store the initially fetched like value so it doesn’t change on later renders.
   const initialLikeRef = useRef(null);
 
+  const navigate = useNavigate();
+
+  // Toggle share popup visibility.
   const toggleSharePopupActive = () => {
     setSharePopupActive((prev) => !prev);
   };
 
   const profileImageSource = postData?.profile_image_url
-    ? "https://the-bucket-of-william-millet.s3.ap-southeast-2.amazonaws.com/" +
+    
+  
+  ? "https://the-bucket-of-william-millet.s3.ap-southeast-2.amazonaws.com/" +
       postData.profile_image_url
     : "https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg";
 
@@ -39,7 +48,6 @@ const IndividualPost = ({ postData, clickable = false, connectedToReply = false 
     : null;
 
   // Extract mentioned post data if available.
-
   let mentionedData;
   if (postData?.mentioned_post_id) {
     mentionedData = Object.keys(postData)
@@ -65,14 +73,56 @@ const IndividualPost = ({ postData, clickable = false, connectedToReply = false 
     },
   ];
 
+  // Create a ref for clicking outside the share popup.
   const sharePopupRef = useClickOutside(() =>
     setSharePopupActive(false)
   );
 
+  // Create a ref for clicking outside the misc options popup.
+  const miscOptionsRef = useClickOutside(() =>
+    setMiscOptionsActive(false)
+  );
+
+  // Data for the miscellaneous options popup.
+
+  const profileIsOwn = useProfileIsOwn(postData.user_identifying_name);
+
+  const uploadBlock = useFetchData();
+
+  const handleBlock = () => {
+    uploadBlock.fetchData(
+      `http://localhost:5000/api/users/${postData.user_display_name}/block`,
+      "POST",
+      { includeAuth: true },
+      null,
+      {
+        onSuccess: () => {
+          navigate("/");
+          setPostHasBeenRemoved({value: true, reason: 'userBlocked'})
+        },
+      }
+    );
+  };
+
+
+  const miscOptionsData = [
+    profileIsOwn
+      ? {
+          text: "✖ Delete Post",
+          onClick: () => {
+            handleDeletePost(postData.post_id);
+            setMiscOptionsActive(false);
+          }
+        }
+      : {
+          iconImgSrc: "/assets/block_icon.png",
+          text: `Block @${truncateString(postData.user_display_name, 15)}`,
+          onClick: handleBlock
+        }
+  ];
+
   const timeSincePostCreation =
     convertIsoStringDateToFormattedTimeSinceNow(postData?.created_at) || null;
-
-  const navigate = useNavigate();
 
   const handleRedirectToProfile = (e) => {
     e.stopPropagation();
@@ -83,7 +133,7 @@ const IndividualPost = ({ postData, clickable = false, connectedToReply = false 
     navigate(`/posts/${postData.post_id}`);
   };
 
-  // Initialize  custom hooks for API calls.
+  // Initialize custom hooks for API calls.
   const checkIfUserHasLikedPost = useFetchData();
   const uploadLike = useFetchData();
   const deleteLike = useFetchData();
@@ -97,11 +147,9 @@ const IndividualPost = ({ postData, clickable = false, connectedToReply = false 
         { includeAuth: true }
       );
     }
-  
-  }, [initialLikeFetched, postData.post_id]);
+  }, [initialLikeFetched, postData.post_id, checkIfUserHasLikedPost]);
 
   // When the response comes in, store it in state and in a ref, then mark the fetch as complete.
-
   useEffect(() => {
     if (!initialLikeFetched && checkIfUserHasLikedPost.response !== null) {
       initialLikeRef.current = checkIfUserHasLikedPost.response;
@@ -112,13 +160,9 @@ const IndividualPost = ({ postData, clickable = false, connectedToReply = false 
 
   // Trigger API call upon toggling like
   useEffect(() => {
-
-    // Do nothing until the initial like status is fetched. This is to prevent sending an API call to reupload the users previous like/lack of a like
-    
+    // Do nothing until the initial like status is fetched.
     if (!initialLikeFetched) return;
-
     // Only proceed if the user’s toggle is different from the initial value.
-
     if (postLiked === initialLikeRef.current) return;
 
     if (postLiked === true) {
@@ -130,7 +174,6 @@ const IndividualPost = ({ postData, clickable = false, connectedToReply = false 
         null
       );
       setAugmentedLikeCount((prev) => prev + 1);
-  
       initialLikeRef.current = true;
     } else if (postLiked === false) {
       // User unliked the post.
@@ -139,7 +182,6 @@ const IndividualPost = ({ postData, clickable = false, connectedToReply = false 
         'DELETE',
         { includeAuth: true }
       );
-      // Reset the like count to the original count.
       setAugmentedLikeCount((prev) => prev - 1);
       initialLikeRef.current = false;
     }
@@ -151,16 +193,50 @@ const IndividualPost = ({ postData, clickable = false, connectedToReply = false 
     uploadLike,
     deleteLike,
   ]);
-  
+
+  const deletePost = useFetchData();
+
+  const handleDeletePost = (postId) => {
+    const handleSuccessfulDelete = () => {
+      if (clickable) {
+        setPostHasBeenRemoved({value: true, reason: 'postDeleted'});
+      } else {
+        navigate('/');
+      }
+    };
+
+    deletePost.fetchData(
+      `http://localhost:5000/api/posts/${postData.post_id}`,
+      'DELETE',
+      { includeAuth: true },
+      null,
+      {
+        onSuccess: handleSuccessfulDelete,
+      }
+    );
+  };
+
+
   if (!postData) {
     return <FlashingGrayBarsLoadingAnimation />;
+  }
+
+  if (postHasBeenRemoved.value === true) {
+    return (
+      <div className="individual-post post-has-been-deleted">
+        <p className="greyed-text" >
+          {postHasBeenRemoved.reason === 'userBlocked' && 'User has been blocked!'}
+          {postHasBeenRemoved.reason === 'postDeleted' && 'Post has been deleted!'}
+        </p>
+      </div>
+    );
   }
 
   return (
     <div
       className={`individual-post 
         ${clickable ? "clickable-individual-post" : "unclickable-individual-post"}
-        ${connectedToReply ? 'connected-to-reply' : 'not-connected-to-reply'}
+        ${connectedToReply ? "connected-to-reply" : "not-connected-to-reply"}
         `}
       onClick={clickable ? handleRedirectToPostPage : undefined}
       style={{ ...(clickable && { cursor: "pointer" }) }}
@@ -199,7 +275,21 @@ const IndividualPost = ({ postData, clickable = false, connectedToReply = false 
             <p className="individual-post-time-since-creation-text">
               {timeSincePostCreation}
             </p>
-            <button className="three-dot-button margin-left-auto">···</button>
+            {/* Three-dot button toggles the misc options popup */}
+            <button
+              className="three-dot-button margin-left-auto three-dots-individual-post"
+              onClick={(e) => {
+                e.stopPropagation();
+                setMiscOptionsActive((prev) => !prev);
+              }}
+            >
+              ···
+            </button>
+            {miscOptionsActive && (
+              <div ref={miscOptionsRef}>
+                <StandardPopup popupData={miscOptionsData} position='right'/>
+              </div>
+            )}
           </div>
           <div className="individual-post-text-container">
             <p className="individual-post-text">{postData.post_text}</p>
@@ -251,10 +341,9 @@ const IndividualPost = ({ postData, clickable = false, connectedToReply = false 
             handleClick={toggleSharePopupActive}
           />
           {sharePopupActive && (
-            <StandardPopup
-              popupData={sharePopupData}
-              ref={sharePopupRef}
-            />
+            <div ref={sharePopupRef}>
+              <StandardPopup popupData={sharePopupData} />
+            </div>
           )}
         </div>
       </div>
