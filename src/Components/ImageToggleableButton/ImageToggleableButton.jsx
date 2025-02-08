@@ -45,14 +45,17 @@ const ImageToggleableButton = ({
           alt="Toggle Button"
           style={{
             width: `${widthInPx}px`,
-            filter: isHovered && !toggle ? filtersByColor[hoverColor] : 'none', // Add a filter when hovering, but remove it with the coloured icon comes in 
-            transition: !toggle ? "filter 0.3s ease" : "none" // Make it so the transition only applies when the filter is being applied. It should be immediately removed when the toggle is disabled because if it wasnt, the filter would overlap the coloured image 
+            filter: isHovered && !toggle ? filtersByColor[hoverColor] : 'none', 
+            transition: !toggle ? "filter 0.3s ease" : "none" 
         }}
         />
       </div>
       <p
         className="toggleable-button-text"
-        style={{ color: toggle || isHovered ? textActiveColor : "rgb(120,120,120)" }}
+        style={{
+          color: toggle || isHovered
+            ? textActiveColor :
+            "rgb(120,120,120)" }}
       >
         {text}
       </p>

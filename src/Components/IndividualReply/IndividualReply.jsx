@@ -27,6 +27,7 @@ import useProfileIsOwn from "../../hooks/useProfileIsOwn";
 // profile_image_url,
 // verified,
 // bio,
+// child_reply_count
 //
 // created_at is an ISO date string
 //
@@ -34,6 +35,9 @@ import useProfileIsOwn from "../../hooks/useProfileIsOwn";
 // Clickable also leads to the post changing its background colour slightly on hover
 //
 // The not connected to reply variable is a boolean that is used to format the post when it is to be connected to a reply
+
+// Note, reply like counting functionality is NOT added yet
+
 
 const IndividualReply = ({
   replyData,
@@ -123,6 +127,7 @@ const IndividualReply = ({
           },
         },
   ];
+
 
   if (!replyData) {
     return <FlashingGrayBarsLoadingAnimation />;
@@ -218,7 +223,7 @@ const IndividualReply = ({
           imgSrcWhenInactive="/assets/unclicked_comment_icon.png"
           imgSrcWhenActive="/assets/clicked_comment_icon.png"
           widthInPx={20}
-          text="3.5k"
+          text={replyData.child_reply_count}
           textActiveColor="#4c96d5"
           hoverColor="twitterBlue"
           navigateLocation={`/reply/${replyData.post_id}`}
@@ -229,7 +234,7 @@ const IndividualReply = ({
           setToggle={setReplyLiked}
           toggle={replyLiked}
           widthInPx={25}
-          text="9.2k"
+          text={replyLiked ? '1' : '0'}
           textActiveColor="#fb73b3"
           hoverColor="heartPink"
         />

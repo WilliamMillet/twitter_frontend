@@ -12,7 +12,7 @@ const FlashingGrayBarsLoadingAnimation = ({
   });
 
   return (
-    <div className="flashing-gray-load-animation-container" style={{justifyContent: verticalPosition}}>
+    <div className="flashing-gray-load-animation-container"style={{justifyContent: verticalPosition}}>
       <div
         className={`flashing-gray-load-animation-set`}
         style={{ gap: spacingPx }}
