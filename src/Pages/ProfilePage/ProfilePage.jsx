@@ -14,10 +14,10 @@ import useProfileIsOwn from "../../hooks/useProfileIsOwn";
 import ProfilePagePostContent from "./ProfilePagePostContent";
 import ProfilePageReplyContent from "./ProfilePageReplyContent";
 import ProfilePageMediaContent from "./ProfilePageMediaContent";
-
+import PortalPopup from "../../Components/PortalPopup/PortalPopup"
+;
 const ProfilePage = () => {
 
-  
   const navigate = useNavigate();
 
   const { username } = useParams();
@@ -332,10 +332,12 @@ const ProfilePage = () => {
       {selectedOption === 'Replies' && <ProfilePageReplyContent/>}
       {selectedOption === 'Media' && <ProfilePageMediaContent/>}
       {isEditPopupOpen && (
+        <PortalPopup>
         <EditProfilePopup
           userDetails={userDetails}
           setIsEditPopupOpen={setIsEditPopupOpen}
         />
+        </PortalPopup>
       )}
     </StandardLayout>
   );
