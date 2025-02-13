@@ -61,22 +61,6 @@ const LeftSidebar = () => {
                 )}
               </NavLink>
             </li>
-            {/* <li>
-              <NavLink to="/signup" className={({isActive}) =>
-                isActive ? 'header-item active-page-link' : 'header-item'
-              }>
-                <span className="header-item">Signup</span>
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/login" className={({isActive}) =>
-                isActive ? 'header-item active-page-link' : 'header-item'
-              }>
-                <span className="header-item">Login</span>
-              </NavLink>
-            </li>
-            {/* Login and signup have been commented out as they should not be visbile on this page, as this page is dedicated for signed in users only */}
-            {/* However, to make this project more acessible to potential employers, I may make a publically acessible version of this page */}
             <li>
               <NavLink
                 to={`/profile/${identifyingName}`}
