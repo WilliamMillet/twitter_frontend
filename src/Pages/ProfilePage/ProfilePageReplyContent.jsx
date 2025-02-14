@@ -96,14 +96,14 @@ const ProfilePageReplyContent = () => {
         className="load-more-posts-button"
         onClick={() => handleLoadRepliesWithParentPosts(repliesWithParentPosts?.length || 0)}
       >
-        Load more posts
+        Load more replies
       </button>
       <p
         className={`no-posts-found-button ${
           noRepliesWithParentPostsFound && "has-no-post-found-text"
         }`}
       >
-        {noRepliesWithParentPostsFound && "No posts found!"}
+        {noRepliesWithParentPostsFound && "No Replies found!"}
       </p>
     </>
   );

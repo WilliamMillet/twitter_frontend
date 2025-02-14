@@ -41,12 +41,15 @@
 .individual-reply-display-name-text {
     font-weight: bold;
     cursor: pointer;
+    margin-right: 5px;
 }
 
 .individual-reply-identifying-name-text {
     color: rgb(120,120,120);
     cursor: pointer;
+    margin-right: 5px;
 }
+
 
 .individual-reply-time-since-creation-text {
     color: rgb(120,120,120);
