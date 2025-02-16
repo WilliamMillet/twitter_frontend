@@ -32,6 +32,7 @@ const EditProfilePopup = ({setIsEditPopupOpen}) => {
     register,
     handleSubmit,
     reset,
+    watch,
     formState: { errors, isValid },
   } = useForm();
 
@@ -119,7 +120,6 @@ const EditProfilePopup = ({setIsEditPopupOpen}) => {
         if (!uploadResponse.ok) {
           throw new Error('Failed to upload profile image');
         }
-        console.log('Profile image uploaded successfully');
       })
       .catch(error => {
         console.error('Error uploading profile image:', error);
@@ -195,15 +195,39 @@ const EditProfilePopup = ({setIsEditPopupOpen}) => {
         })
         .then(response => response.json())
         .then(data => {
-          window.location.reload()
+          
         })
         .catch(error => {
           console.error('Error uploading banner image or updating banner link:', error);
         });
       }
     }
+    window.location.reload()
   };
+
+  const watchedProfile = watch('profile-picture')
+  const watchedBanner = watch('banner-image')
   
+  const [profilePictureUrl, setProfilePictureUrl] = useState(null)
+  const [bannerPictureUrl, setBannerPictureUrl] = useState(null)
+
+  useEffect(() => {
+    if (watchedProfile && watchedProfile.length > 0) {
+      const file = watchedProfile[0];
+      const url = URL.createObjectURL(file);
+      setProfilePictureUrl(url);
+    }
+  }, [watchedProfile]);
+
+  useEffect(() => {
+    if (watchedBanner && watchedBanner.length > 0) {
+      const file = watchedBanner[0];
+      const url = URL.createObjectURL(file);
+      setBannerPictureUrl(url);
+    }
+  }, [watchedBanner]);
+
+  console.log(bannerPictureUrl)
 
   return (
     <div className="edit-profile-popup-dark-overlay">
@@ -250,7 +274,7 @@ const EditProfilePopup = ({setIsEditPopupOpen}) => {
                   <div className="banner-add-dark-overlay"></div>
                   <img
                     className="banner-uploaded-image"
-                    src={bannerImagesource}
+                    src={bannerPictureUrl ? bannerPictureUrl : bannerImagesource}
                     alt="banner-pic"
                   />
                 </label>
@@ -281,7 +305,7 @@ const EditProfilePopup = ({setIsEditPopupOpen}) => {
                   <div className="edit-profile-add-image-dark-overlay"></div>
                   <img
                     className="edit-profile-file-input-img"
-                    src={profileImageSource}
+                    src={profilePictureUrl ? profilePictureUrl : profileImageSource}
                     alt="profile-pic"
                   />
                 </label>
