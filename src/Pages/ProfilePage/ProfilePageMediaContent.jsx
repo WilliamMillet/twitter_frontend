@@ -15,7 +15,7 @@ const ProfilePageMediaContent = () => {
 
     const handleLoadMedia = (offsetValue) => {
         getUserMedia.fetchData(
-            `http://localhost:5000/api/users/${username}/media?limit=5&offset=${offsetValue}`,
+            `${process.env.REACT_APP_SERVER_URL}/api/users/${username}/media?limit=5&offset=${offsetValue}`,
             "GET",
         );
     };

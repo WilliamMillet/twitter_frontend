@@ -69,7 +69,7 @@ const MutedWords = ({ setSelectedOption }) => {
 
   const fetchMutedWordsWithParams = () => {
     getMutedWordFetchFunction(
-      "http://localhost:5000/api/settings/getAllMutedWords",
+      `${process.env.REACT_APP_SERVER_URL}/api/settings/getAllMutedWords`,
       "GET",
       {includeAuth: true}
     );
@@ -97,7 +97,7 @@ const MutedWords = ({ setSelectedOption }) => {
     };
 
     postMutedWordFetchFunction(
-      "http://localhost:5000/api/settings/addMutedWord",
+      `${process.env.REACT_APP_SERVER_URL}/api/settings/addMutedWord`,
       "POST",
       { includeAuth: true },
       addMutedWordRequestBody,
@@ -113,7 +113,7 @@ const MutedWords = ({ setSelectedOption }) => {
 
   const handleDeleteMutedWord = (muted_word) => {
     deleteMutedWordFetchFunction(
-      `http://localhost:5000/api/settings/deleteMutedWord/${muted_word}`,
+      `${process.env.REACT_APP_SERVER_URL}/api/settings/deleteMutedWord/${muted_word}`,
       "DELETE",
       { includeAuth: true },
       null,

@@ -60,7 +60,7 @@ const IndividualPost = ({ postData, clickable = false, connectedToReply = false 
 
   const handleCopyLinkToClipboard = () => {
     navigator.clipboard.writeText(
-      `http://localhost:3000/posts/${postData.post_id}`
+      `${process.env.REACT_APP_CLIENT_URL}/posts/${postData.post_id}`
     );
   };
 
@@ -91,7 +91,7 @@ const IndividualPost = ({ postData, clickable = false, connectedToReply = false 
 
   const handleBlock = () => {
     uploadBlock.fetchData(
-      `http://localhost:5000/api/users/${postData.user_display_name}/block`,
+      `${process.env.REACT_APP_SERVER_URL}/api/users/${postData.user_display_name}/block`,
       "POST",
       { includeAuth: true },
       null,
@@ -142,7 +142,7 @@ const IndividualPost = ({ postData, clickable = false, connectedToReply = false 
   useEffect(() => {
     if (!initialLikeFetched) {
       checkIfUserHasLikedPost.fetchData(
-        `http://localhost:5000/api/posts/${postData.post_id}/is-liked-by-user`,
+        `${process.env.REACT_APP_SERVER_URL}/api/posts/${postData.post_id}/is-liked-by-user`,
         'GET',
         { includeAuth: true }
       );
@@ -168,7 +168,7 @@ const IndividualPost = ({ postData, clickable = false, connectedToReply = false 
     if (postLiked === true) {
       // User liked the post.
       uploadLike.fetchData(
-        `http://localhost:5000/api/posts/${postData.post_id}/like`,
+        `${process.env.REACT_APP_SERVER_URL}/api/posts/${postData.post_id}/like`,
         'POST',
         { includeAuth: true },
         null
@@ -178,7 +178,7 @@ const IndividualPost = ({ postData, clickable = false, connectedToReply = false 
     } else if (postLiked === false) {
       // User unliked the post.
       deleteLike.fetchData(
-        `http://localhost:5000/api/posts/${postData.post_id}/like`,
+        `${process.env.REACT_APP_SERVER_URL}/api/posts/${postData.post_id}/like`,
         'DELETE',
         { includeAuth: true }
       );
@@ -206,7 +206,7 @@ const IndividualPost = ({ postData, clickable = false, connectedToReply = false 
     };
 
     deletePost.fetchData(
-      `http://localhost:5000/api/posts/${postData.post_id}`,
+      `${process.env.REACT_APP_SERVER_URL}/api/posts/${postData.post_id}`,
       'DELETE',
       { includeAuth: true },
       null,

@@ -20,7 +20,7 @@ const BlockedAccounts = ({ setSelectedOption }) => {
   // Initial fetch for a list of all blocked accounts.
   useEffect(() => {
     getBlockedAccounts.fetchData(
-      `http://localhost:5000/api/users/${user_identifying_name}/blocked-accounts`,
+      `${process.env.REACT_APP_SERVER_URL}/api/users/${user_identifying_name}/blocked-accounts`,
       "GET",
       { includeAuth: true }
     );
@@ -48,7 +48,7 @@ const BlockedAccounts = ({ setSelectedOption }) => {
 
     // Remove blocked account on the server.
     unblockAccount.fetchData(
-      `http://localhost:5000/api/users/${user_id_name}/unblock`,
+      `${process.env.REACT_APP_SERVER_URL}/api/users/${user_id_name}/unblock`,
       "DELETE",
       { includeAuth: true }
     );

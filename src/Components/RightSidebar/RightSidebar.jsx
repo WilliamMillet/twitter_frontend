@@ -15,7 +15,7 @@ const RightSidebar = () => {
 
   useEffect(() => {
     getTopProfiles.fetchData(
-      `http://localhost:5000/api/users/top-accounts-main-details?limit=4`,
+      `${process.env.REACT_APP_SERVER_URL}/api/users/top-accounts-main-details?limit=4`,
       "GET"
     );
   }, []);
@@ -28,7 +28,7 @@ const RightSidebar = () => {
   
   const handleGetMatchingProfiles = () => {
     getMatchingProfiles.fetchData(
-        `http://localhost:5000/api/users/top-accounts-main-details?limit=5&pattern=${JSON.stringify(search)}`,
+        `${process.env.REACT_APP_SERVER_URL}/api/users/top-accounts-main-details?limit=5&pattern=${JSON.stringify(search)}`,
         "GET"
       );
   }

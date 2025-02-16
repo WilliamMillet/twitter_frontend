@@ -22,7 +22,7 @@ const AccountInformation = ({setSelectedOption}) => {
 
   const onSubmit = (data) => {
     fetch(
-      `http://localhost:5000/api/users/getMainPublicAndPrivateUserDetails/${user_identifying_name}?password=${data.password}`
+      `${process.env.REACT_APP_SERVER_URL}/api/users/getMainPublicAndPrivateUserDetails/${user_identifying_name}?password=${data.password}`
     )
       .then((response) => {
         if (response.status === 401) {

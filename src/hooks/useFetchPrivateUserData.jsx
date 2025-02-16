@@ -22,7 +22,7 @@ const useFetchPrivateUserData = () => {
         setLoading(true)
         setError(null)
 
-        fetch(`http://localhost:5000/api/users/getMainPublicAndPrivateUserDetails/${name}`, {
+        fetch(`${process.env.REACT_APP_SERVER_URL}/api/users/getMainPublicAndPrivateUserDetails/${name}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

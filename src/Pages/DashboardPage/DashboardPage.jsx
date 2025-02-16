@@ -37,13 +37,13 @@ const DashboardPage = () => {
     if (selectedFeed === "Following") {
       getPosts.fetchData(
         `
-        http://localhost:5000/api/posts/algorithm-sorted-posts/${userIdentifyingName}?limit=5&offset=${offsetValue}&followedBy=${userIdentifyingName}&orderBy=date`,
+        ${process.env.REACT_APP_SERVER_URL}/api/posts/algorithm-sorted-posts/${userIdentifyingName}?limit=5&offset=${offsetValue}&followedBy=${userIdentifyingName}&orderBy=date`,
         "GET",
         { includeAuth: true }
       );
     } else if (selectedFeed === "For You") {
       getPosts.fetchData(
-        `http://localhost:5000/api/posts/algorithm-sorted-posts/${userIdentifyingName}?limit=5&offset=${offsetValue}`,
+        `${process.env.REACT_APP_SERVER_URL}/api/posts/algorithm-sorted-posts/${userIdentifyingName}?limit=5&offset=${offsetValue}`,
         "GET",
         { includeAuth: true }
       );

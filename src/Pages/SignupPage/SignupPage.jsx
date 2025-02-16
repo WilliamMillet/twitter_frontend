@@ -43,7 +43,7 @@ const onSubmit = (data) => {
 
     const flattenedData = flattenOneLayer(tempData)
 
-    fetch('http://localhost:5000/api/users/signup', {
+    fetch('${process.env.REACT_APP_SERVER_URL}/api/users/signup', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -70,7 +70,7 @@ const onSubmit = (data) => {
 
     const contentType = data['profile-picture'][0]?.type
 
-    fetch("http://localhost:5000/api/users/generatePreSignedUrl", {
+    fetch(`${process.env.REACT_APP_SERVER_URL}/api/users/generatePreSignedUrl`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -89,7 +89,7 @@ const onSubmit = (data) => {
       .then(uploadResponse  => {
         console.log("Profile picture uploaded successfully");
 
-        fetch('http://localhost:5000/api/users/updateProfileLink', {
+        fetch(`${process.env.REACT_APP_SERVER_URL}/api/users/updateProfileLink`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'

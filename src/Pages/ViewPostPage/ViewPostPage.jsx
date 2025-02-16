@@ -15,8 +15,8 @@ const ViewPostPage = () => {
   const getRepliesData = useFetchData()
 
   useEffect(() => {
-    getPostData.fetchData(`http://localhost:5000/api/posts/${id}`, "GET");
-    getRepliesData.fetchData(`http://localhost:5000/api/posts/${id}/replies`, "GET")
+    getPostData.fetchData(`${process.env.REACT_APP_SERVER_URL}/api/posts/${id}`, "GET");
+    getRepliesData.fetchData(`${process.env.REACT_APP_SERVER_URL}/api/posts/${id}/replies`, "GET")
   }, [id]);
 
 

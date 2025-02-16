@@ -70,7 +70,7 @@ const EditProfilePopup = ({setIsEditPopupOpen}) => {
   
     // Update text information if it has changed
     if (textInformationHasChanged) {
-      fetch('http://localhost:5000/api/users/changeUserDetails', {
+      fetch(`${process.env.REACT_APP_SERVER_URL}/api/users/changeUserDetails`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -98,7 +98,7 @@ const EditProfilePopup = ({setIsEditPopupOpen}) => {
     if (profileInformationHasChanged) {
       const profileImageFile = data["profile-picture"][0];
 
-      fetch('http://localhost:5000/api/users/getPresignedUrlToUpdateProfileImage', {
+      fetch(`${process.env.REACT_APP_SERVER_URL}/api/users/getPresignedUrlToUpdateProfileImage`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -132,7 +132,7 @@ const EditProfilePopup = ({setIsEditPopupOpen}) => {
       const bannerImageFile = data["banner-image"][0];
   
       if (userHasBanner) {
-        fetch('http://localhost:5000/api/users/getPresignedUrlToUpdateBannerImage', {
+        fetch(`${process.env.REACT_APP_SERVER_URL}/api/users/getPresignedUrlToUpdateBannerImage`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -157,7 +157,7 @@ const EditProfilePopup = ({setIsEditPopupOpen}) => {
           console.error('Error uploading banner image:', error);
         });
       } else {
-        fetch('http://localhost:5000/api/users/getPresignedUrlToAddBannerImage', {
+        fetch(`${process.env.REACT_APP_SERVER_URL}/api/users/getPresignedUrlToAddBannerImage`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -182,7 +182,7 @@ const EditProfilePopup = ({setIsEditPopupOpen}) => {
           });
         })
         .then(uniqueId => {
-          return fetch('http://localhost:5000/api/users/updateBannerLink', {
+          return fetch(`${process.env.REACT_APP_SERVER_URL}/api/users/updateBannerLink`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',

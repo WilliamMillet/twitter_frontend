@@ -83,7 +83,7 @@ const IndividualReply = ({
   // NEW FUNCTIONS FOR DELETE AND BLOCK
   const handleDeleteReply = () => {
     deleteReply.fetchData(
-      `http://localhost:5000/api/replies/${replyData.reply_id}`,
+      `${process.env.REACT_APP_SERVER_URL}/api/replies/${replyData.reply_id}`,
       "DELETE",
       { includeAuth: true },
       null,
@@ -97,7 +97,7 @@ const IndividualReply = ({
 
   const handleBlock = () => {
     blockReplyUser.fetchData(
-      `http://localhost:5000/api/users/${replyData.user_display_name}/block`,
+      `${process.env.REACT_APP_SERVER_URL}/api/users/${replyData.user_display_name}/block`,
       "POST",
       { includeAuth: true },
       null,
@@ -238,14 +238,7 @@ const IndividualReply = ({
           textActiveColor="#fb73b3"
           hoverColor="heartPink"
         />
-        <ImageToggleableButton
-          imgSrcWhenInactive="/assets/unclicked_share_icon.png"
-          imgSrcWhenActive="/assets/clicked_share_icon.png"
-          widthInPx={20}
-          // Text is intentionally NOT applied
-          textActiveColor="#4c96d5"
-          hoverColor="twitterBlue"
-        />
+
       </div>
       {imagePopupActive && (
         <ImagePopup

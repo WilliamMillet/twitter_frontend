@@ -31,7 +31,7 @@ const TerminateAccount = ({ setSelectedOption }) => {
 
   const onSubmit = (data) => {
     fetchData(
-      `http://localhost:5000/api/users/deleteAccount/${user_identifying_name}?password=${data.currentPassword}`,
+      `${process.env.REACT_APP_SERVER_URL}/api/users/deleteAccount/${user_identifying_name}?password=${data.currentPassword}`,
       "DELETE",
       {},
       null,

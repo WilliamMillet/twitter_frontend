@@ -30,7 +30,7 @@ const SearchPage = () => {
     if (selectedOption === "Latest") sortMethod = "date";
 
     getPosts.fetchData(
-      `http://localhost:5000/api/posts/algorithm-sorted-posts/${userIdentifyingName}?limit=5&offset=${offsetValue}&pattern=${query}&orderBy=${sortMethod}`,
+      `${process.env.REACT_APP_SERVER_URL}/api/posts/algorithm-sorted-posts/${userIdentifyingName}?limit=5&offset=${offsetValue}&pattern=${query}&orderBy=${sortMethod}`,
       "GET",
       { includeAuth: true }
     );
@@ -61,7 +61,7 @@ const SearchPage = () => {
     }
 
     getMatchingProfiles.fetchData(
-      `http://localhost:5000/api/users/top-accounts-main-details?limit=${limit}&pattern=${JSON.stringify(
+      `${process.env.REACT_APP_SERVER_URL}/api/users/top-accounts-main-details?limit=${limit}&pattern=${JSON.stringify(
         query
       )}`,
       "GET"

@@ -15,7 +15,7 @@ const ProfilePageReplyContent = () => {
 
   const handleLoadRepliesWithParentPosts = (offsetValue) => {
     getUserRepliesWithParentPosts.fetchData(
-      `http://localhost:5000/api/users/${username}/replies?limit=5&offset=${offsetValue}`,
+      `${process.env.REACT_APP_SERVER_URL}/api/users/${username}/replies?limit=5&offset=${offsetValue}`,
       "GET",
     );
   };

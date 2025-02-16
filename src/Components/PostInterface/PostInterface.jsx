@@ -95,7 +95,7 @@ const PostInterface = () => {
 
   const handlePost = () => {
     uploadTextFetchFunction(
-      "http://localhost:5000/api/posts/text",
+      `${process.env.REACT_APP_SERVER_URL}/api/posts/text`,
       "POST",
       { includeAuth: true },
       { postText: input },
@@ -105,7 +105,7 @@ const PostInterface = () => {
           const { postId } = uploadTextData;
           if (image) {
             generatePresignedUrlFetchFunction(
-              "http://localhost:5000/api/posts/presigned-url-for-upload",
+              `${process.env.REACT_APP_SERVER_URL}/api/posts/presigned-url-for-upload`,
               "POST",
               { includeAuth: true },
               { fileType: image.type },
@@ -120,7 +120,7 @@ const PostInterface = () => {
                     {
                       onSuccess: () => {
                         postImageMetadataFetchFunction(
-                          `http://localhost:5000/api/posts/${postId}/image-metadata`,
+                          `${process.env.REACT_APP_SERVER_URL}/api/posts/${postId}/image-metadata`,
                           "POST",
                           { includeAuth: true },
                           { uuid: uniqueId },

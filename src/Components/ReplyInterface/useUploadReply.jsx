@@ -22,7 +22,7 @@ const useUploadReply = () => {
     isPartOfThread = false
   ) => {
     uploadReplyText.fetchData(
-      "http://localhost:5000/api/replies/text",
+      `${process.env.REACT_APP_SERVER_URL}/api/replies/text`,
       "POST",
       { includeAuth: true },
       {
@@ -36,7 +36,7 @@ const useUploadReply = () => {
           const { replyId } = uploadTextData;
           if (replyImage) {
             generateReplyPresignedUrl.fetchData(
-              "http://localhost:5000/api/replies/presigned-url",
+              `${process.env.REACT_APP_SERVER_URL}/api/replies/presigned-url`,
               "POST",
               { includeAuth: true },
               { replyId, fileType: replyImage.type },
@@ -53,7 +53,7 @@ const useUploadReply = () => {
                     {
                       onSuccess: () => {
                         sendReplyImageMetadata.fetchData(
-                          `http://localhost:5000/api/replies/${replyId}/image-metadata`,
+                          `${process.env.REACT_APP_SERVER_URL}/api/replies/${replyId}/image-metadata`,
                           "POST",
                           { includeAuth: true },
                           { uuid: uniqueId },

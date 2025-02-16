@@ -17,7 +17,7 @@ const ViewReplyPage = () => {
     const getRepliesData = useFetchData()
 
     useEffect(() => {
-      getRepliesData.fetchData(`http://localhost:5000/api/replies/${id}/descendant-replies`, "GET")
+      getRepliesData.fetchData(`${process.env.REACT_APP_SERVER_URL}/api/replies/${id}/descendant-replies`, "GET")
     }, [id]);
 
   const handleNavigateToMainPage = () => {
@@ -35,7 +35,7 @@ const ViewReplyPage = () => {
 
   useEffect(() => {
     getMainReplyAndPostData.fetchData(
-      `http://localhost:5000/api/replies/${id}`,
+      `${process.env.REACT_APP_SERVER_URL}/api/replies/${id}`,
       "GET"
     );
   }, [id]);

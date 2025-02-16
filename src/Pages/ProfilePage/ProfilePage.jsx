@@ -36,7 +36,7 @@ const ProfilePage = () => {
 
   const handleBlock = () => {
     uploadBlock.fetchData(
-      `http://localhost:5000/api/users/${username}/block`,
+      `${process.env.REACT_APP_SERVER_URL}/api/users/${username}/block`,
       "POST",
       { includeAuth: true },
       null,
@@ -57,7 +57,7 @@ const ProfilePage = () => {
 
   const handleCopyLinkToClipboard = () => {
     navigator.clipboard.writeText(
-      `http://localhost:3000/profile/${username}`
+      `${process.env.REACT_APP_CLIENT_URL}/profile/${username}`
     );
   };
 
@@ -95,9 +95,10 @@ const ProfilePage = () => {
 
   // Get public data affiliated with user profile
 
+
   useEffect(() => {
     fetch(
-      `http://localhost:5000/api/users/getMainPublicUserDetails/${username}`
+      `${process.env.REACT_APP_SERVER_URL}/api/users/getMainPublicUserDetails/${username}`
     )
       .then((response) => response.json())
       .then((data) => setUserDetails(data))
@@ -115,22 +116,22 @@ const ProfilePage = () => {
   useEffect(() => {
 
     getUserPostCount.fetchData(
-      `http://localhost:5000/api/posts/${username}/post-count`,
+      `${process.env.REACT_APP_SERVER_URL}/api/posts/${username}/post-count`,
       "GET"
     );
 
     const ownName = JSON.parse(localStorage.getItem("user_identifying_name"))
 
     checkIfFollowing.fetchData(
-      `http://localhost:5000/api/users/${ownName}/is-following/${username}`,
+      `${process.env.REACT_APP_SERVER_URL}/api/users/${ownName}/is-following/${username}`,
       "GET"
     );
     getFollowerCount.fetchData(
-      `http://localhost:5000/api/users/${username}/follower-count`,
+      `${process.env.REACT_APP_SERVER_URL}/api/users/${username}/follower-count`,
       "GET"
     );
     getFollowingCount.fetchData(
-      `http://localhost:5000/api/users/${username}/following-count`,
+      `${process.env.REACT_APP_SERVER_URL}/api/users/${username}/following-count`,
       "GET"
     );
   }, [username]);
@@ -156,7 +157,7 @@ const ProfilePage = () => {
 
   const handleFollow = () => {
     uploadFollowRelationToServer.fetchData(
-      `http://localhost:5000/api/users/${username}/follow`,
+      `${process.env.REACT_APP_SERVER_URL}/api/users/${username}/follow`,
       "POST",
       { includeAuth: true },
       null,
@@ -166,7 +167,7 @@ const ProfilePage = () => {
 
   const handleUnfollow = () => {
     deleteFollowRelationFromServer.fetchData(
-      `http://localhost:5000/api/users/${username}/unfollow`,
+      `${process.env.REACT_APP_SERVER_URL}/api/users/${username}/unfollow`,
       "DELETE",
       { includeAuth: true },
       null,

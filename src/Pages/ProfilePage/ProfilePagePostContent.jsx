@@ -13,7 +13,7 @@ const ProfilePagePostContent = () => {
 
   const handleLoadPosts = (offsetValue) => {
     getUserPosts.fetchData(
-      `http://localhost:5000/api/posts/algorithm-sorted-posts/${username}?limit=5&offset=${offsetValue}&orderBy=date&fromUsername=${username}`,
+      `${process.env.REACT_APP_SERVER_URL}/api/posts/algorithm-sorted-posts/${username}?limit=5&offset=${offsetValue}&orderBy=date&fromUsername=${username}`,
       "GET",
       { includeAuth: true }
     );

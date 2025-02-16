@@ -40,7 +40,7 @@ const AccountInformation = ({ setSelectedOption }) => {
 
   const onSubmit = (data) => {
     // Do a request to change the password with a password verificaiton middleware
-    fetch(`http://localhost:5000/api/users/changePassword/${user_identifying_name}?password=${data.currentPassword}`, {
+    fetch(`${process.env.REACT_APP_SERVER_URL}/api/users/changePassword/${user_identifying_name}?password=${data.currentPassword}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

@@ -63,7 +63,7 @@ const MutedWords = ({ setSelectedOption }) => {
   // Fetch users existing muted words. This should occur when the page loads, and when a word is deleted
 
   const fetchMutedWords = () => {
-    fetch("http://localhost:5000/api/settings/getAllMutedWords", {
+    fetch(`${process.env.REACT_APP_SERVER_URL}/api/settings/getAllMutedWords`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -98,7 +98,7 @@ const MutedWords = ({ setSelectedOption }) => {
         muteDurationStringToSecondConversionTable[selectedDurationValue],
     };
 
-    fetch("http://localhost:5000/api/settings/addMutedWord", {
+    fetch(`${process.env.REACT_APP_SERVER_URL}/api/settings/addMutedWord`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -134,7 +134,7 @@ const MutedWords = ({ setSelectedOption }) => {
   // Delete muted words
 
   const handleDeleteMutedWord = (muted_word) => {
-    fetch(`http://localhost:5000/api/settings/deleteMutedWord/${muted_word}`, {
+    fetch(`${process.env.REACT_APP_SERVER_URL}/api/settings/deleteMutedWord/${muted_word}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
