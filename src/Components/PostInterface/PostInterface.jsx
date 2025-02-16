@@ -126,7 +126,7 @@ const PostInterface = () => {
                           { uuid: uniqueId },
                           {
                             onSuccess: () => {
-                              setImage(null);
+                              handleRemoveImage()
                             },
                           }
                         );

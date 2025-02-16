@@ -111,6 +111,7 @@ const LoginPage = () => {
             error={errors.password}
           />
           {wrongPassOrContact && <span className="standard-input-error">{usingPhone ? 'Phone number' : 'Email'} or password is incorrect.</span>}
+          <button className="blue-text-button signup-instead-button" onClick={() => navigate('/signup')}>Signup instead</button>
           <Button
             size="medium-stretch"
             variant="default"

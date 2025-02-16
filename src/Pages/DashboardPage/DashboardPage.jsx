@@ -6,6 +6,7 @@ import IndividualPost from "../../Components/IndividualPost/IndividualPost";
 import useFetchData from "../../hooks/useFetchData";
 import FlashingGrayBarsLoadingAnimation from "../../Components/FlashingGrayBarsLoadingAnimation/FlashingGrayBarsLoadingAnimation";
 import { Suspense } from "react";
+import { useNavigate } from "react-router-dom";
 
 const DashboardPage = () => {
   const [selectedFeed, setSelectedFeed] = useState("For You");
@@ -14,19 +15,15 @@ const DashboardPage = () => {
     localStorage.getItem("user_identifying_name")
   );
 
-  // const posts = [
-  //   {
-  //     post_id: 1,
-  //     user_identifying_name: "john_doe193",
-  //     user_display_name: "John Doe",
-  //     profile_image_url: "6069e6c2-ab6e-469f-8e66-24aa11e15316",
-  //     bio: "This is my bio!",
-  //     post_text: "Good morning everybody on this site",
-  //     created_at: "2025-01-22T16:43:18.425134",
-  //     mentioned_post_id: null,
-  //     verified: true
-  //   },
-  // ];
+  const navigate = useNavigate()
+
+  // Navigate users that arent signed in to the home page
+
+  useEffect(() => {
+    if (!localStorage.getItem("user_identifying_name")) {
+      navigate('/signup')
+    }
+  })
 
   const [noPostsFound, setNoPostsFound] = useState(false);
   const [posts, setPosts] = useState([]);

@@ -50,8 +50,7 @@
     display: flex;
     position: relative;
     margin-bottom: 40px;
-    
-
+    flex-direction: row;
 }
 
 .x-button {
@@ -79,15 +78,23 @@
     position: absolute;
     margin: 0;
     bottom: -15px;
-    left: -30px;
+    left: -60px;
+}
+
+.login-instead-button {
+    position: absolute;
+    bottom: -25px;
+    left: 335px;
+    width: 200px;
 }
 
 .profile-img-upload-container {
     position: relative;
     display: inline-block;
     width: 200px;
+    height: 200px;
     margin: auto;
-
+    cursor: pointer;
   }
 
 .file-input-real-btn {
@@ -110,6 +117,9 @@
     border-radius: 50%;
     width: 100%;
     height: 100%;
+    object-fit: cover;
+    cursor: pointer;
+
 }
 
 .dark-overlay {
@@ -119,4 +129,13 @@
     position: absolute;
     width: 100%;
     height: 100%;
+    cursor: pointer;
+  }
+
+  .signup-camera-overlay {
+    position: absolute;
+    z-index: 2;
+    width: 50px;
+    top: 75px;
+    left: 76px;
   }

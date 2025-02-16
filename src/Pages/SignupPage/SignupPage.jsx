@@ -121,6 +121,8 @@ const onSubmit = (data) => {
   }
 };
 
+const [imageUrl, setImageUrl] = useState(null)
+
 const watchedPassword = watch("password");
 
 const watchedProfilePicture = watch("profile-picture");
@@ -129,6 +131,11 @@ useEffect(() => {
   if (watchedProfilePicture && watchedProfilePicture.length > 0) {
     const imageType = watchedProfilePicture[0]?.type;
     setWrongFileType(!["image/jpeg", "image/png"].includes(imageType));
+    if (["image/jpeg", "image/png"].includes(imageType)) {
+      setImageUrl(URL.createObjectURL(watchedProfilePicture[0]));
+    }
+  } else {
+    setImageUrl(null);
   }
 }, [watchedProfilePicture]);
 
@@ -149,8 +156,9 @@ return (
   <main className="signup-page full-size">
     <div className="signup-form-container">
       <div className="signup-form-top-container">
-        <h4 className="x-button">×</h4>
+        {/* <h4 className="x-button">×</h4> */}
         <h4 className="step-indicator">Step {currentStep} of 3</h4>
+        {currentStep === 1 && <button className="blue-text-button login-instead-button" onClick={() => navigate('/login')}>Login instead</button>}
       </div>
 
       <form className="signup-form" onSubmit={handleSubmit(onSubmit)}>
@@ -324,11 +332,15 @@ return (
                   {...register('profile-picture', validationRules.profile)}
                 />
                 <label htmlFor="file-input-real-btn">
-                  <span className="camera-overlay">+</span>
+                <img
+                    src="/assets/add_image_icon.png"
+                    alt="Upload image"
+                    className="signup-camera-overlay"
+                  />
                   <div className="dark-overlay"></div>
                   <img
                     className="file-input-img"
-                    src="https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg"
+                    src={imageUrl ? imageUrl : `https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg`}
                     alt="profile-pic"
                   />
                 </label>
