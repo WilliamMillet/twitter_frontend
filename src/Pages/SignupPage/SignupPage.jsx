@@ -43,7 +43,7 @@ const onSubmit = (data) => {
 
     const flattenedData = flattenOneLayer(tempData)
 
-    fetch('${process.env.REACT_APP_SERVER_URL}/api/users/signup', {
+    fetch(`${process.env.REACT_APP_SERVER_URL}/api/users/signup`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
