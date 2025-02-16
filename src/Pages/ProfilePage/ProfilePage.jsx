@@ -15,12 +15,13 @@ import ProfilePagePostContent from "./ProfilePagePostContent";
 import ProfilePageReplyContent from "./ProfilePageReplyContent";
 import ProfilePageMediaContent from "./ProfilePageMediaContent";
 import PortalPopup from "../../Components/PortalPopup/PortalPopup"
-;
+
 const ProfilePage = () => {
 
   const navigate = useNavigate();
 
   const { username } = useParams();
+
 
   const [userActionsPopupActive, setUserActionsPopupActive] = useState(false);
 

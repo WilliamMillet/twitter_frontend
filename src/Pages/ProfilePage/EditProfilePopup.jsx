@@ -85,7 +85,9 @@ const EditProfilePopup = ({setIsEditPopupOpen}) => {
       })
       .then(response => response.json())
       .then(result => {
-        console.log('User details updated successfully:', result);
+        if (!profileInformationHasChanged) {
+          window.location.reload()
+        }
       })
       .catch(error => {
         console.error('Error updating user details:', error);
@@ -193,7 +195,7 @@ const EditProfilePopup = ({setIsEditPopupOpen}) => {
         })
         .then(response => response.json())
         .then(data => {
-          console.log('Banner link updated successfully:', data);
+          window.location.reload()
         })
         .catch(error => {
           console.error('Error uploading banner image or updating banner link:', error);
