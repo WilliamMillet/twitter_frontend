@@ -9,6 +9,7 @@ const ProfilePreview = ({profileData, truncateAtChar = 13, includeBio = false}) 
 
       const handleClick = (user_identifying_name) => {
         navigate(`/profile/${user_identifying_name}`);
+        window.location.reload();
       };
     
 

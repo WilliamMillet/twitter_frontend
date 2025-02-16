@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./LeftSidebar.css";
 import { Link, NavLink, useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -28,6 +28,7 @@ const LeftSidebar = () => {
     navigate("/");
   };
 
+  
   return (
     <aside className="left-sidebar">
       <div className="left-sidebar-inner-container">

@@ -21,7 +21,7 @@ const ProfilePagePostContent = () => {
   useEffect(() => {
     setPosts([]);
     handleLoadPosts(0);
-  }, []);
+  }, [username]);
   useEffect(() => {
     console.log(getUserPosts.response);
 

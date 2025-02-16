@@ -22,7 +22,7 @@ const ProfilePageReplyContent = () => {
   useEffect(() => {
     setRepliesWithParentPosts([]);
     handleLoadRepliesWithParentPosts(0);
-  }, []);
+  }, [username]);
   useEffect(() => {
 
     if (getUserRepliesWithParentPosts.response && getUserRepliesWithParentPosts.response.length) {

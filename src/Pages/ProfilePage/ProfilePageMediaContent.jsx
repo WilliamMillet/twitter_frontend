@@ -23,7 +23,7 @@ const ProfilePageMediaContent = () => {
     useEffect(() => {
         setMedia([]);
         handleLoadMedia(0);
-    }, []);
+    }, [username]);
 
 
     useEffect(() => {
