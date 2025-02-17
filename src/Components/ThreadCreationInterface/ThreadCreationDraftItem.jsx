@@ -137,7 +137,7 @@ const ThreadCreationDraftItem = ({
           <div className="upload-image-with-post-button">
             <img
               className="add-image-button-cover"
-              src="/assets/image_icon.png"
+              src={`${REACT_APP_SERVER_URL}/assets/image_icon.png`}
               alt="Image"
               onClick={handleAddImageClick}
               onKeyDown={handleAddImageKeyDown}

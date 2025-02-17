@@ -333,7 +333,7 @@ return (
                 />
                 <label htmlFor="file-input-real-btn">
                 <img
-                    src="/assets/add_image_icon.png"
+                    src={`${REACT_APP_SERVER_URL}/assets/add_image_icon.png`}
                     alt="Upload image"
                     className="signup-camera-overlay"
                   />

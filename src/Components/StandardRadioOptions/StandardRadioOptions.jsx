@@ -27,8 +27,8 @@ const StandardRadioOptions = ({ options, selectedValue, setSelectedValue }) => {
           <img
             src={
               selectedValue === option.value
-                ? "/assets/standard_open_tick.png"
-                : "/assets/standard_closed_tick.png"
+                ? `${REACT_APP_SERVER_URL}/assets/standard_open_tick.png`
+                : `${REACT_APP_SERVER_URL}/assets/standard_closed_tick.png`
             }
             alt={selectedValue === option.value ? "Checked" : "Unchecked"}
           />

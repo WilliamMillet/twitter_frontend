@@ -119,7 +119,7 @@ const IndividualReply = ({
           },
         }
       : {
-          iconImgSrc: "/assets/block_icon.png",
+          iconImgSrc: `${REACT_APP_SERVER_URL}/assets/block_icon.png`,
           text: `Block @${replyData.user_display_name}`,
           onClick: () => {
             handleBlock();
@@ -220,8 +220,8 @@ const IndividualReply = ({
       </div>
       <div className="individual-reply-second-row">
         <ImageToggleableButton
-          imgSrcWhenInactive="/assets/unclicked_comment_icon.png"
-          imgSrcWhenActive="/assets/clicked_comment_icon.png"
+          imgSrcWhenInactive={`${REACT_APP_SERVER_URL}/assets/unclicked_comment_icon.png`}
+          imgSrcWhenActive={`${REACT_APP_SERVER_URL}/assets/clicked_comment_icon.png`}
           widthInPx={20}
           text={replyData.child_reply_count}
           textActiveColor="#4c96d5"
@@ -229,8 +229,8 @@ const IndividualReply = ({
           navigateLocation={`/reply/${replyData.post_id}`}
         />
         <ImageToggleableButton
-          imgSrcWhenInactive="/assets/unclicked_heart_icon.png"
-          imgSrcWhenActive="/assets/clicked_heart_icon.png"
+          imgSrcWhenInactive={`${REACT_APP_SERVER_URL}/assets/unclicked_heart_icon.png`}
+          imgSrcWhenActive={`${REACT_APP_SERVER_URL}/assets/clicked_heart_icon.png`}
           setToggle={setReplyLiked}
           toggle={replyLiked}
           widthInPx={25}

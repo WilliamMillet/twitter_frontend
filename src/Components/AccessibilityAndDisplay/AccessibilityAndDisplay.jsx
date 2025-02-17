@@ -30,8 +30,8 @@ const AccessibilityAndDisplay = () => {
               <img
                 src={
                   selectedColorScheme === "light-mode"
-                    ? "/assets/standard_open_tick.png"
-                    : "/assets/standard_closed_tick.png"
+                    ? `/${REACT_APP_SERVER_URL}assets/standard_open_tick.png`
+                    : `${REACT_APP_SERVER_URL}/assets/standard_closed_tick.png`
                 }
                 alt={
                   selectedColorScheme === "light-mode" ? "Checked" : "Unchecked"
@@ -49,8 +49,8 @@ const AccessibilityAndDisplay = () => {
               <img
                 src={
                   selectedColorScheme === "dark-mode"
-                    ? "/assets/standard_open_tick.png"
-                    : "/assets/standard_closed_tick.png"
+                    ? `${REACT_APP_SERVER_URL}/assets/standard_open_tick.png`
+                    : `${REACT_APP_SERVER_URL}/assets/standard_closed_tick.png`
                 }
                 alt={
                   selectedColorScheme === "dark-mode" ? "Checked" : "Unchecked"
