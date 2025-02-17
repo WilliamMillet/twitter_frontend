@@ -9,6 +9,10 @@ import "@fontsource/noto-sans/800.css";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
+
+    <BrowserRouter basename='twitter_frontend'>
       <App />
+    </BrowserRouter>
+
 );
 

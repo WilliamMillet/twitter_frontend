@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import {HashRouter, Routes, Route} from "react-router-dom"
+import {Routes, Route} from "react-router-dom"
 
 import DashboardPage from './Pages/DashboardPage/DashboardPage';
 import LoginPage from './Pages/LoginPage/LoginPage';
@@ -13,18 +13,18 @@ import ViewReplyPage from './Pages/ViewReplyPage/ViewReplyPage';
 
 function App() {
   return (
-    <HashRouter basename='twitter_frontend'>
+    <div>
       <Routes>
-        <Route path='/' element={<DashboardPage />} />
-        <Route path='/login' element={<LoginPage />} />
-        <Route path='/signup' element={<SignupPage />} />
-        <Route path='/settings' element={<SettingsPage />} />
-        <Route path='/profile/:username' element={<ProfilePage />} />
-        <Route path='posts/:id' element={<ViewPostPage />} />
-        <Route path='replies/:id' element={<ViewReplyPage />} />
-        <Route path='search/:query' element={<SearchPage />} />
+        <Route path='/' element={<DashboardPage/>}/>
+        <Route path='/login' element={<LoginPage/>}/>
+        <Route path='/signup' element={<SignupPage/>}/>
+        <Route path='/settings' element={<SettingsPage/>}/>
+        <Route path='/profile/:username' element={<ProfilePage/>}/>
+        <Route path='posts/:id' element={<ViewPostPage/>}></Route>
+        <Route path='replies/:id' element={<ViewReplyPage/>}></Route>
+        <Route path='search/:query' element={<SearchPage/>}></Route>
       </Routes>
-    </HashRouter>
+    </div>
   );
 }
 
