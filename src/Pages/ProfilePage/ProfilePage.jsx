@@ -64,12 +64,12 @@ const ProfilePage = () => {
 
   const userActionPopupData = [
     {
-      iconImgSrc: `${REACT_APP_SERVER_URL}/assets/block_icon.png`,
+      iconImgSrc: `${process.env.REACT_APP_CLIENT_URL}/assets/block_icon.png`,
       text: `Block @${truncateString(username, 15)}`,
       onClick: handleBlock,
     },
     {
-      iconImgSrc: `${REACT_APP_SERVER_URL}/assets/link_icon.png`,
+      iconImgSrc: `${process.env.REACT_APP_CLIENT_URL}/assets/link_icon.png`,
       text: "Copy link",
       onClick: handleCopyLinkToClipboard,
       textAfterClick: 'Copied!'

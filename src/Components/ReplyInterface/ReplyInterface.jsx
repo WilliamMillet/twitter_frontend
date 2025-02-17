@@ -157,7 +157,7 @@ const ReplyInterface = ({ parentData, replyingToReply = false }) => {
             <div className="upload-image-with-post-button">
               <img
                 className="reply-inteface-add-image-button-cover"
-                src={`${REACT_APP_SERVER_URL}/assets/image_icon.png`}
+                src={`${process.env.REACT_APP_CLIENT_URL}/assets/image_icon.png`}
                 alt="Image"
                 onClick={handleAddImageClick}
                 onKeyDown={handleAddImageKeyDown}

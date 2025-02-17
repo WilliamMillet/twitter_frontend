@@ -38,7 +38,7 @@ const LeftSidebar = () => {
               <Link to="/">
                 <div className="x-main-icon-container">
                   <img
-                    src={`${REACT_APP_SERVER_URL}/assets/x_main_icon.png`}
+                    src={`${process.env.REACT_APP_CLIENT_URL}/assets/x_main_icon.png`}
                     alt="Profile"
                     className="left-sidebar-x-icon"
                   />
@@ -53,7 +53,7 @@ const LeftSidebar = () => {
                 }
               >
                 <img
-                  src={`${REACT_APP_SERVER_URL}/assets/home_icon.png`}
+                  src={`${process.env.REACT_APP_CLIENT_URL}/assets/home_icon.png`}
                   alt="Home"
                   className="left-sidebar-main-icon"
                 />
@@ -70,7 +70,7 @@ const LeftSidebar = () => {
                 }
               >
                 <img
-                  src={`${REACT_APP_SERVER_URL}/assets/profile_icon.png`}
+                  src={`${process.env.REACT_APP_CLIENT_URL}/assets/profile_icon.png`}
                   alt="Profile"
                   className="left-sidebar-main-icon"
                 />
@@ -87,7 +87,7 @@ const LeftSidebar = () => {
                 }
               >
                 <img
-                  src={`${REACT_APP_SERVER_URL}/assets/settings_icon.png`}
+                  src={`${process.env.REACT_APP_CLIENT_URL}/assets/settings_icon.png`}
                   alt="Settings"
                   className="left-sidebar-main-icon"
                 />

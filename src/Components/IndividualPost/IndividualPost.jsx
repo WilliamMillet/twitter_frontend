@@ -66,7 +66,7 @@ const IndividualPost = ({ postData, clickable = false, connectedToReply = false 
 
   const sharePopupData = [
     {
-      iconImgSrc: `${REACT_APP_SERVER_URL}/assets/link_icon.png`,
+      iconImgSrc: `${process.env.REACT_APP_CLIENT_URL}/assets/link_icon.png`,
       text: "Copy link",
       onClick: handleCopyLinkToClipboard,
       textAfterClick: 'Copied!'
@@ -115,7 +115,7 @@ const IndividualPost = ({ postData, clickable = false, connectedToReply = false 
           }
         }
       : {
-          iconImgSrc: `${REACT_APP_SERVER_URL}/assets/block_icon.png`,
+          iconImgSrc: `${process.env.REACT_APP_CLIENT_URL}/assets/block_icon.png`,
           text: `Block @${truncateString(postData.user_display_name, 15)}`,
           onClick: handleBlock
         }
@@ -313,8 +313,8 @@ const IndividualPost = ({ postData, clickable = false, connectedToReply = false 
       )}
       <div className="individual-post-second-row">
         <ImageToggleableButton
-          imgSrcWhenInactive={`${REACT_APP_SERVER_URL}/unclicked_comment_icon.png`}
-          imgSrcWhenActive={`${REACT_APP_SERVER_URL}/assets/clicked_comment_icon.png`}
+          imgSrcWhenInactive={`${process.env.REACT_APP_CLIENT_URL}/unclicked_comment_icon.png`}
+          imgSrcWhenActive={`${process.env.REACT_APP_CLIENT_URL}/assets/clicked_comment_icon.png`}
           widthInPx={20}
           text={abbreviateNumber(postData.reply_count)}
           textActiveColor="#4c96d5"
@@ -322,8 +322,8 @@ const IndividualPost = ({ postData, clickable = false, connectedToReply = false 
           navigateLocation={`/posts/${postData.post_id}`}
         />
         <ImageToggleableButton
-          imgSrcWhenInactive={`${REACT_APP_SERVER_URL}/assets/unclicked_heart_icon.png`}
-          imgSrcWhenActive={`${REACT_APP_SERVER_URL}/assets/clicked_heart_icon.png`}
+          imgSrcWhenInactive={`${process.env.REACT_APP_CLIENT_URL}/assets/unclicked_heart_icon.png`}
+          imgSrcWhenActive={`${process.env.REACT_APP_CLIENT_URL}/assets/clicked_heart_icon.png`}
           setToggle={setPostLiked}
           toggle={postLiked}
           widthInPx={25}
@@ -333,7 +333,7 @@ const IndividualPost = ({ postData, clickable = false, connectedToReply = false 
         />
         <div className="image-popup-icon-and-popup">
           <ImageButton
-            imgSrc={`${REACT_APP_SERVER_URL}/assets/unclicked_share_icon.png`}
+            imgSrc={`${process.env.REACT_APP_CLIENT_URL}/assets/unclicked_share_icon.png`}
             widthInPx={20}
             // Text is intentionally NOT applied
             textActiveColor="#4c96d5"

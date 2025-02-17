@@ -267,7 +267,7 @@ const EditProfilePopup = ({setIsEditPopupOpen}) => {
                 />
                 <label htmlFor="banner-upload-display-button">
                   <img
-                    src={`${REACT_APP_SERVER_URL}/assets/add_image_icon.png`}
+                    src={`${process.env.REACT_APP_CLIENT_URL}/assets/add_image_icon.png`}
                     alt="Upload Banner"
                     className="banner-camera-overlay"
                   />
@@ -298,7 +298,7 @@ const EditProfilePopup = ({setIsEditPopupOpen}) => {
                 />
                 <label htmlFor="edit-profile-file-input-display-btn">
                   <img
-                    src={`${REACT_APP_SERVER_URL}/assets/add_image_icon.png`}
+                    src={`${process.env.REACT_APP_CLIENT_URL}/assets/add_image_icon.png`}
                     alt="Add image"
                     className="edit-profile-camera-overlay"
                   />
