@@ -160,6 +160,7 @@ return (
         <h4 className="step-indicator">Step {currentStep} of 3</h4>
         {currentStep === 1 && <button className="blue-text-button login-instead-button" onClick={() => navigate('/login')}>Login instead</button>}
       </div>
+      Test
 
       <form className="signup-form" onSubmit={handleSubmit(onSubmit)}>
         {currentStep === 1 && (
