@@ -405,3 +405,8 @@ body, button, input, textarea {
 .two-hundred-vh {
   height: 200vh;
 }
+
+.root > div {
+  min-width: 100vh;
+  min-height: 100vw;
+}
