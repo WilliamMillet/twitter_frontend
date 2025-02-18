@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/twitter_frontend/static/css/main.6ff390a7.css",
-    "main.js": "/twitter_frontend/static/js/main.f98f9bf1.js",
+    "main.js": "/twitter_frontend/static/js/main.a68360dd.js",
     "static/media/noto-sans-devanagari-800-normal.woff": "/twitter_frontend/static/media/noto-sans-devanagari-800-normal.87c6098c11d7c8973e1d.woff",
     "static/media/noto-sans-latin-ext-800-normal.woff": "/twitter_frontend/static/media/noto-sans-latin-ext-800-normal.2983ab7def3e4f8f484b.woff",
     "static/media/noto-sans-devanagari-400-normal.woff": "/twitter_frontend/static/media/noto-sans-devanagari-400-normal.f05a9c61a35577626752.woff",
@@ -36,10 +36,10 @@
     "static/media/noto-sans-greek-ext-400-normal.woff2": "/twitter_frontend/static/media/noto-sans-greek-ext-400-normal.cc048507994039b6463f.woff2",
     "index.html": "/twitter_frontend/index.html",
     "main.6ff390a7.css.map": "/twitter_frontend/static/css/main.6ff390a7.css.map",
-    "main.f98f9bf1.js.map": "/twitter_frontend/static/js/main.f98f9bf1.js.map"
+    "main.a68360dd.js.map": "/twitter_frontend/static/js/main.a68360dd.js.map"
   },
   "entrypoints": [
     "static/css/main.6ff390a7.css",
-    "static/js/main.f98f9bf1.js"
+    "static/js/main.a68360dd.js"
   ]
 }
