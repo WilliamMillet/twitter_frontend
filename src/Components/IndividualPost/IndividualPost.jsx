@@ -313,8 +313,8 @@ const IndividualPost = ({ postData, clickable = false, connectedToReply = false 
       )}
       <div className="individual-post-second-row">
         <ImageToggleableButton
-          imgSrcWhenInactive={`${process.env.REACT_APP_CLIENT_URL}/unclicked_comment_icon.png`}
-          imgSrcWhenActive={`${process.env.REACT_APP_CLIENT_URL}/unclicked_comment_icon/clicked_comment_icon.png`}
+          imgSrcWhenInactive={`${process.env.REACT_APP_CLIENT_URL}/assets/unclicked_comment_icon.png`}
+          imgSrcWhenActive={`${process.env.REACT_APP_CLIENT_URL}/assets/clicked_comment_icon.png`}
           widthInPx={20}
           text={abbreviateNumber(postData.reply_count)}
           textActiveColor="#4c96d5"
