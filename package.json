@@ -2,7 +2,7 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://WilliamMillet.github.io/twitter_frontend",
+  "homepage": "https://williammilletwebsite.site/",
   "dependencies": {
     "@fontsource/noto-sans": "^5.1.0",
     "cra-template": "1.2.0",
