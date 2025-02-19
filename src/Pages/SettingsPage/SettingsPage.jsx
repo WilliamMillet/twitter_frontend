@@ -40,6 +40,7 @@ const SettingsPage = () => {
           {selectedOption === 'Privacy and Saftey' && <PrivacyAndSaftey/>}
           {selectedOption === 'Accessibility and display' && <AccessibilityAndDisplay/>}
           {selectedOption === 'Additional Resources' && <AdditionalResources/>}
+          {selectedOption === 'Notifications' && <h1 className="center-text">This feature has not been implemented yet!</h1>}
           </div>
           </section>
         </StandardLayout>
