@@ -52,7 +52,6 @@ body, button, input, textarea {
   .center-grid-item {
     border-left: 1px solid rgb(70, 70, 70);
     border-right: 1px solid rgb(70, 70, 70);
-    max-width: 650px;
   }
   
 
