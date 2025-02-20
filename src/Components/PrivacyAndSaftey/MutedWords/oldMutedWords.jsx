@@ -124,7 +124,6 @@ const MutedWords = ({ setSelectedOption }) => {
         fetchMutedWords()
         return response.json();
       })
-      .then((data) => console.log(data))
       .catch((err) => {
         console.error("Error adding muted word", err);
       });
@@ -150,7 +149,6 @@ const MutedWords = ({ setSelectedOption }) => {
         response.json();
       })
       .then((data) => {
-        console.log("Muted word deleted successfully:", data);
         fetchMutedWords();
       })
       .catch((err) => {

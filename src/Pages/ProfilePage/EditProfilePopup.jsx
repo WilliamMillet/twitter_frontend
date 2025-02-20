@@ -153,7 +153,6 @@ const EditProfilePopup = ({setIsEditPopupOpen}) => {
           if (!uploadResponse.ok) {
             throw new Error('Failed to upload banner image');
           }
-          console.log('Banner image uploaded successfully');
         })
         .catch(error => {
           console.error('Error uploading banner image:', error);
@@ -179,7 +178,6 @@ const EditProfilePopup = ({setIsEditPopupOpen}) => {
             if (!uploadResponse.ok) {
               throw new Error('Failed to upload banner image');
             }
-            console.log('Banner image uploaded successfully');
             return uniqueId; // Return the uniqueId for the next fetch call
           });
         })
@@ -227,7 +225,6 @@ const EditProfilePopup = ({setIsEditPopupOpen}) => {
     }
   }, [watchedBanner]);
 
-  console.log(bannerPictureUrl)
 
   return (
     <div className="edit-profile-popup-dark-overlay">

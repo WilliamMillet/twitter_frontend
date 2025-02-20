@@ -29,7 +29,6 @@ export const useDaysInMonth = (month, year) => {
     useEffect(() => {
         
         if (month) {
-          console.log(month)
             const numberOfDays = daysInMonth[month];
             if (month === 'february') {
                 if (year) {

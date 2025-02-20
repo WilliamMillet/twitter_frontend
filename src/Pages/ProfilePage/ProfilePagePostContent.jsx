@@ -23,7 +23,6 @@ const ProfilePagePostContent = () => {
     handleLoadPosts(0);
   }, [username]);
   useEffect(() => {
-    console.log(getUserPosts.response);
 
     if (getUserPosts.response && getUserPosts.response.length) {
       setPosts((prevPosts) => [...prevPosts, ...getUserPosts.response]);

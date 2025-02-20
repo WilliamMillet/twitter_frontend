@@ -45,7 +45,6 @@ const LoginPage = () => {
         return response.json();
       })
     .then(data => {
-        console.log(data)
             localStorage.setItem('jsonwebtoken', JSON.stringify(data.token))
             localStorage.setItem('user_display_name', JSON.stringify(data.user_display_name))
             localStorage.setItem('user_identifying_name', JSON.stringify(data.user_identifying_name))

@@ -30,7 +30,6 @@ const AccountInformation = ({ setSelectedOption }) => {
   const confirmNewPasswordInput = watch("confirmNewPassword");
 
   useEffect(() => {
-    console.log(equalityError)
     if (newPasswordInput != confirmNewPasswordInput) {
       setEqualityError(true);
     } else {
@@ -49,14 +48,12 @@ const AccountInformation = ({ setSelectedOption }) => {
     })
       .then((response) => {
         if (response.status === 401) {
-          console.log("is working");
           setAuthError(true);
           throw new Error("Unauthorised access");
         }
         return response.json();
       })
       .then((response) => {
-        console.log(response);
         setSuccess(true)
         setUserData(response);
         setAuthError(false);

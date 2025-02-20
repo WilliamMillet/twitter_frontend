@@ -26,15 +26,12 @@ const AccountInformation = ({setSelectedOption}) => {
     )
       .then((response) => {
         if (response.status === 401) {
-          console.log("is working");
           setAuthError(true)
           throw new Error("Unauthorised access")
         } 
         return response.json()
       })
       .then((response) => {
-        console.log(response);
-        
 
           setUserData(response)
           setAuthError(false)

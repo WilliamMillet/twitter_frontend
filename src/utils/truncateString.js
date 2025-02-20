@@ -1,6 +1,6 @@
 const truncateString = (string, maxLength) => {
     if (!maxLength) {
-        console.log("Please provide a maximum length")
+        console.error("Please provide a maximum length")
         return string
     }
     if (string.length <= maxLength) {

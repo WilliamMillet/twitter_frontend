@@ -27,7 +27,6 @@ const ProfilePageMediaContent = () => {
 
 
     useEffect(() => {
-        console.log(getUserMedia.response);
 
         if (getUserMedia.response && getUserMedia.response.length) {
             setMedia((prevMedia) => [...prevMedia, ...getUserMedia.response]);

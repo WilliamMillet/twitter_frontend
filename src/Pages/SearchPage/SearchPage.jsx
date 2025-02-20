@@ -42,7 +42,6 @@ const SearchPage = () => {
   }, [selectedOption]);
 
   useEffect(() => {
-    console.log(getPosts.response);
 
     if (getPosts.response && getPosts.response.length) {
       setPosts((prevPosts) => [...prevPosts, ...getPosts.response]);

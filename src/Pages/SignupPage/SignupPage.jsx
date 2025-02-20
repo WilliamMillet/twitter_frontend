@@ -59,7 +59,6 @@ const onSubmit = (data) => {
       return response.json()
     })
     .then(signupData => {
-      console.log('User created successfully:', signupData);
       localStorage.setItem('jsonwebtoken', JSON.stringify(signupData.token))
       localStorage.setItem('user_display_name', JSON.stringify(data.name))
       localStorage.setItem('user_identifying_name', JSON.stringify(data.name))
@@ -87,7 +86,6 @@ const onSubmit = (data) => {
         }
       })
       .then(uploadResponse  => {
-        console.log("Profile picture uploaded successfully");
 
         fetch(`${process.env.REACT_APP_SERVER_URL}/api/users/updateProfileLink`, {
           method: 'POST',
@@ -101,7 +99,6 @@ const onSubmit = (data) => {
         })
         .then(response => response.json())
         .then(updateProfileLinkData => {
-          console.log(updateProfileLinkData)
           localStorage.setItem('profile_link_suffix', JSON.stringify(preSignedUrlData.uniqueId))
           navigate('/'); 
         })
